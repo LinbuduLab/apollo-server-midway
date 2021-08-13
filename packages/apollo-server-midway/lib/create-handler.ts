@@ -8,6 +8,7 @@ import { CreateHandlerOption } from './types';
 import { playgroundDefaultSettings } from './constants';
 import { ApolloServerMidway } from './apollo-server-midway';
 import ApolloResolveTimePlugin from 'apollo-resolve-time';
+import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
 
 export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const schema = buildSchemaSync({
@@ -24,6 +25,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
         settings: playgroundDefaultSettings,
       }),
       ApolloResolveTimePlugin(),
+      ApolloQueryComplexityPlugin(schema),
     ].filter(Boolean),
   });
 
