@@ -1,0 +1,31 @@
+{
+  "name": "graphql-util-scalars",
+  "version": "0.1.0",
+  "description": "GraphQL scalar utilities",
+  "keywords": [
+    "GraphQL",
+    "GraphQL",
+    "Scalar"
+  ],
+  "author": "linbudu599",
+  "homepage": "https://github.com/linbudu599/apollo-server-midway#readme",
+  "license": "MIT",
+  "main": "lib/graphql-util-scalars.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linbudu599/apollo-server-midway.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/linbudu599/apollo-server-midway/issues"
+  }
+}

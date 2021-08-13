@@ -1,0 +1,33 @@
+{
+  "name": "midway-faas-graphql",
+  "version": "0.1.0",
+  "description": "Midway Serverless component for using GraphQL",
+  "keywords": [
+    "Apollo-Server",
+    "MidwayJS",
+    "Midway-Serverless",
+    "Serverless",
+    "GraphQL"
+  ],
+  "author": "linbudu599",
+  "homepage": "https://github.com/linbudu599/apollo-server-midway#readme",
+  "license": "MIT",
+  "main": "lib/midway-faas-graphql.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linbudu599/apollo-server-midway.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/linbudu599/apollo-server-midway/issues"
+  }
+}
