@@ -7,6 +7,7 @@ import { buildSchemaSync } from 'type-graphql';
 import { CreateHandlerOption } from './types';
 import { playgroundDefaultSettings } from './constants';
 import { ApolloServerMidway } from './apollo-server-midway';
+import ApolloResolveTimePlugin from 'apollo-resolve-time';
 
 export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const schema = buildSchemaSync({
@@ -22,6 +23,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
       ApolloServerPluginLandingPageGraphQLPlayground({
         settings: playgroundDefaultSettings,
       }),
+      ApolloResolveTimePlugin(),
     ].filter(Boolean),
   });
 

@@ -10,7 +10,7 @@
   "author": "linbudu599",
   "homepage": "https://github.com/linbudu599/apollo-server-midway#readme",
   "license": "MIT",
-  "main": "./dist/lib/index.js",
+  "main": "./dist/index.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -18,12 +18,14 @@
   "files": [
     "lib"
   ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "check": "tsc --noEmit"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/linbudu599/apollo-server-midway.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/linbudu599/apollo-server-midway/issues"
@@ -34,6 +36,7 @@
     "@midwayjs/core": "^2.12.3",
     "@midwayjs/decorator": "^2.12.3",
     "@midwayjs/faas": "^2.12.4",
+    "apollo-resolve-time": "^0.1.0",
     "apollo-server-core": "^3.1.2",
     "apollo-server-plugin-base": "^3.1.1",
     "apollo-server-types": "^3.1.1",
