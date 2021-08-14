@@ -1,6 +1,6 @@
 {
   "name": "apollo-resolve-time",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An Apollo-Server plugin to add resolve time in response extension field",
   "keywords": [
     "Apollo-Server"
