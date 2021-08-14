@@ -8,14 +8,16 @@ import { join } from 'path';
 import { GraphQLService } from './lib/core';
 
 @Configuration({
-  importConfigs: [join(__dirname, './config/')],
-  conflictCheck: true,
+  importConfigs: [join(__dirname, 'config')],
   namespace: 'graphql',
 })
 export class ContainerLifeCycle implements ILifeCycle {
   async onReady(container: IMidwayContainer, app: IMidwayApplication) {
-    const graphql = new GraphQLService(container, app);
-    console.log('register');
+    const config = container
+      .getConfigService()
+      .getConfiguration('faasGraphQLConfig');
+    const graphql = new GraphQLService(container, config);
+
     container.registerObject('graphql', graphql);
   }
 }

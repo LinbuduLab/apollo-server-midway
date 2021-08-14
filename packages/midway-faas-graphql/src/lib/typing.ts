@@ -14,6 +14,8 @@ export interface RenderPlaygroundQueryOptions {
 }
 
 export interface PluginConfig {
+  // FIXME: use NonEmptyArray
+  resolvers: string[];
   // TODO: 选项合并
   playground?: boolean;
   rootValue?: any;

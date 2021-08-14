@@ -17,5 +17,6 @@
     "outDir": "dist",
     "esModuleInterop": true
   },
+  "include": ["src/*"],
   "exclude": ["dist", "node_modules", "test"]
 }

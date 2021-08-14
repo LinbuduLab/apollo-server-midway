@@ -6,10 +6,11 @@ import {
   ServerlessTriggerType,
   ALL,
   Query,
+  Config,
 } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/faas';
 import { experimentalCreateHandler } from 'apollo-server-midway';
-import { GraphQLService } from 'midway-faas-graphql';
+import { GraphQLService, PluginConfig } from 'midway-faas-graphql';
 import { RenderPlaygroundQueryOptions } from '../typing';
 
 const apolloHandlerFuncName = 'apollo-handler';
@@ -23,8 +24,11 @@ export class HelloHTTPService {
   @Inject()
   ctx: Context;
 
-  @Inject()
+  @Inject('graphql:GraphQLService')
   graphql: GraphQLService;
+
+  @Config()
+  faasGraphQLConfig: PluginConfig;
 
   @ServerlessFunction({
     functionName: graphqlHandlerFuncName,
@@ -44,7 +48,7 @@ export class HelloHTTPService {
     method: 'post',
   })
   async graphqlHandler() {
-    return this.graphql.handler(this.ctx);
+    return this.graphql.handler(this.ctx, this.faasGraphQLConfig);
   }
 
   @ServerlessFunction({

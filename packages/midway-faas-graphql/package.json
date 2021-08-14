@@ -12,7 +12,7 @@
   "author": "linbudu599",
   "homepage": "https://github.com/linbudu599/apollo-server-midway#readme",
   "license": "MIT",
-  "main": "./dist/index.js",
+  "main": "./dist/index",
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts"
@@ -28,5 +28,16 @@
   },
   "bugs": {
     "url": "https://github.com/linbudu599/apollo-server-midway/issues"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^8.1.0",
+    "@midwayjs/core": "^2.12.3",
+    "@midwayjs/decorator": "^2.12.3",
+    "@midwayjs/faas": "^2.12.4",
+    "apollo-server-core": "^3.1.2",
+    "apollo-server-plugin-base": "^3.1.1",
+    "graphql": "^15.5.1",
+    "graphql-playground-html": "^1.6.29",
+    "type-graphql": "^1.1.1"
   }
 }

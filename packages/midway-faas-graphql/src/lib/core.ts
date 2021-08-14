@@ -1,5 +1,6 @@
 import { graphql, GraphQLSchema, printSchema, Source } from 'graphql';
 import { Context as FaaSContext } from '@midwayjs/faas';
+import { Provide } from '@midwayjs/decorator';
 import * as path from 'path';
 import { buildSchemaSync, ClassType, Maybe, ResolverData } from 'type-graphql';
 import { midwayFaaSPlayground } from './playground-faas';
@@ -12,16 +13,14 @@ export interface GraphQLContext extends FaaSContext {
   __key__: never;
 }
 
+@Provide('GraphQLService')
 export class GraphQLService {
   _schema?: GraphQLSchema;
   config: PluginConfig;
 
-  constructor(
-    public container: IMidwayContainer,
-    public app: IMidwayApplication
-  ) {
-    this.config = app.getConfig('faasGraphQLConfig');
-
+  constructor(container: IMidwayContainer, internalConfig: PluginConfig) {
+    // FIXME:
+    this.config = internalConfig;
     this._init();
   }
 
@@ -41,7 +40,7 @@ export class GraphQLService {
   // complexity
   private buildGraphQLSchema() {
     return buildSchemaSync({
-      resolvers: [path.resolve(this.app.getBaseDir(), 'resolver/*')],
+      resolvers: [path.resolve(__dirname, 'resolver/*')],
       dateScalarMode: 'timestamp',
 
       globalMiddlewares: [ErrorInterceptor],
@@ -60,7 +59,8 @@ export class GraphQLService {
     return this._schema;
   }
 
-  async handler(ctx: FaaSContext) {
+  async handler(ctx: FaaSContext, config: PluginConfig) {
+    // 如果resolver也要提供，那么schema就需要重新构建了，不太行
     let body = ctx.req.body;
     if (body) {
       body = JSON.parse(body);
@@ -77,11 +77,12 @@ export class GraphQLService {
       source: query,
       variableValues: variables,
       contextValue: {
-        // FIXME: Avoid incorrect overriding
-        ...(this.config.context ?? {}),
+        // ...(this.config.context ?? {}),
+        ...(config.context ?? {}),
         ...ctx,
       },
-      rootValue: this.config.rootValue ?? {},
+      // rootValue: this.config.rootValue ?? {},
+      rootValue: config.rootValue ?? {},
     });
   }
 

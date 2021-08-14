@@ -15,6 +15,7 @@ export const graphqlPlaygroundSettings = {
 } as ISettings;
 
 export const faasGraphQLConfig: PluginConfig = {
+  resolvers: ['resolvers/*', 'resolver/*'],
   playground: true,
   context: {
     sampleContextValue: 'sampleContextValue',
