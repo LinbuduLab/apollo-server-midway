@@ -1,5 +1,5 @@
 import { ISettings } from 'graphql-playground-html/dist/render-playground-page';
-import { PluginConfig } from '../typing';
+import { PluginConfig } from 'midway-faas-graphql';
 
 export const graphqlPlaygroundSettings = {
   'editor.cursorShape': 'line',
@@ -15,6 +15,8 @@ export const graphqlPlaygroundSettings = {
 } as ISettings;
 
 export const faasGraphQLConfig: PluginConfig = {
+  // will not be loaded for now
+  resolvers: [],
   playground: true,
   context: {
     sampleContextValue: 'sampleContextValue',

@@ -15,6 +15,7 @@ import {
   PluginConfig,
   RenderPlaygroundQueryOptions,
 } from 'midway-faas-graphql';
+import path from 'path';
 
 const apolloHandlerFuncName = 'apollo-handler';
 const graphqlHandlerFuncName = 'graphql-handler';
@@ -66,9 +67,13 @@ export class HelloHTTPService {
     method: 'post',
   })
   async apolloHandler() {
+    // TODO: use @Config()
     return await experimentalCreateHandler({
       path: '/apollo',
       context: this.ctx,
+      schema: {
+        resolvers: [path.resolve(__dirname, '../resolvers/*')],
+      },
     });
   }
 }

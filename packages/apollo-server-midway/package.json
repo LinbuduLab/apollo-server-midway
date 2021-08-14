@@ -41,10 +41,12 @@
     "graphql": "^15.5.1",
     "graphql-playground-html": "^1.6.29",
     "graphql-query-complexity": "^0.9.0",
+    "lodash": "^4.17.21",
     "type-graphql": "^1.1.1",
     "type-is": "^1.6.18"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.172",
     "@types/type-is": "^1.6.3"
   },
   "gitHead": "b0fa3e7d2ad3a04442ecdf23e252e3cc1630bce0"

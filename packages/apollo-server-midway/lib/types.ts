@@ -15,8 +15,16 @@ export type CreateHandlerOption = {
   context: Context;
   path?: string;
   functionName?: string;
-  useResolveTimeExtension?: boolean;
-  useQueryComplexityExtension?: boolean;
+  builtInPlugins?: {
+    resolveTime?: {
+      enable: boolean;
+    };
+    queryComplexity?: {
+      enable: boolean;
+      maxComlexity?: number;
+      throwOnMaximum?: boolean;
+    };
+  };
   apollo?: Pick<
     ApolloServerConfig,
     | 'persistedQueries'
@@ -36,5 +44,6 @@ export type CreateHandlerOption = {
     | 'globalMiddlewares'
     | 'nullableByDefault'
     | 'skipCheck'
+    | 'resolvers'
   >;
 };
