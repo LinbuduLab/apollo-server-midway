@@ -28,5 +28,6 @@
   "dependencies": {
     "apollo-server-core": "^3.1.2",
     "apollo-server-plugin-base": "^3.1.1"
-  }
+  },
+  "gitHead": "b0fa3e7d2ad3a04442ecdf23e252e3cc1630bce0"
 }

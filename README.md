@@ -1,15 +1,21 @@
 # apollo-server-midway
 
-Apllo-Server integration for Midway Serverless, have fun!
-
-**Un published yet**
-
-This project is still under heavy development, the interface exposed may got breaking change at any time.
-So donot use this project yet, for example of Apollo-Server + Midway Serverless, see repo [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) or package [sample](packages/sample/src/function/hello.ts) for more information.
+**This project is still under heavy development, the interface exposed may got breaking change at any time.
+So donot use this project yet, for example of Apollo-Server + Midway Serverless, see repo [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) or package [sample](packages/sample/src/function/hello.ts) for more information.**
 
 ## Quick Start
 
-Use [apollo-server-midway](packages/apollo-server-midway/README.md):
+Using [apollo-server-midway](packages/apollo-server-midway/README.md):
+
+> **Midway Serverless Only!**
+
+Use Apollo-Server as serverless request / response handler.
+
+```bash
+npm install apollo-server-midway --save
+yarn add apollo-server-midway --save
+pnpm install apollo-server-midway --save
+```
 
 ```typescript
 import {
@@ -20,7 +26,7 @@ import {
   ServerlessTriggerType,
 } from "@midwayjs/decorator";
 import { Context } from "@midwayjs/faas";
-import { createApolloHandler } from "apollo-server-midway";
+import { experimentalCreateHandler } from "apollo-server-midway";
 
 @Provide()
 export class HelloHTTPService {
@@ -39,7 +45,7 @@ export class HelloHTTPService {
     method: "post",
   })
   async apolloMidwayHandler() {
-    return await createApolloHandler({
+    return await experimentalCreateHandler({
       path: "/graphql",
       context: this.ctx,
     });
@@ -47,7 +53,11 @@ export class HelloHTTPService {
 }
 ```
 
-Use [midway-faas-graphql](packages/apollo-server-midway/README.md):
+Function `apollo` will be deployed, endpoint located at `SLS_DOMAIN/SERVICE/apollo/graphql`.
+
+Using [midway-faas-graphql](packages/apollo-server-midway/README.md):
+
+Use official GraphQL package to handle request / response.
 
 ```typescript
 import {
@@ -62,8 +72,11 @@ import {
 } from "@midwayjs/decorator";
 import { Context } from "@midwayjs/faas";
 import { experimentalCreateHandler } from "apollo-server-midway";
-import { GraphQLService, PluginConfig } from "midway-faas-graphql";
-import { RenderPlaygroundQueryOptions } from "../typing";
+import {
+  GraphQLService,
+  PluginConfig,
+  RenderPlaygroundQueryOptions,
+} from "midway-faas-graphql";
 
 @Provide()
 export class HelloHTTPService {
@@ -98,6 +111,10 @@ export class HelloHTTPService {
   }
 }
 ```
+
+Function `graphql` will be deployed, endpoint located at `SLS_DOMAIN/SERVICE/graphql/graphql`.
+
+If you prefer index handler, just modify `path` in `@ServerlessTrigger`.
 
 ## Main Packages & Todo
 

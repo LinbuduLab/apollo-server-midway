@@ -10,8 +10,11 @@ import {
 } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/faas';
 import { experimentalCreateHandler } from 'apollo-server-midway';
-import { GraphQLService, PluginConfig } from 'midway-faas-graphql';
-import { RenderPlaygroundQueryOptions } from '../typing';
+import {
+  GraphQLService,
+  PluginConfig,
+  RenderPlaygroundQueryOptions,
+} from 'midway-faas-graphql';
 
 const apolloHandlerFuncName = 'apollo-handler';
 const graphqlHandlerFuncName = 'graphql-handler';
