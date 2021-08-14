@@ -7,6 +7,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "pub": "oao  publish"
+  },
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/node": "^16.6.1",
@@ -14,6 +17,7 @@
     "jest": "^27.0.6",
     "lerna": "^4.0.0",
     "mwts": "^1.2.2",
+    "oao": "^2.0.2",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.0",
     "ts-node-dev": "^1.1.8",
