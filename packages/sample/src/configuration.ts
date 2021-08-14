@@ -5,8 +5,10 @@ import {
   IMidwayContainer,
 } from '@midwayjs/core';
 import { join } from 'path';
+import * as graphql from 'midway-faas-graphql';
 
 @Configuration({
+  imports: [graphql],
   importConfigs: [join(__dirname, './config/')],
   conflictCheck: true,
 })

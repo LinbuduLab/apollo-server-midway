@@ -33,8 +33,9 @@
     "graphql": "^15.5.1",
     "graphql-playground-html": "^1.6.29",
     "graphql-query-complexity": "^0.9.0",
-    "graphql-tools": "^8.1.0",
     "micro": "^9.3.4",
+    "graphql-tools": "^8.1.0",
+    "midway-faas-graphql": "^0.1.0",
     "moment": "^2.29.1",
     "type-graphql": "^1.1.1",
     "type-is": "^1.6.18"

@@ -12,6 +12,7 @@
   "author": "linbudu599",
   "homepage": "https://github.com/linbudu599/apollo-server-midway#readme",
   "license": "MIT",
+  "main": "./dist/index.js",
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts"
