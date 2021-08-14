@@ -2,6 +2,7 @@
   "name": "graphql-util-directives",
   "version": "0.1.0",
   "description": "GraphQL directive utilities",
+  "private": true,
   "keywords": [
     "GraphQL",
     "GraphQL",

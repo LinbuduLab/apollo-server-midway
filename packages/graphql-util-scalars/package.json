@@ -1,6 +1,7 @@
 {
   "name": "graphql-util-scalars",
   "version": "0.1.0",
+  "private": true,
   "description": "GraphQL scalar utilities",
   "keywords": [
     "GraphQL",
