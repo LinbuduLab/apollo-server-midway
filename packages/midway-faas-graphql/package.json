@@ -1,6 +1,6 @@
 {
   "name": "midway-faas-graphql",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Midway Serverless component for using GraphQL",
   "keywords": [
     "Apollo-Server",
