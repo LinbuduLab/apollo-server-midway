@@ -13,7 +13,14 @@ import {
 import { handleResponse } from './utils';
 
 export class ApolloServerMidway extends ApolloServerBase {
-  async createGraphQLServerOptions(
+  async createServerlessGraphQLServerOptions(
+    req: MidwayReq,
+    res: MidwayRes
+  ): Promise<GraphQLOptions> {
+    return super.graphQLServerOptions({ req, res });
+  }
+
+  async createKoaFrameworkGraphQLServerOptions(
     req: MidwayReq,
     res: MidwayRes
   ): Promise<GraphQLOptions> {
@@ -137,7 +144,7 @@ export class ApolloServerMidway extends ApolloServerBase {
     const url = this.getURLLastPart(req.url);
     if (url === this.graphqlPath) {
       const graphqlHandler = graphqlCoreHandler(() => {
-        return this.createGraphQLServerOptions(req, res);
+        return this.createServerlessGraphQLServerOptions(req, res);
       });
       await graphqlHandler(req, res);
       handled = true;

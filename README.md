@@ -141,7 +141,7 @@ If you prefer index handler, just modify `path` in `@ServerlessTrigger`.
 - [ ] [Feature] Custom decorators.
 - [x] [Feature] Schema as response.
 - [x] [Feature] Support Apollo DataSource.
-- [ ] [Feature] Support Health-Checks.
+- [x] [Feature] Support Health-Checks.
 - [x] [Fix] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
 - [x] [Fix] Request/Response headers adjustments.
 - [ ] [Test] Unit Tests.

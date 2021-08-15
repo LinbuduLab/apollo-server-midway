@@ -36,7 +36,7 @@
     "graphql-query-complexity": "^0.9.0",
     "graphql-tools": "^8.1.0",
     "micro": "^9.3.4",
-    "midway-faas-graphql": "^0.2.2-alpha.0",
+    "midway-faas-graphql": "^0.2.3",
     "moment": "^2.29.1",
     "type-graphql": "^1.1.1",
     "type-is": "^1.6.18"
