@@ -1,7 +1,7 @@
 import { Provide, Inject, App } from '@midwayjs/decorator';
 import { Resolver, Query, FieldResolver, Root } from 'type-graphql';
 
-import { SampleType } from '../../graphql/sample.type';
+import { SampleType } from '../graphql/sample.type';
 
 @Provide()
 @Resolver(type => SampleType)
