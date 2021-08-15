@@ -126,8 +126,9 @@ If you prefer index handler, just modify `path` in `@ServerlessTrigger`.
 - [x] [Feature] Extension based function debug.
 - [ ] [Feature] Apollo-Server / TypeGraphQL config normalization.
 - [ ] [Feature] Custom decorators.
-- [ ] [Feature] Schema / Voyager as response.
-- [ ] [Fix] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
+- [x] [Feature] Schema as response.
+- [x] [Feature] Support Apollo DataSource.
+- [x] [Fix] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
 - [ ] [Fix] Request/Response headers adjustments.
 - [ ] [Test] Unit Tests.
 

@@ -18,6 +18,7 @@ import {
   RenderPlaygroundQueryOptions,
 } from 'midway-faas-graphql';
 import path from 'path';
+import { DogsAPISource } from '../extra/data-source';
 
 const apolloHandlerFuncName = 'apollo-handler';
 const graphqlHandlerFuncName = 'graphql-handler';
@@ -77,7 +78,12 @@ export class HelloHTTPService {
       app: this.app,
       context: this.ctx,
       apollo: {
-        context: {},
+        context: {
+          foo: 'bar',
+        },
+        dataSources: () => ({
+          dog: new DogsAPISource(),
+        }),
       },
       builtInPlugins: {
         // contextExtension: {

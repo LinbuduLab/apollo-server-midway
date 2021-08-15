@@ -16,7 +16,7 @@ export type CreateHandlerOption = {
   app?: IMidwayFaaSApplication;
   prodPlaygound?: boolean;
   path?: string;
-  functionName?: string;
+  appendFaaSContext?: boolean;
   builtInPlugins?: {
     resolveTime?: {
       enable?: boolean;

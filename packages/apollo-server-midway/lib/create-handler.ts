@@ -3,7 +3,6 @@ import {
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
 import path from 'path';
-import { printSchema, lexicographicSortSchema } from 'graphql';
 import { buildSchemaSync } from 'type-graphql';
 import { CreateHandlerOption } from './types';
 import { playgroundDefaultSettings } from './constants';
@@ -17,6 +16,7 @@ import { printSchemaExtensionPlugin } from './print-graphql-schema';
 const presetOption: Omit<CreateHandlerOption, 'context'> = {
   path: '/graphql',
   prodPlaygound: false,
+  appendFaaSContext: false,
   builtInPlugins: {
     // TODO: control by environment variables
     resolveTime: {
@@ -47,6 +47,9 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
       contextExtension,
       printSchema,
     },
+    context,
+    appendFaaSContext,
+    apollo: { context: graphQLContext, dataSources },
   } = merge(presetOption, option);
 
   const resolverPath = option?.schema?.resolvers ?? [
@@ -71,6 +74,13 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
 
   const server = new ApolloServerMidway({
     schema,
+    dataSources,
+    context: appendFaaSContext
+      ? {
+          ...context,
+          ...graphQLContext,
+        }
+      : graphQLContext,
     plugins: [
       // Auto disabled inside sls container?
       option.prodPlaygound

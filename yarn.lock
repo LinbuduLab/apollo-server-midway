@@ -3243,6 +3243,17 @@ anymatch@^3.0.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+apollo-datasource-rest@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/apollo-datasource-rest/-/apollo-datasource-rest-3.1.1.tgz#2d4e8afb0745a65de211df238a1d098efd428c66"
+  integrity sha512-C+aAPe+q7OfpOrWmfNNajq42AJHPuUHe5IuLJqkmXGE7YYA3Y5mLP+/19UQ9ppDStp3P9do+X/ZXta/8aEoIdQ==
+  dependencies:
+    apollo-datasource "^3.0.3"
+    apollo-server-caching "^3.0.1"
+    apollo-server-env "^4.0.3"
+    apollo-server-errors "^3.0.1"
+    http-cache-semantics "^4.1.0"
+
 apollo-datasource@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/apollo-datasource/-/apollo-datasource-3.0.3.tgz#616ccf2cbfaa6d9bf04520bf7d80da0e372eee5c"
