@@ -10,6 +10,7 @@ import { ApolloServerMidway } from './apollo-server-midway';
 import ApolloResolveTimePlugin from 'apollo-resolve-time';
 import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
 import merge from 'lodash/merge';
+import { containerExtensionPlugin } from './container-extension';
 
 const presetOption: Omit<CreateHandlerOption, 'context'> = {
   path: '/graphql',
@@ -20,6 +21,9 @@ const presetOption: Omit<CreateHandlerOption, 'context'> = {
     queryComplexity: {
       enable: true,
     },
+    contextExtension: {
+      enable: false,
+    },
   },
   apollo: {},
   schema: {
@@ -29,7 +33,7 @@ const presetOption: Omit<CreateHandlerOption, 'context'> = {
 
 export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const {
-    builtInPlugins: { resolveTime, queryComplexity },
+    builtInPlugins: { resolveTime, queryComplexity, contextExtension },
   } = merge(presetOption, option);
 
   const resolverPath = option?.schema?.resolvers ?? [
@@ -66,6 +70,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
           queryComplexity.maxComlexity,
           queryComplexity.throwOnMaximum
         ),
+      contextExtension.enable && containerExtensionPlugin(option.context),
     ].filter(Boolean),
   });
 

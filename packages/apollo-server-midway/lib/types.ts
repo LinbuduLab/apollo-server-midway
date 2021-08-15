@@ -17,12 +17,15 @@ export type CreateHandlerOption = {
   functionName?: string;
   builtInPlugins?: {
     resolveTime?: {
-      enable: boolean;
+      enable?: boolean;
     };
     queryComplexity?: {
-      enable: boolean;
+      enable?: boolean;
       maxComlexity?: number;
       throwOnMaximum?: boolean;
+    };
+    contextExtension?: {
+      enable?: boolean;
     };
   };
   apollo?: Pick<

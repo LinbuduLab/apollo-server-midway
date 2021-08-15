@@ -1,3 +1,4 @@
+import { IMidwayApplication } from '@midwayjs/core';
 import {
   Provide,
   Inject,
@@ -7,6 +8,7 @@ import {
   ALL,
   Query,
   Config,
+  App,
 } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/faas';
 import { experimentalCreateHandler } from 'apollo-server-midway';
@@ -27,6 +29,9 @@ const GRAPHQL_HANDLER_PATH = '/graphql';
 export class HelloHTTPService {
   @Inject()
   ctx: Context;
+
+  @App()
+  app: IMidwayApplication;
 
   @Inject('graphql:GraphQLService')
   graphql: GraphQLService;
@@ -71,8 +76,12 @@ export class HelloHTTPService {
     return await experimentalCreateHandler({
       path: '/apollo',
       context: this.ctx,
+      apollo: {
+        context: {},
+      },
       schema: {
-        resolvers: [path.resolve(__dirname, '../resolvers/*')],
+        // TODO: 测试 this.app 在 faas 下是否正常
+        resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
       },
     });
   }
