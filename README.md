@@ -24,30 +24,43 @@ import {
   ServerlessTrigger,
   ServerlessFunction,
   ServerlessTriggerType,
+  App,
 } from "@midwayjs/decorator";
-import { Context } from "@midwayjs/faas";
+import { Context, IMidwayFaaSApplication } from "@midwayjs/faas";
 import { experimentalCreateHandler } from "apollo-server-midway";
+import path from "path";
+
+const apolloHandlerFuncName = "apollo-handler";
+
+const APOLLO_SERVER_MIDWAY_PATH = "/apollo";
 
 @Provide()
 export class HelloHTTPService {
   @Inject()
   ctx: Context;
 
+  @App()
+  app: IMidwayFaaSApplication;
+
   @ServerlessFunction({
-    functionName: "apollo",
+    functionName: apolloHandlerFuncName,
   })
   @ServerlessTrigger(ServerlessTriggerType.HTTP, {
-    path: "/graphql",
+    path: APOLLO_SERVER_MIDWAY_PATH,
     method: "get",
   })
   @ServerlessTrigger(ServerlessTriggerType.HTTP, {
-    path: "/graphql",
+    path: APOLLO_SERVER_MIDWAY_PATH,
     method: "post",
   })
-  async apolloMidwayHandler() {
+  async apolloHandler() {
     return await experimentalCreateHandler({
-      path: "/graphql",
+      path: "/apollo",
+      app: this.app,
       context: this.ctx,
+      schema: {
+        resolvers: [path.resolve(this.app.getBaseDir(), "resolvers/*")],
+      },
     });
   }
 }
