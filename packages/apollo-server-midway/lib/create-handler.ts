@@ -3,6 +3,7 @@ import {
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
 import path from 'path';
+import { printSchema, lexicographicSortSchema } from 'graphql';
 import { buildSchemaSync } from 'type-graphql';
 import { CreateHandlerOption } from './types';
 import { playgroundDefaultSettings } from './constants';
@@ -10,11 +11,14 @@ import { ApolloServerMidway } from './apollo-server-midway';
 import ApolloResolveTimePlugin from 'apollo-resolve-time';
 import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
 import merge from 'lodash/merge';
-import { containerExtensionPlugin } from './container-extension';
+import { contextExtensionPlugin } from './container-extension';
+import { printSchemaExtensionPlugin } from './print-graphql-schema';
 
 const presetOption: Omit<CreateHandlerOption, 'context'> = {
   path: '/graphql',
+  prodPlaygound: false,
   builtInPlugins: {
+    // TODO: control by environment variables
     resolveTime: {
       enable: true,
     },
@@ -23,6 +27,10 @@ const presetOption: Omit<CreateHandlerOption, 'context'> = {
     },
     contextExtension: {
       enable: false,
+    },
+    printSchema: {
+      enable: false,
+      sort: true,
     },
   },
   apollo: {},
@@ -33,7 +41,12 @@ const presetOption: Omit<CreateHandlerOption, 'context'> = {
 
 export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const {
-    builtInPlugins: { resolveTime, queryComplexity, contextExtension },
+    builtInPlugins: {
+      resolveTime,
+      queryComplexity,
+      contextExtension,
+      printSchema,
+    },
   } = merge(presetOption, option);
 
   const resolverPath = option?.schema?.resolvers ?? [
@@ -60,9 +73,15 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
     schema,
     plugins: [
       // Auto disabled inside sls container?
-      ApolloServerPluginLandingPageGraphQLPlayground({
-        settings: playgroundDefaultSettings,
-      }),
+      option.prodPlaygound
+        ? ApolloServerPluginLandingPageGraphQLPlayground({
+            settings: playgroundDefaultSettings,
+          })
+        : process.env.NODE_ENV !== 'production'
+        ? ApolloServerPluginLandingPageGraphQLPlayground({
+            settings: playgroundDefaultSettings,
+          })
+        : ApolloServerPluginLandingPageDisabled(),
       resolveTime.enable && ApolloResolveTimePlugin(),
       queryComplexity.enable &&
         ApolloQueryComplexityPlugin(
@@ -70,7 +89,9 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
           queryComplexity.maxComlexity,
           queryComplexity.throwOnMaximum
         ),
-      contextExtension.enable && containerExtensionPlugin(option.context),
+      contextExtension.enable &&
+        contextExtensionPlugin(option.context, option.app),
+      printSchema.enable && printSchemaExtensionPlugin(schema, printSchema),
     ].filter(Boolean),
   });
 

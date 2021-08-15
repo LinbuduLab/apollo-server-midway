@@ -10,7 +10,7 @@ import {
   Config,
   App,
 } from '@midwayjs/decorator';
-import { Context } from '@midwayjs/faas';
+import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
 import { experimentalCreateHandler } from 'apollo-server-midway';
 import {
   GraphQLService,
@@ -31,7 +31,7 @@ export class HelloHTTPService {
   ctx: Context;
 
   @App()
-  app: IMidwayApplication;
+  app: IMidwayFaaSApplication;
 
   @Inject('graphql:GraphQLService')
   graphql: GraphQLService;
@@ -72,12 +72,20 @@ export class HelloHTTPService {
     method: 'post',
   })
   async apolloHandler() {
-    // TODO: use @Config()
     return await experimentalCreateHandler({
       path: '/apollo',
+      app: this.app,
       context: this.ctx,
       apollo: {
         context: {},
+      },
+      builtInPlugins: {
+        // contextExtension: {
+        //   enable: true,
+        // },
+        printSchema: {
+          enable: true,
+        },
       },
       schema: {
         // TODO: 测试 this.app 在 faas 下是否正常

@@ -1,4 +1,4 @@
-import { Context } from '@midwayjs/faas';
+import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
 import { BuildSchemaOptions } from 'type-graphql';
 import { Config as ApolloServerConfig } from 'apollo-server-core';
 
@@ -13,6 +13,8 @@ export type MidwaySLSReqRes = {
 // TODO: Built-in lib options: resolve-time query-complexity error-interceptor ...
 export type CreateHandlerOption = {
   context: Context;
+  app?: IMidwayFaaSApplication;
+  prodPlaygound?: boolean;
   path?: string;
   functionName?: string;
   builtInPlugins?: {
@@ -26,6 +28,10 @@ export type CreateHandlerOption = {
     };
     contextExtension?: {
       enable?: boolean;
+    };
+    printSchema?: {
+      enable?: boolean;
+      sort?: boolean;
     };
   };
   apollo?: Pick<

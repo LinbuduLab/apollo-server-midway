@@ -123,7 +123,7 @@ If you prefer index handler, just modify `path` in `@ServerlessTrigger`.
 - [ ] [Feature] Support for plain NodeJS application based on MidwayJS framework(currently only Midway Serverless is supported).
 - [ ] [Feature] Support built-in plugins for out-of-box usage.
 - [ ] [Feature] Support Vercel as provider.
-- [ ] [Feature] Extension based function debug.
+- [x] [Feature] Extension based function debug.
 - [ ] [Feature] Apollo-Server / TypeGraphQL config normalization.
 - [ ] [Feature] Custom decorators.
 - [ ] [Feature] Schema / Voyager as response.
