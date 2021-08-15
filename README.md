@@ -121,15 +121,16 @@ If you prefer index handler, just modify `path` in `@ServerlessTrigger`.
 ### apollo-server-midway
 
 - [ ] [Feature] Support for plain NodeJS application based on MidwayJS framework(currently only Midway Serverless is supported).
-- [ ] [Feature] Support built-in plugins for out-of-box usage.
+- [x] [Feature] Support built-in plugins for out-of-box usage.
 - [ ] [Feature] Support Vercel as provider.
 - [x] [Feature] Extension based function debug.
-- [ ] [Feature] Apollo-Server / TypeGraphQL config normalization.
+- [x] [Feature] Apollo-Server / TypeGraphQL config normalization.
 - [ ] [Feature] Custom decorators.
 - [x] [Feature] Schema as response.
 - [x] [Feature] Support Apollo DataSource.
+- [ ] [Feature] Support Health-Checks.
 - [x] [Fix] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
-- [ ] [Fix] Request/Response headers adjustments.
+- [x] [Fix] Request/Response headers adjustments.
 - [ ] [Test] Unit Tests.
 
 ### midway-faas-graphql

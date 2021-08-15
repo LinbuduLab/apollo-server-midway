@@ -13,9 +13,11 @@ export type MidwaySLSReqRes = {
 // TODO: Built-in lib options: resolve-time query-complexity error-interceptor ...
 export type CreateHandlerOption = {
   context: Context;
+  path?: string;
   app?: IMidwayFaaSApplication;
   prodPlaygound?: boolean;
-  path?: string;
+  disableHealthCheck?: boolean;
+  onHealthCheck?: (req: MidwayReq) => Promise<unknown>;
   appendFaaSContext?: boolean;
   builtInPlugins?: {
     resolveTime?: {

@@ -1,4 +1,3 @@
-import { IMidwayApplication } from '@midwayjs/core';
 import {
   Provide,
   Inject,
