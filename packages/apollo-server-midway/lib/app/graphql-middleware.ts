@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 import { Provide, Config, App } from '@midwayjs/decorator';
 import {
   IWebMiddleware,
@@ -9,27 +9,34 @@ import {
 
 import { ApolloServer, ServerRegistration } from 'apollo-server-koa';
 import { buildSchemaSync } from 'type-graphql';
-import { IContext } from '../typing';
 
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
+import { playgroundDefaultSettings } from '../shared/constants';
 
-@Provide('GraphQLMiddleware')
-export class GraphQLMiddleware implements IWebMiddleware {
-  @Config('apollo')
-  config: ServerRegistration;
+const presetConfig: Omit<ServerRegistration, 'app'> = {};
+
+@Provide('GraphQLKoaMiddleware')
+export class GraphQLKoaMiddleware implements IWebMiddleware {
+  // @Config('internal')
+  // config: ServerRegistration;
+
+  @Config('graphql')
+  externalconfig: ServerRegistration;
 
   @App()
   app: IMidwayKoaApplication;
 
   resolve() {
     return async (_ctx: IMidwayKoaContext, next: IMidwayKoaNext) => {
+      // console.log(this.config);
+      console.log(this.externalconfig);
       const container = this.app.getApplicationContext();
       const schema = buildSchemaSync({
         resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
-        // container,
+        container,
         authMode: 'error',
         emitSchemaFile: 'schema.graphql',
       });
@@ -38,22 +45,13 @@ export class GraphQLMiddleware implements IWebMiddleware {
         schema,
         context: {
           container,
-        } as IContext,
+        },
         plugins: [
           ['production'].includes(process.env.NODE_ENV) ||
           process.env.DISABLE_PLAYGROUND
             ? ApolloServerPluginLandingPageDisabled()
             : ApolloServerPluginLandingPageGraphQLPlayground({
-                settings: {
-                  'editor.theme': 'dark',
-                  'editor.reuseHeaders': true,
-                  'editor.fontSize': 14,
-                  'editor.fontFamily': '"Fira Code"',
-                  'schema.polling.enable': true,
-                  'schema.polling.interval': 5000,
-                  'tracing.hideTracingResponse': false,
-                  'queryPlan.hideQueryPlanResponse': false,
-                },
+                settings: playgroundDefaultSettings,
               }),
         ],
       });
@@ -63,7 +61,7 @@ export class GraphQLMiddleware implements IWebMiddleware {
 
       server.applyMiddleware({
         app: this.app,
-        ...this.config,
+        ...this.externalconfig,
       });
 
       await next();

@@ -6,6 +6,7 @@ export type DefaultConfig = PowerPartial<EggAppConfig>;
 
 export type ExtendedConfig = DefaultConfig & {
   apollo: Omit<ServerRegistration, 'app'>;
+  graphql: Record<string, unknown>;
 };
 
 export default (appInfo: EggAppInfo) => {
@@ -23,6 +24,10 @@ export default (appInfo: EggAppInfo) => {
 
   config.security = {
     csrf: false,
+  };
+
+  config.graphql = {
+    type: 'app',
   };
 
   return config;

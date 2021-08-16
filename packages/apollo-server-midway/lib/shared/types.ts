@@ -10,6 +10,10 @@ export type MidwaySLSReqRes = {
   res: MidwayRes;
 };
 
+export type GraphQLMiddlewareOption = {
+  __tmp__: never;
+};
+
 // TODO: Built-in lib options: resolve-time query-complexity error-interceptor ...
 export type CreateHandlerOption = {
   context: Context;

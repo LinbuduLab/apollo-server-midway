@@ -1,18 +1,19 @@
 import { ApolloServerBase, GraphQLOptions } from 'apollo-server-core';
 import { parseAll } from '@hapi/accept';
 import { LandingPage } from 'apollo-server-plugin-base';
-import qs from 'qs';
-import { graphqlCoreHandler } from './handler';
 
+import { createApolloQueryHandler } from './create-apollo-handler';
 import {
   MidwaySLSReqRes,
   CreateHandlerOption,
   MidwayReq,
   MidwayRes,
-} from './types';
-import { handleResponse } from './utils';
+} from '../shared/types';
+import { handleResponse } from '../shared/utils';
 
 export class ApolloServerMidway extends ApolloServerBase {
+  graphqlPath: string;
+
   async createServerlessGraphQLServerOptions(
     req: MidwayReq,
     res: MidwayRes
@@ -30,7 +31,7 @@ export class ApolloServerMidway extends ApolloServerBase {
   public async createHandler({
     path,
     context: { request: req, response: res },
-    disableHealthCheck = false,
+    disableHealthCheck,
     onHealthCheck,
   }: CreateHandlerOption) {
     this.assertStarted('createHandler');
@@ -62,8 +63,8 @@ export class ApolloServerMidway extends ApolloServerBase {
       }
       handleResponse(res, 404, null);
     } catch (error) {
-      const statusCode = error.statusCode || error.status;
-      handleResponse(res, statusCode || 500, error.stack);
+      const statusCode = error.statusCode || error.status || 500;
+      handleResponse(res, statusCode, error.stack || error.message);
     }
   }
 
@@ -83,6 +84,7 @@ export class ApolloServerMidway extends ApolloServerBase {
     let handled = false;
 
     if (
+      // visit /GRAPHQL_PATH?apollo_health_check=true to apply health check
       !disableHealthCheck &&
       // FIXME: FaaS URL parse compatibility
       Boolean(req.query['apollo_health_check'])
@@ -118,9 +120,11 @@ export class ApolloServerMidway extends ApolloServerBase {
     let handled = false;
 
     const url = this.getURLLastPart(req.url);
+
     if (req.method === 'GET' && url === this.graphqlPath) {
       const accept = parseAll(req.headers);
-      const types = accept.mediaTypes as string[];
+      const types = accept.mediaTypes;
+
       const prefersHtml =
         types.find(
           (x: string) => x === 'text/html' || x === 'application/json'
@@ -143,7 +147,7 @@ export class ApolloServerMidway extends ApolloServerBase {
     let handled = false;
     const url = this.getURLLastPart(req.url);
     if (url === this.graphqlPath) {
-      const graphqlHandler = graphqlCoreHandler(() => {
+      const graphqlHandler = createApolloQueryHandler(() => {
         return this.createServerlessGraphQLServerOptions(req, res);
       });
       await graphqlHandler(req, res);

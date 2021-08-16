@@ -1,11 +1,10 @@
 import { GraphQLSchema, lexicographicSortSchema, printSchema } from 'graphql';
 import { PluginDefinition } from 'apollo-server-core';
 import { GraphQLRequestContext } from 'apollo-server-plugin-base';
-import { CreateHandlerOption } from './types';
 
 export const printSchemaExtensionPlugin = (
   schema: GraphQLSchema,
-  printOption: CreateHandlerOption['builtInPlugins']['printSchema']
+  printOption?: { sort?: boolean }
 ): PluginDefinition => ({
   requestDidStart: async () => {
     return {
@@ -18,8 +17,8 @@ export const printSchemaExtensionPlugin = (
           commentDescriptions: false,
         });
 
-        reqContext.response!.extensions = {
-          ...reqContext.response!.extensions,
+        reqContext.response.extensions = {
+          ...reqContext.response.extensions,
           SCHEMA: schemaContent,
         };
       },

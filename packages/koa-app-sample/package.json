@@ -1,8 +1,8 @@
 {
-  "name": "my-midway-project",
-  "version": "1.0.0",
-  "description": "",
+  "name": "koa-app-sample",
   "private": true,
+  "version": "1.0.0",
+  "description": "Koa sample",
   "scripts": {
     "start": "egg-scripts start --daemon --title=my-midway-project --framework=@midwayjs/web",
     "stop": "egg-scripts stop --title=my-midway-project",
@@ -34,6 +34,7 @@
     "@midwayjs/decorator": "^2.11.5",
     "@midwayjs/koa": "^2.12.1",
     "apollo-server-koa": "^3.1.1",
+    "apollo-server-midway": "^0.3.0",
     "apollo-server-plugin-base": "^3.1.1",
     "compression": "^1.7.4",
     "dataloader": "^2.0.0",
@@ -69,10 +70,13 @@
       "midway_v2"
     ]
   },
+  "author": "linbudu599",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/linbudu599/apollo-server-midway/issues"
+  },
   "repository": {
     "type": "git",
-    "url": ""
-  },
-  "author": "linbudu599",
-  "license": "MIT"
+    "url": "git+https://github.com/linbudu599/apollo-server-midway.git"
+  }
 }

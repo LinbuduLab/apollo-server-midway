@@ -13,12 +13,12 @@ export const contextExtensionPlugin = (
           FUNCTION: app.getFunctionName(),
           PROJECT: app.getProjectName(),
         }
-      : 'Pass `app` to handler option to check faas info';
+      : 'Pass `app` to handler option to check faas info as extension fields.';
 
     return {
       willSendResponse: async (reqContext: GraphQLRequestContext) => {
-        reqContext.response!.extensions = {
-          ...reqContext.response!.extensions,
+        reqContext.response.extensions = {
+          ...reqContext.response.extensions,
           context,
           FAAS_INFO,
         };

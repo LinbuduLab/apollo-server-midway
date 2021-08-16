@@ -5,21 +5,14 @@ import {
 } from 'apollo-server-core';
 import { ValueOrPromise } from 'apollo-server-types';
 import { IncomingMessage } from 'http';
-import { MidwayReq, MidwayRes } from './types';
-import { handleResponse } from './utils';
-import typeis from 'type-is';
+import { MidwayReq, MidwayRes } from '../shared/types';
+import { handleResponse, setHeaders } from '../shared/utils';
 
 export interface GraphQLOptionsFunction {
   (req?: MidwayReq): ValueOrPromise<GraphQLOptions>;
 }
 
-function setHeaders(res: MidwayRes, headers: Record<string, string>): void {
-  for (const [header, value] of Object.entries(headers)) {
-    res.set(header, value);
-  }
-}
-
-export function graphqlCoreHandler(
+export function createApolloQueryHandler(
   options: GraphQLOptions | GraphQLOptionsFunction
 ) {
   const graphqlHandler = async (req: MidwayReq, res: MidwayRes) => {
