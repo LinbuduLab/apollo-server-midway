@@ -13,7 +13,5 @@ import * as graphql from 'midway-faas-graphql';
   // conflictCheck: true,
 })
 export class ContainerLifeCycle implements ILifeCycle {
-  async onReady(container: IMidwayContainer, app: IMidwayApplication) {
-    // console.log(await container.getAsync('graphql'));
-  }
+  async onReady(container: IMidwayContainer, app: IMidwayApplication) {}
 }

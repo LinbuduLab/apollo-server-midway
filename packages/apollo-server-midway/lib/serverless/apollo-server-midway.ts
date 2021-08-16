@@ -10,6 +10,7 @@ import {
   MidwayRes,
 } from '../shared/types';
 import { handleResponse } from '../shared/utils';
+import { assertValidExecutionArguments } from 'graphql/execution/execute';
 
 export class ApolloServerMidway extends ApolloServerBase {
   graphqlPath: string;
@@ -58,9 +59,11 @@ export class ApolloServerMidway extends ApolloServerBase {
       ) {
         return;
       }
+
       if (await this.handleGraphqlRequestsWithServer({ req, res })) {
         return;
       }
+
       handleResponse(res, 404, null);
     } catch (error) {
       const statusCode = error.statusCode || error.status || 500;

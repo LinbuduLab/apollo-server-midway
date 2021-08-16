@@ -6,7 +6,7 @@ import { GraphQLContext } from '../typing';
 
 @Provide()
 @Resolver(type => DogType)
-export class SampleResolver {
+export class DogResolver {
   @Query(type => DogType)
   async QueryRandomDog(@Ctx() context: GraphQLContext) {
     const dogAPI = context.dataSources.dog;

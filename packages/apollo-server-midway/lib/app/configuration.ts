@@ -8,8 +8,8 @@ import { IMidwayKoaApplication } from '@midwayjs/koa';
   namespace: 'graphql',
 })
 export class GraphQLConfiguration implements ILifeCycle {
-  @App()
-  app: IMidwayKoaApplication;
+  // @App()
+  // app: IMidwayKoaApplication;
 
   async onReady(): Promise<void> {
     // this.app.use(

@@ -59,9 +59,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const schema = buildSchemaSync({
     // FIXME: 不指定也能解析到？这是什么玄学
     // FIXME: 加载逻辑
-    resolvers: [resolverPath].concat(
-      disableHealthResolver ? [] : [InternalResolver]
-    ),
+    resolvers: resolverPath,
     dateScalarMode,
     nullableByDefault,
     skipCheck,

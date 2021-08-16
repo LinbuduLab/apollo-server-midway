@@ -1,7 +1,8 @@
 import { Provide, Inject, App } from '@midwayjs/decorator';
-import { Resolver, Query, FieldResolver, Root } from 'type-graphql';
+import { Resolver, Query, FieldResolver, Root, Ctx } from 'type-graphql';
 
 import { SampleType } from '../graphql/sample.type';
+import { GraphQLContext } from '../typing';
 
 @Provide()
 @Resolver(type => SampleType)
@@ -17,7 +18,7 @@ export class SampleResolver {
   }
 
   @FieldResolver(() => String)
-  FieldQuerySample(@Root() sample: SampleType) {
+  FieldQuerySample(@Root() sample: SampleType, @Ctx() context: GraphQLContext) {
     return `FieldQuerySample! ${sample.SampleField}`;
   }
 }
