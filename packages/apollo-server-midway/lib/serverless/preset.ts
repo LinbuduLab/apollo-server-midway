@@ -28,7 +28,8 @@ export const presetOption: Omit<CreateHandlerOption, 'context'> = {
     rootValue: {},
     introspection: false,
     plugins: [],
-    mocks: {},
+    mocks: false,
+    mockEntireSchema: false,
   },
   schema: {
     dateScalarMode: 'timestamp',

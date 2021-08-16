@@ -46,10 +46,11 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
       contextExtension,
       printSchema,
     },
-    apollo: { context: graphQLContext, dataSources },
+    apollo: { context: graphQLContext, dataSources, mocks, mockEntireSchema },
     schema: { globalMiddlewares, dateScalarMode, nullableByDefault, skipCheck },
     disableHealthCheck,
     disableHealthResolver,
+
     onHealthCheck,
   } = merge(presetOption, option);
 
@@ -59,18 +60,23 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const schema = buildSchemaSync({
     // FIXME: 不指定也能解析到？这是什么玄学
     // FIXME: 加载逻辑
-    resolvers: resolverPath,
+    resolvers: [resolverPath].concat(
+      disableHealthResolver ? [] : [InternalResolver]
+    ),
     dateScalarMode,
     nullableByDefault,
     skipCheck,
     ...option.schema,
     globalMiddlewares,
-    container: app?.getApplicationContext() ?? undefined,
+    // not supported! will cause unexpected error.
+    // container: app?.getApplicationContext() ?? undefined,
   });
 
   const server = new ApolloServerMidway({
     schema,
     dataSources,
+    mocks,
+    mockEntireSchema,
     introspection: prodPlaygound,
     context: appendFaaSContext
       ? {

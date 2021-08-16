@@ -1,6 +1,10 @@
 import { PluginDefinition } from 'apollo-server-core';
 import { GraphQLRequestContext } from 'apollo-server-plugin-base';
-import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
+import { IMidwayApplication, IMidwayContext } from '@midwayjs/core';
+import {
+  Context as IMidwayFaaSContext,
+  IMidwayFaaSApplication,
+} from '@midwayjs/faas';
 
 export interface ContainerExtensionInfo {
   faasInfo?: boolean;
@@ -11,19 +15,30 @@ export interface ContainerExtensionInfo {
   process?: boolean;
 }
 
+export function isFaaSApp(
+  context: IMidwayApplication
+): context is IMidwayFaaSApplication {
+  return 'getFunctionServiceName' in context;
+}
+
 // TODO: used by node app
-export const contextExtensionPlugin = (
-  context: Context,
-  app?: IMidwayFaaSApplication
+export const contextExtensionPlugin = <
+  TContext extends IMidwayContext = IMidwayFaaSContext,
+  TApp extends IMidwayApplication = IMidwayFaaSApplication
+>(
+  context: TContext,
+  app?: TApp
 ): PluginDefinition => ({
   requestDidStart: async () => {
-    const FAAS_INFO: Record<string, string> | string = app
-      ? {
-          SERVICE: app.getFunctionServiceName(),
-          FUNCTION: app.getFunctionName(),
-          PROJECT: app.getProjectName(),
-        }
-      : 'Pass `app` to handler option to check faas info as extension fields.';
+    // TODO: empty on common node application
+    const FAAS_INFO: Record<string, string> | string =
+      app && isFaaSApp(app)
+        ? {
+            SERVICE: app.getFunctionServiceName(),
+            FUNCTION: app.getFunctionName(),
+            PROJECT: app.getProjectName(),
+          }
+        : 'Pass `app` to handler option to check faas info as extension fields.';
 
     return {
       willSendResponse: async (reqContext: GraphQLRequestContext) => {
