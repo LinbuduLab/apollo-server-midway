@@ -76,6 +76,8 @@ export class HelloHTTPService {
       path: '/apollo',
       app: this.app,
       context: this.ctx,
+      prodPlaygound: true,
+      disableHealthResolver: true,
       apollo: {
         context: {
           foo: 'bar',

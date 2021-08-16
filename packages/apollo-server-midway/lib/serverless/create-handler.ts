@@ -9,6 +9,7 @@ import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
 import merge from 'lodash/merge';
 
 import { ApolloServerMidway } from './apollo-server-midway';
+import { InternalResolver } from './internal-resolver';
 
 import { contextExtensionPlugin } from '../plugins/container-extension';
 import { printSchemaExtensionPlugin } from '../plugins/print-graphql-schema';
@@ -17,43 +18,62 @@ import { CreateHandlerOption } from '../shared/types';
 import { playgroundDefaultSettings } from '../shared/constants';
 
 import { presetOption } from './preset';
+import { IMidwayFaaSApplication } from '@midwayjs/faas';
+
+const getFallbackResolverPath = (app?: IMidwayFaaSApplication): string[] => {
+  return app
+    ? [
+        path.resolve(app.getBaseDir(), 'resolver/*'),
+        path.resolve(app.getBaseDir(), 'resolvers/*'),
+      ]
+    : [
+        // assert it's located in src/functions/
+        path.resolve(__dirname, '../resolver/*'),
+        path.resolve(__dirname, '../resolvers/*'),
+      ];
+};
 
 export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const {
+    context,
+    app,
+    path,
+    appendFaaSContext,
+    prodPlaygound,
     builtInPlugins: {
       resolveTime,
       queryComplexity,
       contextExtension,
       printSchema,
     },
-    context,
-    appendFaaSContext,
     apollo: { context: graphQLContext, dataSources },
+    schema: { globalMiddlewares, dateScalarMode, nullableByDefault, skipCheck },
+    disableHealthCheck,
+    disableHealthResolver,
+
+    onHealthCheck,
   } = merge(presetOption, option);
 
-  const resolverPath = option?.schema?.resolvers ?? [
-    path.resolve(__dirname, '../resolver/*'),
-    path.resolve(__dirname, '../resolvers/*'),
-  ];
-
-  const mergedMiddlewares = [
-    // ...built-in middlware
-    ...(option?.schema?.globalMiddlewares ?? []),
-  ];
+  const resolverPath =
+    option?.schema?.resolvers ?? getFallbackResolverPath(app);
 
   const schema = buildSchemaSync({
     // FIXME: 不指定也能解析到？这是什么玄学
-    resolvers: resolverPath,
-    dateScalarMode: 'timestamp',
-    nullableByDefault: false,
-    skipCheck: false,
+    // FIXME: 加载逻辑
+    resolvers: [resolverPath].concat(
+      disableHealthResolver ? [] : [InternalResolver]
+    ),
+    dateScalarMode,
+    nullableByDefault,
+    skipCheck,
     ...option.schema,
-    globalMiddlewares: mergedMiddlewares,
+    globalMiddlewares,
   });
 
   const server = new ApolloServerMidway({
     schema,
     dataSources,
+    introspection: prodPlaygound,
     context: appendFaaSContext
       ? {
           ...context,
@@ -61,7 +81,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
         }
       : graphQLContext,
     plugins: [
-      option.prodPlaygound
+      prodPlaygound
         ? ApolloServerPluginLandingPageGraphQLPlayground({
             settings: playgroundDefaultSettings,
           })
@@ -85,7 +105,9 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
 
   await server.start();
   return server.createHandler({
-    path: option.path,
-    context: option.context,
+    path,
+    context,
+    disableHealthCheck,
+    onHealthCheck,
   });
 }

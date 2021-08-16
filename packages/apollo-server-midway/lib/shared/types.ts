@@ -14,13 +14,13 @@ export type GraphQLMiddlewareOption = {
   __tmp__: never;
 };
 
-// TODO: Built-in lib options: resolve-time query-complexity error-interceptor ...
 export type CreateHandlerOption = {
   context: Context;
   path?: string;
   app?: IMidwayFaaSApplication;
   prodPlaygound?: boolean;
   disableHealthCheck?: boolean;
+  disableHealthResolver?: boolean;
   onHealthCheck?: (req: MidwayReq) => Promise<unknown>;
   appendFaaSContext?: boolean;
   builtInPlugins?: {
@@ -50,6 +50,8 @@ export type CreateHandlerOption = {
     | 'rootValue'
     | 'dataSources'
     | 'introspection'
+    | 'mocks'
+    | 'mockEntireSchema'
   >;
   schema?: Pick<
     BuildSchemaOptions,

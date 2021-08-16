@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts",
-    "de": "cross-env NODE_ENV=local midway-bin dev --ts --debug",
+    "prod": "cross-env NODE_ENV=production midway-bin dev --ts --debug",
     "test": "cross-env midway-bin test --ts",
     "deploy": "cross-env UDEV_NODE_ENV=production midway-bin deploy",
     "lint": "mwts check",

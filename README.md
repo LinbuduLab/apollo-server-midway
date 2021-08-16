@@ -133,7 +133,7 @@ If you prefer index handler, just modify `path` in `@ServerlessTrigger`.
 
 ### apollo-server-midway
 
-- [ ] [Feature] Support for plain NodeJS application based on MidwayJS framework(currently only Midway Serverless is supported).
+- [x] [Feature] Support for plain NodeJS application based on MidwayJS framework(currently only Midway Serverless is supported).
 - [x] [Feature] Support built-in plugins for out-of-box usage.
 - [ ] [Feature] Support Vercel as provider.
 - [x] [Feature] Extension based function debug.
