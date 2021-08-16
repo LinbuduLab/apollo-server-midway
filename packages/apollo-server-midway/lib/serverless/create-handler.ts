@@ -50,7 +50,6 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
     schema: { globalMiddlewares, dateScalarMode, nullableByDefault, skipCheck },
     disableHealthCheck,
     disableHealthResolver,
-
     onHealthCheck,
   } = merge(presetOption, option);
 
@@ -68,6 +67,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
     skipCheck,
     ...option.schema,
     globalMiddlewares,
+    container: app?.getApplicationContext() ?? undefined,
   });
 
   const server = new ApolloServerMidway({

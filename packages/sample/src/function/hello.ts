@@ -86,14 +86,7 @@ export class HelloHTTPService {
           dog: new DogsAPISource(),
         }),
       },
-      builtInPlugins: {
-        // contextExtension: {
-        //   enable: true,
-        // },
-        printSchema: {
-          enable: true,
-        },
-      },
+      builtInPlugins: {},
       schema: {
         // TODO: 测试 this.app 在 faas 下是否正常
         resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],

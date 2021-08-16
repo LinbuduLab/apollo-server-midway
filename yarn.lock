@@ -1910,6 +1910,15 @@
     extend2 "^1.0.0"
     fs-extra "^9.1.0"
 
+"@midwayjs/express@^2.12.3":
+  version "2.12.3"
+  resolved "https://registry.yarnpkg.com/@midwayjs/express/-/express-2.12.3.tgz#6130b18c2b385f4a227c065cf6596901282c7c55"
+  integrity sha512-sVWs8jFtD3vE4W1OXpXgTEXwFhmEAqanee6jiYXd7yfEjXEJ6kpUpRQRgaSScXjkeA0WDN9O7euJV3D1myJbJQ==
+  dependencies:
+    "@midwayjs/core" "^2.12.3"
+    "@midwayjs/logger" "^2.11.3"
+    express "^4.17.1"
+
 "@midwayjs/faas-code-analysis@^1.2.79":
   version "1.2.79"
   resolved "https://registry.yarnpkg.com/@midwayjs/faas-code-analysis/-/faas-code-analysis-1.2.79.tgz#aa829b8a477881ec3c63d42f49d1b500c06eb09a"
@@ -2171,6 +2180,25 @@
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@midwayjs/simple-lock/-/simple-lock-1.1.4.tgz#f434902a38c9f3bd275f5ea719af6a56f82b7b99"
   integrity sha512-+4PVJX2cycQdOal/Ge9Bm2STfDXqEFpzKK7MgXofbYy4Gz45UFEptLK21DRtylvqgZ+0LMfecTGX53nXZddkSg==
+
+"@midwayjs/web@^2.12.3":
+  version "2.12.3"
+  resolved "https://registry.yarnpkg.com/@midwayjs/web/-/web-2.12.3.tgz#919b35c522099f86ef74e8d8d8644af28d8623ce"
+  integrity sha512-ZqZbmxF4qA4DFPdF/UCVJSs4Kd2b5vDeu1uX4gyBwvas81d7pkzXqELZohOPvtSNs4xxQebt20+rMUfRqaFFvA==
+  dependencies:
+    "@eggjs/router" "^2.0.0"
+    "@midwayjs/bootstrap" "^2.12.3"
+    "@midwayjs/core" "^2.12.3"
+    "@midwayjs/koa" "^2.12.3"
+    "@midwayjs/logger" "^2.11.3"
+    debug "^4.1.1"
+    egg "^2.28.0"
+    egg-logger "^2.4.2"
+    egg-path-matching "^1.0.1"
+    extend2 "^1.0.0"
+    find-up "^5.0.0"
+    midway-schedule "^2.12.3"
+    mkdirp "^1.0.4"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -6229,7 +6257,7 @@ egg-watcher@^3.1.0:
     sdk-base "^3.5.0"
     wt "^1.2.0"
 
-egg@^2.29.4:
+egg@^2.28.0, egg@^2.29.4:
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/egg/-/egg-2.30.0.tgz#f0421e01731ea1033a72a13e324dbb66a7235663"
   integrity sha512-j09rY+yyubjQUPknXGyNx81h3DmZjNPGAeW9SKonM39sEjoCFDFDImkikMoGCsI5y/9d5AkL/bemUI2p4a/euA==
@@ -10802,6 +10830,13 @@ micromatch@^4.0.2, micromatch@^4.0.4:
   dependencies:
     braces "^3.0.1"
     picomatch "^2.2.3"
+
+midway-schedule@^2.12.3:
+  version "2.12.3"
+  resolved "https://registry.yarnpkg.com/midway-schedule/-/midway-schedule-2.12.3.tgz#c8efc336a25f26f7d2a8d1b357261b625106b1e4"
+  integrity sha512-/nRtYrGh1RxQjgsiKmbJoLQ6X9a+skffI8MnauNezsodVWVD9rSilHgknEhtSlRilQX5yR52SbC+wy2g1VYxxQ==
+  dependencies:
+    is-type-of "^1.2.1"
 
 mime-db@1.49.0, "mime-db@>= 1.43.0 < 2", mime-db@^1.28.0:
   version "1.49.0"
