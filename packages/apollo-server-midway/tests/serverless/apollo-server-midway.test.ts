@@ -1,10 +1,53 @@
-import { ApolloServerMidway } from '../../lib/serverless/apollo-server-midway';
 import { Config, gql } from 'apollo-server-core';
 import { createFunctionApp, close, createHttpRequest } from '@midwayjs/mock';
 import { Framework, Application } from '@midwayjs/serverless-app';
 import { createInitializeContext } from '@midwayjs/serverless-fc-trigger';
 
+import { ApolloServerMidway } from '../../lib/serverless/apollo-server-midway';
+import {
+  PLAIN_USAGE_FUNC_PATH,
+  PLUGIN_ENABLED_FUNC_PATH,
+  USE_APOLLO_SCHEMA_FUNC_PATH,
+  FULL_CONFIGURED_FUNC_PATH,
+} from '../fixtures/src/function/hello';
+
 import path from 'path';
+
+const SAMPLE_FIELD_ONLY_QUERY = /* GraphQL */ `
+  query {
+    QuerySample {
+      SampleField
+    }
+  }
+`;
+
+const HEALTH_CHECK_ONLY_QUERY = /* GraphQL */ `
+  query {
+    HealthCheck {
+      __typename
+      ... on SuccessStatus {
+        status
+      }
+      ... on FailureStatus {
+        status
+      }
+    }
+  }
+`;
+
+const EXPECT_ERROR_QUERY = /* GraphQL */ `
+  query {
+    HealthCheck(expectError: true) {
+      __typename
+      ... on SuccessStatus {
+        status
+      }
+      ... on FailureStatus {
+        status
+      }
+    }
+  }
+`;
 
 const typeDefs = gql`
   type Query {
@@ -60,9 +103,9 @@ describe('Serverless module test suite', () => {
     await close(app);
   });
 
-  it.skip('should create app and handle request', async () => {
+  it('should create app and handle request', async () => {
     const result = await createHttpRequest(app).get('/');
-    expect(result.text).toEqual('Hello, Index!');
+    expect(result.text).toEqual('Hello Index!');
     expect(result.statusCode).toBe(200);
   });
 
@@ -76,32 +119,37 @@ describe('Serverless module test suite', () => {
     expect(server.graphqlPath).toBe('/graphql');
   });
 
-  it.skip('should return empty or 404 page when requesting un-registered path', async () => {
+  it('should return empty or 404 page when requesting un-registered path', async () => {
+    // Note: Correct Path: ${PAHT}/
     const badResult1 = await createHttpRequest(app).get(
-      '/graphql/un-registered-path'
+      `${PLAIN_USAGE_FUNC_PATH}/un-registered-path`
     );
 
     expect(badResult1.statusCode).toBe(404);
     expect(badResult1.text).toContain('not found');
 
-    const badResult2 = await createHttpRequest(app).get('/graphqlss/');
+    const badResult2 = await createHttpRequest(app).get(
+      `${PLAIN_USAGE_FUNC_PATH}foo`
+    );
     expect(badResult2.statusCode).toBe(404);
     expect(badResult2.text).toContain('not found');
 
-    const badResult3 = await createHttpRequest(app).get('/graphql');
+    const badResult3 = await createHttpRequest(app).get(PLAIN_USAGE_FUNC_PATH);
 
     expect(badResult3.statusCode).toBe(204);
     expect(badResult3.text).toBeFalsy();
   });
 
-  it.skip('should return playground HTML only when with `accept: text/html` header', async () => {
-    const badResult = await createHttpRequest(app).get('/graphql/');
+  it('should return playground HTML only when with `accept: text/html` header', async () => {
+    const badResult = await createHttpRequest(app).get(
+      `${PLAIN_USAGE_FUNC_PATH}/`
+    );
 
     expect(badResult.statusCode).toBe(400);
     expect(badResult.text).toBe('GET query missing.');
 
     const requestHTMLResult = await createHttpRequest(app)
-      .get('/graphql/')
+      .get(`${PLAIN_USAGE_FUNC_PATH}/`)
       .set('Accept', 'text/html');
 
     expect(requestHTMLResult.statusCode).toBe(200);
@@ -112,26 +160,94 @@ describe('Serverless module test suite', () => {
     );
   });
 
-  it.skip('should perform query', async () => {
-    const result = await createHttpRequest(app).post('/graphql/').send({
-      operationName: null,
-      variables: {},
-      // TODO: use query builder ?
-      query: '{\n  QuerySample {\n    SampleField\n  }\n}\n',
-    });
+  it('should perform query', async () => {
+    const result = await createHttpRequest(app)
+      .post(`${PLAIN_USAGE_FUNC_PATH}/`)
+      .send({
+        operationName: null,
+        variables: {},
+        // TODO: use query builder ?
+        query: SAMPLE_FIELD_ONLY_QUERY,
+      });
 
     expect(result.statusCode).toBe(200);
     expect(result.headers['content-type']).toBe(
       'application/json; charset=utf-8'
     );
-    expect(result.body).toEqual({
+    expect(result.body).toMatchObject({
       data: {
         QuerySample: {
           SampleField: 'SampleField',
         },
       },
-      extensions: { RESOLVE_TIME: 11, CURRENT_COMPLEXITY: 2 },
     });
+
+    // default enabled built-in plugin
+    expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
+    expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
+
+    expect(result.body.extensions.RESOLVE_TIME).toBeGreaterThan(0);
+    expect(result.body.extensions.CURRENT_COMPLEXITY).toBe(2);
+  });
+
+  it('should handle health check query', async () => {
+    const result = await createHttpRequest(app)
+      .post(`${PLAIN_USAGE_FUNC_PATH}/`)
+      .send({
+        operationName: null,
+        variables: {},
+        query: HEALTH_CHECK_ONLY_QUERY,
+      });
+
+    expect(result.statusCode).toBe(200);
+    expect(result.headers['content-type']).toBe(
+      'application/json; charset=utf-8'
+    );
+    expect(result.body).toMatchObject({
+      data: {
+        HealthCheck: {
+          __typename: 'SuccessStatus',
+          status: 'success',
+        },
+      },
+    });
+
+    // // default enabled built-in plugin
+    expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
+    expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
+
+    expect(result.body.extensions.RESOLVE_TIME).toBeGreaterThan(0);
+    expect(result.body.extensions.CURRENT_COMPLEXITY).toBe(2);
+  });
+
+  it('should handle health check query(expect error)', async () => {
+    const result = await createHttpRequest(app)
+      .post(`${PLAIN_USAGE_FUNC_PATH}/`)
+      .send({
+        operationName: null,
+        variables: {},
+        query: EXPECT_ERROR_QUERY,
+      });
+
+    expect(result.statusCode).toBe(200);
+    expect(result.headers['content-type']).toBe(
+      'application/json; charset=utf-8'
+    );
+    expect(result.body).toMatchObject({
+      data: {
+        HealthCheck: {
+          __typename: 'FailureStatus',
+          status: 'fail',
+        },
+      },
+    });
+
+    // // default enabled built-in plugin
+    expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
+    expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
+
+    expect(result.body.extensions.RESOLVE_TIME).toBeGreaterThan(0);
+    expect(result.body.extensions.CURRENT_COMPLEXITY).toBe(2);
   });
 
   it('should perform health check when no disabled', () => {
@@ -145,4 +261,5 @@ describe('Serverless module test suite', () => {
   // schema
   // apollo
   // full
+  // 验证实例化完毕的apollo server内配置部
 });

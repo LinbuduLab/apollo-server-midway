@@ -46,8 +46,21 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
       contextExtension,
       printSchema,
     },
-    apollo: { context: graphQLContext, dataSources, mocks, mockEntireSchema },
-    schema: { globalMiddlewares, dateScalarMode, nullableByDefault, skipCheck },
+    apollo: {
+      context: graphQLContext,
+      dataSources,
+      mocks,
+      mockEntireSchema,
+      introspection,
+    },
+    schema: {
+      globalMiddlewares,
+      dateScalarMode,
+      nullableByDefault,
+      skipCheck,
+      authMode,
+      authChecker,
+    },
     disableHealthCheck,
     disableHealthResolver,
 
@@ -68,6 +81,8 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
     skipCheck,
     ...option.schema,
     globalMiddlewares,
+    authMode,
+    authChecker,
     // not supported! will cause unexpected error.
     // container: app?.getApplicationContext() ?? undefined,
   });
@@ -77,7 +92,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
     dataSources,
     mocks,
     mockEntireSchema,
-    introspection: prodPlaygound,
+    introspection,
     context: appendFaaSContext
       ? {
           ...context,

@@ -7,6 +7,7 @@ import {
   Int,
   Query,
   registerEnumType,
+  Arg,
 } from 'type-graphql';
 import { plainToClass } from 'class-transformer';
 
@@ -47,16 +48,26 @@ const StatusCheckUnion = createUnionType({
 @Resolver()
 export class InternalResolver {
   @Query(() => StatusCheckUnion)
-  HealthCheck() {
-    try {
-      return plainToClass(SuccessStatus, {
+  HealthCheck(@Arg('expectError', { nullable: true }) expectError: boolean) {
+    const succeed = () =>
+      plainToClass(SuccessStatus, {
         status: StatusEnum.SUCCESS,
       });
-    } catch (error) {
-      return plainToClass(FailureStatus, {
+
+    const failed = (error?: unknown) =>
+      plainToClass(FailureStatus, {
         status: StatusEnum.FAIL,
         error,
       });
+
+    try {
+      if (expectError) {
+        throw new Error('EXPECTED_ERROR');
+      }
+
+      return succeed();
+    } catch (error) {
+      return failed(error);
     }
   }
 }

@@ -23,6 +23,14 @@ export class HelloHTTPService {
   app: IMidwayFaaSApplication;
 
   @ServerlessTrigger(ServerlessTriggerType.HTTP, {
+    path: '/',
+    method: 'get',
+  })
+  async IndexHandler() {
+    return 'Hello Index!';
+  }
+
+  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
     path: PLAIN_USAGE_FUNC_PATH,
     method: 'get',
   })
@@ -30,14 +38,15 @@ export class HelloHTTPService {
     path: PLAIN_USAGE_FUNC_PATH,
     method: 'post',
   })
-  async apolloHandler() {
+  async PlainUsage() {
     return await experimentalCreateHandler({
       path: '/',
-      app: this.app,
       context: this.ctx,
-      prodPlaygound: true,
       schema: {
         resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
+      },
+      apollo: {
+        introspection: true,
       },
     });
   }
