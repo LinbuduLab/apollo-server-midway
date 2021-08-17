@@ -7,7 +7,6 @@
 - [ ] Support Vercel as provider.
 - [x] Extension based function debug.
 - [x] Apollo-Server / TypeGraphQL config normalization.
-- [ ] Custom decorators.
 - [x] Schema as response.
 - [x] Support Apollo DataSource.
 - [x] Support Health-Checks (Also as resolver).
@@ -18,7 +17,12 @@
 - [ ] Better options normalization.
 - [ ] Better `Debug` support.
 - [ ] Function path in custom domain
-- [ ] External schema(as `apollo.schema` option).
+- [ ] Better node application support.
+
+## Future
+
+- [ ] Custom decorators.
+- [ ] Built-in support for TypeORM / Prisma + TypeGraphQL application.
 
 **This project is still under heavy development, the interface exposed may got breaking change at any time.**
 
@@ -85,7 +89,7 @@ export class HelloHTTPService {
 }
 ```
 
-See [types.ts](https://github.com/linbudu599/apollo-server-midway/blob/main/packages/apollo-server-midway/lib/shared/types.ts) for supported options including **built-in options** & **Apollo Server config** & **TypeGraphQL `buildSchemaSync` options.**
+See [types.ts](packages/apollo-server-midway/lib/shared/types.ts) and [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) for supported options including **built-in options** & **Apollo Server config** & **TypeGraphQL `buildSchemaSync` options.**
 
 As sample aboce, faas function `apollo` will be deployed with endpoint located at `SLS_DOMAIN/SERVICE/apollo/graphql`.
 
@@ -96,6 +100,12 @@ Using [apollo-server-midway](packages/apollo-server-midway/README.md) for Midway
 see [koa-app-sample](packages/koa-app-sample) for more info.
 
 ```typescript
+// config.default.ts
+import { CreateGraphQLMiddlewareOption } from "apollo-server-midway";
+
+export const graphql: CreateGraphQLMiddlewareOption = {};
+
+// configuration.ts
 import { Configuration, App } from "@midwayjs/decorator";
 import { ILifeCycle } from "@midwayjs/core";
 import { IMidwayKoaApplication } from "@midwayjs/koa";
@@ -118,6 +128,8 @@ export class ContainerConfiguration implements ILifeCycle {
   }
 }
 ```
+
+See [types.ts](packages/apollo-server-midway/lib/shared/types.ts) and [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) for supported options including **built-in options** & **Apollo Server config** & **TypeGraphQL `buildSchemaSync` options.**
 
 ### Midway-FaaS-GraphQL + Midway Serverless(Not Stable!)
 
