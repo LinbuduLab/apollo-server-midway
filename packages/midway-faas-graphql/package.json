@@ -30,7 +30,7 @@
     "url": "https://github.com/linbudu599/apollo-server-midway/issues"
   },
   "dependencies": {
-    "@graphql-tools/schema": "^8.1.0",
+    "@graphql-tools/schema": "^8.1.1",
     "@midwayjs/core": "^2.12.3",
     "@midwayjs/decorator": "^2.12.3",
     "@midwayjs/faas": "^2.12.4",
