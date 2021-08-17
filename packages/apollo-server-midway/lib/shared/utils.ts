@@ -1,6 +1,7 @@
 import path from 'path';
 import { IMidwayApplication } from '@midwayjs/core';
 import { MidwayRes } from './types';
+import { NonEmptyArray } from 'type-graphql';
 
 export const handleResponse = (
   res: MidwayRes,
@@ -23,7 +24,7 @@ export const setHeaders = (
 
 export const getFallbackResolverPath = <TAppContext extends IMidwayApplication>(
   app?: TAppContext
-): string[] => {
+): NonEmptyArray<string> => {
   return app
     ? [
         path.resolve(app.getBaseDir(), 'resolver/*'),

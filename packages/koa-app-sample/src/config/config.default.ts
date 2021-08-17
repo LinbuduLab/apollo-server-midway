@@ -1,12 +1,10 @@
-import path from 'path';
-import { ServerRegistration } from 'apollo-server-koa/dist/ApolloServer';
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+import { CreateGraphQLMiddlewareOption } from 'apollo-server-midway';
 
 export type DefaultConfig = PowerPartial<EggAppConfig>;
 
 export type ExtendedConfig = DefaultConfig & {
-  apollo: Omit<ServerRegistration, 'app'>;
-  graphql: Record<string, unknown>;
+  graphql: CreateGraphQLMiddlewareOption;
 };
 
 export default (appInfo: EggAppInfo) => {
@@ -14,20 +12,12 @@ export default (appInfo: EggAppInfo) => {
 
   config.keys = appInfo.name + '_{{keys}}';
 
-  config.apollo = {
-    path: '/graphql',
-  };
+  config.graphql = {};
 
   config.salt = 20;
 
-  // console.log(path.join(__dirname, '../entities/*'));
-
   config.security = {
     csrf: false,
-  };
-
-  config.graphql = {
-    type: 'app',
   };
 
   return config;

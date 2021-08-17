@@ -32,19 +32,52 @@ import {
 } from 'apollo-server-core';
 import { GraphQLSchema } from 'graphql';
 import { playgroundDefaultSettings } from '../shared/constants';
-import {} from '../shared/types';
+import {
+  presetApolloOption,
+  presetBuildSchemaOption,
+  presetOption,
+} from '../shared/preset-option';
+import {
+  UsableBuildSchemaOption,
+  UsableApolloOption,
+  BuiltInPluginConfiguration,
+  CreateGraphQLMiddlewareOption,
+} from '../shared/types';
+import merge from 'lodash/merge';
+import { getFallbackResolverPath } from '../shared/utils';
 
 export const sharedInitGraphQLSchema = (
   app: IMidwayKoaApplication | IMidwayExpressApplication,
-  options?: BuildSchemaOptions
+  options?: UsableBuildSchemaOption & {
+    emitSchemaFile?: boolean;
+    useContainer?: boolean;
+  }
 ) => {
+  const {
+    resolvers = getFallbackResolverPath(app),
+    authMode,
+    authChecker,
+    dateScalarMode,
+    nullableByDefault,
+    skipCheck,
+    globalMiddlewares,
+    emitSchemaFile = 'schema.graphql',
+    useContainer = true,
+  } = merge(presetBuildSchemaOption, options);
+
   const container = app.getApplicationContext();
 
   const schema = buildSchemaSync({
-    resolvers: [path.resolve(app.getBaseDir(), 'resolvers/*')],
-    container,
-    authMode: 'error',
-    emitSchemaFile: 'schema.graphql',
+    resolvers,
+    dateScalarMode,
+    nullableByDefault,
+    skipCheck,
+    globalMiddlewares,
+    authMode,
+    authChecker,
+    emitSchemaFile,
+    // TODO: getter
+    container: useContainer ? container : undefined,
   });
 
   return schema;
@@ -55,21 +88,26 @@ export function initKoaApolloServer(
   schema: GraphQLSchema,
   config?: ApolloServerKoaConfig
 ): ApolloServerKoa {
-  const container = app.getApplicationContext();
+  const {
+    context: userGraphQLContext,
+    dataSources,
+    mocks,
+    mockEntireSchema,
+    introspection,
+  } = merge(presetApolloOption, config);
 
   const server = new ApolloServerKoa({
     schema,
-    context: {
-      container,
-    },
+    context: userGraphQLContext,
     plugins: [
-      ['production'].includes(process.env.NODE_ENV) ||
-      process.env.DISABLE_PLAYGROUND
-        ? ApolloServerPluginLandingPageDisabled()
-        : ApolloServerPluginLandingPageGraphQLPlayground({
-            settings: playgroundDefaultSettings,
-          }),
+      ApolloServerPluginLandingPageGraphQLPlayground({
+        settings: playgroundDefaultSettings,
+      }),
     ],
+    dataSources,
+    mocks,
+    mockEntireSchema,
+    introspection,
   });
 
   return server;
@@ -103,21 +141,32 @@ export function initExpressApolloServer(
 @Provide('GraphQLKoaMiddleware')
 export class GraphQLKoaMiddleware implements KoaMiddleware {
   @Config('graphql')
-  externalconfig: KoaServerRegistration;
+  externalconfig: CreateGraphQLMiddlewareOption;
 
   @App()
   app: IMidwayKoaApplication;
 
+  // TODO: cors、bodyParser
+  // TODO: cache ?
+
   resolve() {
     return async (ctx: IMidwayKoaContext, next: IMidwayKoaNext) => {
-      const schema = sharedInitGraphQLSchema(this.app);
-      const server = initKoaApolloServer(this.app, schema);
+      const {
+        apollo,
+        schema: buildSchemaOptions,
+        path = '/graphql',
+        prodPlaygound,
+      } = this.externalconfig;
+
+      const schema =
+        apollo?.schema ?? sharedInitGraphQLSchema(this.app, buildSchemaOptions);
+
+      const server = initKoaApolloServer(this.app, schema, apollo);
       await server.start();
 
       server.applyMiddleware({
         app: this.app,
-        path: '/graphql',
-        ...this.externalconfig,
+        path,
       });
 
       await next();

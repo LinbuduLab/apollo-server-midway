@@ -13,7 +13,7 @@ type FailureStatus {
 }
 
 type Query {
-  HealthCheck: StatusCheckUnion!
+  HealthCheck(expectError: Boolean): StatusCheckUnion!
   QuerySample: SampleType!
 }
 

@@ -3,7 +3,7 @@ import {
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
 import path from 'path';
-import { buildSchemaSync } from 'type-graphql';
+import { buildSchemaSync, NonEmptyArray } from 'type-graphql';
 import ApolloResolveTimePlugin from 'apollo-resolve-time';
 import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
 import merge from 'lodash/merge';
@@ -62,15 +62,13 @@ export async function experimentalCreateHandler(
   const schema =
     externalSchemaForApolloServer ??
     buildSchemaSync({
-      // FIXME: 不指定也能解析到？这是什么玄学
-      // FIXME: 加载逻辑
-      resolvers: [resolverPath].concat(
-        disableHealthResolver ? [] : [InternalResolver]
-      ),
+      resolvers: [
+        ...resolverPath,
+        !disableHealthResolver && InternalResolver,
+      ].filter(Boolean) as NonEmptyArray<string>,
       dateScalarMode,
       nullableByDefault,
       skipCheck,
-      ...option.schema,
       globalMiddlewares,
       authMode,
       authChecker,

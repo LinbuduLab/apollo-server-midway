@@ -15,8 +15,6 @@ export class ContainerConfiguration implements ILifeCycle {
     this.app.use(
       await this.app.generateMiddleware('graphql:GraphQLKoaMiddleware')
     );
-    // this.app.use(await this.app.generateMiddleware('GraphQLMiddleware'));
-    // this.app.use(await this.app.generateMiddleware('GraphQLMiddleware'));
   }
 
   async onStop(): Promise<void> {}
