@@ -1815,16 +1815,16 @@
     light-spinner "^1.0.1"
     tsconfig-paths "^3.9.0"
 
-"@midwayjs/cli-plugin-faas@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-faas/-/cli-plugin-faas-1.2.79.tgz#fae776a3a64a2e9f95cc424f18f0eb1fdb2fc0d9"
-  integrity sha512-o+3J00EHZqq/iYb6jOKAbkd9yBWjDhPbnPKxJIzcrj8EZAvig2KGM6q/hSx0z9akqG+1V4d43QKnD263IevKzw==
+"@midwayjs/cli-plugin-faas@^1.2.80":
+  version "1.2.80"
+  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-faas/-/cli-plugin-faas-1.2.80.tgz#7285bba9a6817ea8a36b71dd8da4e92f81fb23a4"
+  integrity sha512-c9Kswfh6FlqePURw9+Gp8qasd4NBqSUwzx8JwRY0Eqzsxh3fiHE7y1rIlr1z+jJ1p4LvZmxLAPJcPOscLB1rJA==
   dependencies:
     "@midwayjs/command-core" "^1.2.79-beta.4"
     "@midwayjs/fcli-plugin-deploy" "^1.2.79"
-    "@midwayjs/fcli-plugin-package" "^1.2.79"
+    "@midwayjs/fcli-plugin-package" "^1.2.80"
     "@midwayjs/serverless-app" "^2.8.9"
-    "@midwayjs/serverless-spec-builder" "^1.2.79"
+    "@midwayjs/serverless-spec-builder" "^1.2.80"
 
 "@midwayjs/cli-plugin-test@^1.2.79":
   version "1.2.79"
@@ -1966,17 +1966,17 @@
     "@serverless-devs/core" "*"
     request "^2.88.2"
 
-"@midwayjs/fcli-plugin-package@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-package/-/fcli-plugin-package-1.2.79.tgz#9b73187875d29825d1439a84341af8cdffd85c54"
-  integrity sha512-JNu8LgHWI5K00KjmFm7hrWlVs8thyJKITIkI6TQW5Tbk8B9jkTdUgyowP8Vpkz2pKQjXYWSanrfwbKwgE+srCQ==
+"@midwayjs/fcli-plugin-package@^1.2.80":
+  version "1.2.80"
+  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-package/-/fcli-plugin-package-1.2.80.tgz#db51b487001b7b1ff934c0a1b93794dc40d2bf9b"
+  integrity sha512-o+nUqIGmnt1nLoi7ffG9HRGQMoX5wy7BEFDME9uxlMqH+2QbOKZl36pqvfCK4yk1psKLfeXkb9KpZCCqJAvAlg==
   dependencies:
     "@midwayjs/command-core" "^1.2.79-beta.4"
     "@midwayjs/faas-code-analysis" "^1.2.79"
     "@midwayjs/hooks-core" "^2.2.4"
     "@midwayjs/locate" "^1.0.3"
     "@midwayjs/mwcc" "^0.7.x"
-    "@midwayjs/serverless-spec-builder" "^1.2.79"
+    "@midwayjs/serverless-spec-builder" "^1.2.80"
     fs-extra "^8.1.0"
     globby "^10.0.1"
     jszip "^3.2.2"
@@ -2170,6 +2170,16 @@
   version "1.2.79"
   resolved "https://registry.yarnpkg.com/@midwayjs/serverless-spec-builder/-/serverless-spec-builder-1.2.79.tgz#3e04ecaad046181ad639d5c9d7dc9b8324d36347"
   integrity sha512-yS6nJcXYgcdvMSfWulysSwo/D3K3lqhX38/aKhDCpLhg0q7MboEW2yOC7WiNbhY4umryWJxQZIqQX7J+XuAROA==
+  dependencies:
+    ejs "^3.1.3"
+    js-yaml "^4.1.0"
+    json-cycle "^1.3.0"
+    mkdirp "^0.5.1"
+
+"@midwayjs/serverless-spec-builder@^1.2.80":
+  version "1.2.80"
+  resolved "https://registry.yarnpkg.com/@midwayjs/serverless-spec-builder/-/serverless-spec-builder-1.2.80.tgz#9ab982d2e1cc6d00bdefa98fb6c69cf87ec9f723"
+  integrity sha512-GGIAfjeTJ1L9uZyuCYB5QbagtG+R0ces/Qgmd6AoW9YaPXvxfXHMA5cXZDacnVx2LV9r4Loq9ekxhnbXGkHYDw==
   dependencies:
     ejs "^3.1.3"
     js-yaml "^4.1.0"
