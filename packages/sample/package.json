@@ -1,7 +1,7 @@
 {
   "name": "sample",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Midway Serverless for the Serverless environment",
   "main": "index.js",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "apollo-datasource-rest": "^3.1.1",
     "apollo-server-core": "^3.1.2",
     "apollo-server-express": "^3.1.2",
-    "apollo-server-midway": "^0.3.0",
+    "apollo-server-midway": "^0.4.0",
     "apollo-server-plugin-base": "^3.1.1",
     "apollo-server-types": "^3.1.1",
     "faker": "^5.5.3",
@@ -36,7 +36,7 @@
     "graphql-query-complexity": "^0.9.0",
     "graphql-tools": "^8.1.0",
     "micro": "^9.3.4",
-    "midway-faas-graphql": "^0.2.3",
+    "midway-faas-graphql": "^0.3.0",
     "moment": "^2.29.1",
     "type-graphql": "^1.1.1",
     "type-is": "^1.6.18"
