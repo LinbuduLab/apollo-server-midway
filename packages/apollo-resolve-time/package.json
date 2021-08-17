@@ -16,7 +16,9 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "lint": "mwts check",
+    "lint:fix": "mwts fix"
   },
   "repository": {
     "type": "git",

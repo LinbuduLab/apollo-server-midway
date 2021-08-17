@@ -19,7 +19,9 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "check": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "lint": "mwts check",
+    "lint:fix": "mwts fix"
   },
   "repository": {
     "type": "git",

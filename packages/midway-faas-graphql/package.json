@@ -24,7 +24,9 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "lint": "mwts check",
+    "lint:fix": "mwts fix"
   },
   "bugs": {
     "url": "https://github.com/linbudu599/apollo-server-midway/issues"
