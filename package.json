@@ -9,16 +9,28 @@
   ],
   "scripts": {
     "lint": "ultra -r lint",
+    "commit": "git add -A && git-cz",
     "lint:fix": "ultra -r lint:fix",
     "test": "ultra -r --filter 'apollo-server-midway' test",
     "pub": "yarn build && lerna publish minor",
     "build": "ultra -r --filter 'apollo-server-midway' --topology build",
     "rebuild": "ultra -r --filter 'apollo-server-midway' --topology rebuild"
   },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.6.1",
+    "commitizen": "^4.2.4",
+    "commitlint-config-cz": "^0.13.2",
     "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^6.3.0",
     "jest": "^27.0.6",
     "lerna": "^4.0.0",
     "mwts": "^1.2.2",

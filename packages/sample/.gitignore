@@ -16,4 +16,4 @@ run/
 .env_temp
 *.zip
 .serverless
-*/**/.ultra.cache.json
+.ultra.cache.json
