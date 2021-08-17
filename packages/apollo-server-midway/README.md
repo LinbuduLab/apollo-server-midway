@@ -1,11 +1,3 @@
 # `apollo-server-midway`
 
-> TODO: description
-
-## Usage
-
-```
-const apolloServerMidway = require('apollo-server-midway');
-
-// TODO: DEMONSTRATE API
-```
+Visit [main repo](https://github.com/linbudu599/apollo-server-midway) for documentations.

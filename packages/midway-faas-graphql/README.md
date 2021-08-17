@@ -1,11 +1,3 @@
 # `midway-faas-graphql`
 
-> TODO: description
-
-## Usage
-
-```
-const midwayFaasGraphql = require('midway-faas-graphql');
-
-// TODO: DEMONSTRATE API
-```
+Visit [main repo](https://github.com/linbudu599/apollo-server-midway) for documentations.

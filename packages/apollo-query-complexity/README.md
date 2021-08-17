@@ -1,11 +1,3 @@
 # `apollo-query-complexity`
 
-> TODO: description
-
-## Usage
-
-```
-const apolloQueryComplexity = require('apollo-query-complexity');
-
-// TODO: DEMONSTRATE API
-```
+Visit [main repo](https://github.com/linbudu599/apollo-server-midway) for documentations.

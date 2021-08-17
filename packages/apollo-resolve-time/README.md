@@ -1,11 +1,3 @@
 # `apollo-resolve-time`
 
-> TODO: description
-
-## Usage
-
-```
-const apolloResolveTime = require('apollo-resolve-time');
-
-// TODO: DEMONSTRATE API
-```
+Visit [main repo](https://github.com/linbudu599/apollo-server-midway) for documentations.
