@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ['<rootDir>/test/fixtures'],
-  coveragePathIgnorePatterns: ['<rootDir>/test/'],
+  testPathIgnorePatterns: ['<rootDir>/tests/fixtures'],
+  coveragePathIgnorePatterns: ['<rootDir>/tests/'],
 };

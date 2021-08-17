@@ -22,13 +22,6 @@ export class ApolloServerMidway extends ApolloServerBase {
     return super.graphQLServerOptions({ req, res });
   }
 
-  async createKoaFrameworkGraphQLServerOptions(
-    req: MidwayReq,
-    res: MidwayRes
-  ): Promise<GraphQLOptions> {
-    return super.graphQLServerOptions({ req, res });
-  }
-
   public async createHandler({
     path,
     context: { request: req, response: res },

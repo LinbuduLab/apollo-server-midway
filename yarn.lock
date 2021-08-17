@@ -2094,7 +2094,7 @@
   dependencies:
     "@midwayjs/runtime-engine" "^2.11.2"
 
-"@midwayjs/serverless-app@^2.12.3", "@midwayjs/serverless-app@^2.8.9":
+"@midwayjs/serverless-app@^2.12.4", "@midwayjs/serverless-app@^2.8.9":
   version "2.12.4"
   resolved "https://registry.yarnpkg.com/@midwayjs/serverless-app/-/serverless-app-2.12.4.tgz#082c50673a5292037f12d68dde6081679847998c"
   integrity sha512-QTrnsOnsXIX1ba+Qo8JzCOJylad2tJJ4el5wcF1bjXiJ6KxLQiPM8x43Pt98SdgqbjsCox5QROLA2nbW5Gpl9Q==
