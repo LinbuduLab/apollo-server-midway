@@ -20,7 +20,9 @@ import { playgroundDefaultSettings } from '../shared/constants';
 import { presetOption } from './preset';
 import { IMidwayFaaSApplication } from '@midwayjs/faas';
 
-const getFallbackResolverPath = (app?: IMidwayFaaSApplication): string[] => {
+export const getFallbackResolverPath = (
+  app?: IMidwayFaaSApplication
+): string[] => {
   return app
     ? [
         path.resolve(app.getBaseDir(), 'resolver/*'),

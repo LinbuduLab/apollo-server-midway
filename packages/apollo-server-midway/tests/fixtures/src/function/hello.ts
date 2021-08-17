@@ -42,11 +42,43 @@ export class HelloHTTPService {
     return await experimentalCreateHandler({
       path: '/',
       context: this.ctx,
+      disableHealthCheck: false,
+      onHealthCheck: req => Promise.resolve(),
       schema: {
         resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
       },
       apollo: {
         introspection: true,
+      },
+    });
+  }
+
+  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
+    path: PLUGIN_ENABLED_FUNC_PATH,
+    method: 'get',
+  })
+  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
+    path: PLUGIN_ENABLED_FUNC_PATH,
+    method: 'post',
+  })
+  async PluginUsage() {
+    return await experimentalCreateHandler({
+      path: '/',
+      context: this.ctx,
+      schema: {
+        resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
+      },
+      apollo: {
+        introspection: true,
+      },
+      builtInPlugins: {
+        printSchema: {
+          enable: true,
+          sort: true,
+        },
+        contextExtension: {
+          enable: true,
+        },
       },
     });
   }

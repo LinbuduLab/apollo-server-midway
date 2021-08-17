@@ -10,7 +10,6 @@ import {
   MidwayRes,
 } from '../shared/types';
 import { handleResponse } from '../shared/utils';
-import { assertValidExecutionArguments } from 'graphql/execution/execute';
 
 export class ApolloServerMidway extends ApolloServerBase {
   graphqlPath: string;
@@ -78,7 +77,6 @@ export class ApolloServerMidway extends ApolloServerBase {
   }: MidwaySLSReqRes &
     Pick<CreateHandlerOption, 'disableHealthCheck' | 'onHealthCheck'>) {
     let handled = false;
-
     if (
       // visit /GRAPHQL_PATH?apollo_health_check=true to apply health check
       !disableHealthCheck &&

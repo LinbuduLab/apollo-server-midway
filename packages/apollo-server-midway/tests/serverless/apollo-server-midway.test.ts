@@ -4,6 +4,8 @@ import { Framework, Application } from '@midwayjs/serverless-app';
 import { createInitializeContext } from '@midwayjs/serverless-fc-trigger';
 
 import { ApolloServerMidway } from '../../lib/serverless/apollo-server-midway';
+import { getFallbackResolverPath } from '../../lib/serverless/create-handler';
+import { isFaaSApp } from '../../lib/plugins/container-extension';
 import {
   PLAIN_USAGE_FUNC_PATH,
   PLUGIN_ENABLED_FUNC_PATH,
@@ -12,6 +14,8 @@ import {
 } from '../fixtures/src/function/hello';
 
 import path from 'path';
+import { IMidwayFaaSApplication } from '@midwayjs/faas';
+import { IMidwayApplication } from '@midwayjs/core';
 
 const SAMPLE_FIELD_ONLY_QUERY = /* GraphQL */ `
   query {
@@ -109,7 +113,7 @@ describe('Serverless module test suite', () => {
     expect(result.statusCode).toBe(200);
   });
 
-  it.skip('should initialize correctly', async () => {
+  it('should initialize correctly', async () => {
     const server = await createServer();
 
     expect(server).toBeDefined();
@@ -218,6 +222,23 @@ describe('Serverless module test suite', () => {
 
     expect(result.body.extensions.RESOLVE_TIME).toBeGreaterThan(0);
     expect(result.body.extensions.CURRENT_COMPLEXITY).toBe(2);
+
+    const apolloResult = await createHttpRequest(app)
+      .post(`${PLAIN_USAGE_FUNC_PATH}/?apollo_health_check=true`)
+      .send({
+        operationName: null,
+        variables: {},
+        query: HEALTH_CHECK_ONLY_QUERY,
+      });
+
+    expect(result.statusCode).toBe(200);
+    expect(result.headers['content-type']).toBe(
+      'application/json; charset=utf-8'
+    );
+
+    expect(apolloResult.body).toMatchObject({
+      status: 'pass',
+    });
   });
 
   it('should handle health check query(expect error)', async () => {
@@ -241,17 +262,62 @@ describe('Serverless module test suite', () => {
         },
       },
     });
-
-    // // default enabled built-in plugin
-    expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
-    expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
-
-    expect(result.body.extensions.RESOLVE_TIME).toBeGreaterThan(0);
-    expect(result.body.extensions.CURRENT_COMPLEXITY).toBe(2);
   });
 
   it('should perform health check when no disabled', () => {
     // 需要 mock 掉 experimentalCreateHandler 的导入
+  });
+
+  it('should take plugin extensions', async () => {
+    const result = await createHttpRequest(app)
+      .post(`${PLUGIN_ENABLED_FUNC_PATH}/`)
+      .send({
+        operationName: null,
+        variables: {},
+        query: SAMPLE_FIELD_ONLY_QUERY,
+      });
+
+    expect(result.statusCode).toBe(200);
+    expect(result.headers['content-type']).toBe(
+      'application/json; charset=utf-8'
+    );
+
+    expect(isFaaSApp({} as IMidwayApplication)).toBeFalsy();
+    expect(
+      isFaaSApp({
+        getFunctionServiceName: () => 'ANY',
+      } as unknown as IMidwayApplication)
+    ).toBeTruthy();
+
+    expect(result.body.extensions.RESOLVE_TIME).toBeDefined();
+    expect(result.body.extensions.CURRENT_COMPLEXITY).toBeDefined();
+    expect(result.body.extensions.CONTEXT).toBeDefined();
+    expect(result.body.extensions.FAAS_INFO).toBeDefined();
+    expect(result.body.extensions.SCHEMA).toBeDefined();
+
+    // // default enabled built-in plugin
+    expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
+    expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
+    expect(typeof result.body.extensions.CONTEXT).toBe('object');
+    expect(typeof result.body.extensions.FAAS_INFO).toBe('string');
+    expect(typeof result.body.extensions.SCHEMA).toBe('string');
+  });
+
+  it('should get fallback reolvers', () => {
+    const tmpApp = {
+      getBaseDir: () => 'TMP_DIR',
+    };
+    expect(getFallbackResolverPath()).toEqual([
+      path.join(__dirname, '../../', 'lib/resolver/*'),
+      path.join(__dirname, '../../', 'lib/resolvers/*'),
+    ]);
+
+    expect(
+      getFallbackResolverPath(tmpApp as unknown as IMidwayFaaSApplication)
+    ).toEqual([
+      path.resolve(tmpApp.getBaseDir(), 'resolver/*'),
+      path.resolve(tmpApp.getBaseDir(), 'resolvers/*'),
+    ]);
   });
 
   // TODO: extension plugin tests
