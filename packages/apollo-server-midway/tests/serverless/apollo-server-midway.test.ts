@@ -11,6 +11,7 @@ import {
   PLUGIN_ENABLED_FUNC_PATH,
   USE_APOLLO_SCHEMA_FUNC_PATH,
   FULL_CONFIGURED_FUNC_PATH,
+  APOLLO_SCHEMA_FUNC_PATH,
 } from '../fixtures/src/function/hello';
 
 import path from 'path';
@@ -312,6 +313,36 @@ describe('Serverless module test suite', () => {
       path.resolve(tmpApp.getBaseDir(), 'resolver/*'),
       path.resolve(tmpApp.getBaseDir(), 'resolvers/*'),
     ]);
+  });
+
+  it('should perform query(built schema)', async () => {
+    const result = await createHttpRequest(app)
+      .post(`${APOLLO_SCHEMA_FUNC_PATH}/`)
+      .send({
+        operationName: null,
+        variables: {},
+        // TODO: use query builder ?
+        query: SAMPLE_FIELD_ONLY_QUERY,
+      });
+
+    expect(result.statusCode).toBe(200);
+    expect(result.headers['content-type']).toBe(
+      'application/json; charset=utf-8'
+    );
+    expect(result.body).toMatchObject({
+      data: {
+        QuerySample: {
+          SampleField: 'SampleField',
+        },
+      },
+    });
+
+    // default enabled built-in plugin
+    expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
+    expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
+
+    expect(result.body.extensions.RESOLVE_TIME).toBeGreaterThan(0);
+    expect(result.body.extensions.CURRENT_COMPLEXITY).toBe(2);
   });
 
   // TODO: extension plugin tests

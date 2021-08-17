@@ -52,6 +52,7 @@ export type CreateHandlerOption = {
     | 'introspection'
     | 'mocks'
     | 'mockEntireSchema'
+    | 'schema'
   >;
   schema?: Pick<
     BuildSchemaOptions,

@@ -54,6 +54,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
       mocks,
       mockEntireSchema,
       introspection,
+      schema: externalSchemaForApolloServer,
     },
     schema: {
       globalMiddlewares,
@@ -72,22 +73,24 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
   const resolverPath =
     option?.schema?.resolvers ?? getFallbackResolverPath(app);
 
-  const schema = buildSchemaSync({
-    // FIXME: 不指定也能解析到？这是什么玄学
-    // FIXME: 加载逻辑
-    resolvers: [resolverPath].concat(
-      disableHealthResolver ? [] : [InternalResolver]
-    ),
-    dateScalarMode,
-    nullableByDefault,
-    skipCheck,
-    ...option.schema,
-    globalMiddlewares,
-    authMode,
-    authChecker,
-    // not supported! will cause unexpected error.
-    // container: app?.getApplicationContext() ?? undefined,
-  });
+  const schema =
+    externalSchemaForApolloServer ??
+    buildSchemaSync({
+      // FIXME: 不指定也能解析到？这是什么玄学
+      // FIXME: 加载逻辑
+      resolvers: [resolverPath].concat(
+        disableHealthResolver ? [] : [InternalResolver]
+      ),
+      dateScalarMode,
+      nullableByDefault,
+      skipCheck,
+      ...option.schema,
+      globalMiddlewares,
+      authMode,
+      authChecker,
+      // not supported! will cause unexpected error.
+      // container: app?.getApplicationContext() ?? undefined,
+    });
 
   const server = new ApolloServerMidway({
     schema,

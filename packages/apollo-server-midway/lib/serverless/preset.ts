@@ -26,7 +26,7 @@ export const presetOption: Omit<CreateHandlerOption, 'context'> = {
   apollo: {
     context: {},
     rootValue: {},
-    introspection: false,
+    introspection: true,
     plugins: [],
     mocks: false,
     mockEntireSchema: false,

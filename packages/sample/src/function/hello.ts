@@ -18,6 +18,7 @@ import {
 } from 'midway-faas-graphql';
 import path from 'path';
 import { DogsAPISource } from '../extra/data-source';
+import { schema as externalSchema } from '../schema';
 
 const apolloHandlerFuncName = 'apollo-handler';
 const graphqlHandlerFuncName = 'graphql-handler';
@@ -79,6 +80,8 @@ export class HelloHTTPService {
       prodPlaygound: true,
       disableHealthResolver: false,
       apollo: {
+        introspection: true,
+        schema: externalSchema,
         context: {
           foo: 'bar',
         },
@@ -91,9 +94,32 @@ export class HelloHTTPService {
           enable: true,
         },
       },
-      schema: {
-        // TODO: 测试 this.app 在 faas 下是否正常
-        resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
+      // schema: {
+      //   // TODO: 测试 this.app 在 faas 下是否正常
+      //   resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
+      // },
+    });
+  }
+
+  @ServerlessFunction({
+    functionName: apolloHandlerFuncName,
+  })
+  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
+    path: '/schema',
+    method: 'get',
+  })
+  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
+    path: '/schema',
+    method: 'post',
+  })
+  async apolloSchemaHandler() {
+    return await experimentalCreateHandler({
+      path: '/',
+      app: this.app,
+      context: this.ctx,
+      apollo: {
+        schema: externalSchema,
+        introspection: true,
       },
     });
   }

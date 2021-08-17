@@ -2,7 +2,7 @@ service:
   name: midway-http
 
 provider:
-  name: vercel
+  name: aliyun
 
 custom:
   customDomain:

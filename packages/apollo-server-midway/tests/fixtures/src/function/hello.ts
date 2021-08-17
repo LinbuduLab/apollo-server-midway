@@ -7,12 +7,14 @@ import {
 } from '@midwayjs/decorator';
 import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
 import { experimentalCreateHandler } from '../../../../lib';
+import { schema as externalSchema } from '../schema';
 import path from 'path';
 
 export const PLAIN_USAGE_FUNC_PATH = '/plain';
 export const PLUGIN_ENABLED_FUNC_PATH = '/plugin';
 export const USE_APOLLO_SCHEMA_FUNC_PATH = '/apollo';
 export const FULL_CONFIGURED_FUNC_PATH = '/full';
+export const APOLLO_SCHEMA_FUNC_PATH = '/schema';
 
 @Provide()
 export class HelloHTTPService {
@@ -69,6 +71,34 @@ export class HelloHTTPService {
         resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
       },
       apollo: {
+        introspection: true,
+      },
+      builtInPlugins: {
+        printSchema: {
+          enable: true,
+          sort: true,
+        },
+        contextExtension: {
+          enable: true,
+        },
+      },
+    });
+  }
+
+  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
+    path: APOLLO_SCHEMA_FUNC_PATH,
+    method: 'get',
+  })
+  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
+    path: APOLLO_SCHEMA_FUNC_PATH,
+    method: 'post',
+  })
+  async ApolloSchemaUsage() {
+    return await experimentalCreateHandler({
+      path: '/',
+      context: this.ctx,
+      apollo: {
+        schema: externalSchema,
         introspection: true,
       },
       builtInPlugins: {
