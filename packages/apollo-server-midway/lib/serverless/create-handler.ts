@@ -14,28 +14,14 @@ import { InternalResolver } from './internal-resolver';
 import { contextExtensionPlugin } from '../plugins/container-extension';
 import { printSchemaExtensionPlugin } from '../plugins/print-graphql-schema';
 
-import { CreateHandlerOption } from '../shared/types';
+import { CreateApolloHandlerOption } from '../shared/types';
+import { presetOption } from '../shared/preset-option';
 import { playgroundDefaultSettings } from '../shared/constants';
+import { getFallbackResolverPath } from '../shared/utils';
 
-import { presetOption } from './preset';
-import { IMidwayFaaSApplication } from '@midwayjs/faas';
-
-export const getFallbackResolverPath = (
-  app?: IMidwayFaaSApplication
-): string[] => {
-  return app
-    ? [
-        path.resolve(app.getBaseDir(), 'resolver/*'),
-        path.resolve(app.getBaseDir(), 'resolvers/*'),
-      ]
-    : [
-        // assert it's located in src/functions/
-        path.resolve(__dirname, '../resolver/*'),
-        path.resolve(__dirname, '../resolvers/*'),
-      ];
-};
-
-export async function experimentalCreateHandler(option: CreateHandlerOption) {
+export async function experimentalCreateHandler(
+  option: CreateApolloHandlerOption
+) {
   const {
     context,
     app,
@@ -49,7 +35,7 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
       printSchema,
     },
     apollo: {
-      context: graphQLContext,
+      context: userGraphQLContext,
       dataSources,
       mocks,
       mockEntireSchema,
@@ -101,9 +87,9 @@ export async function experimentalCreateHandler(option: CreateHandlerOption) {
     context: appendFaaSContext
       ? {
           ...context,
-          ...graphQLContext,
+          ...userGraphQLContext,
         }
-      : graphQLContext,
+      : userGraphQLContext,
     plugins: [
       prodPlaygound
         ? ApolloServerPluginLandingPageGraphQLPlayground({

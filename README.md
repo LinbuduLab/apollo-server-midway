@@ -1,5 +1,25 @@
 # apollo-server-midway
 
+## Towards apollo-server-midway V1.0
+
+- [x] Support for plain NodeJS application based on MidwayJS framework(Koa / Express).
+- [x] Support built-in plugins for out-of-box usage.
+- [ ] Support Vercel as provider.
+- [x] Extension based function debug.
+- [x] Apollo-Server / TypeGraphQL config normalization.
+- [ ] Custom decorators.
+- [x] Schema as response.
+- [x] Support Apollo DataSource.
+- [x] Support Health-Checks (Also as resolver).
+- [x] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
+- [x] Request/Response headers adjustments.
+- [x] Unit Tests.
+- [ ] f.yml related.
+- [ ] Better options normalization.
+- [ ] Better `Debug` support.
+- [ ] Function path in custom domain
+- [ ] External schema(as `apollo.schema` option).
+
 **This project is still under heavy development, the interface exposed may got breaking change at any time.**
 
 **Therefore it's not production-ready yet, if you're searching for usage example of Apollo-Server with Midway Serverless, see repo [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) or package [sample](packages/sample/src/function/hello.ts) for more information.**
@@ -184,25 +204,3 @@ export class ContainerLifeCycle implements ILifeCycle {
 Function `graphql` will be deployed, endpoint located at `SLS_DOMAIN/SERVICE/graphql/graphql`.
 
 If you prefer index handler, just modify `path` in `@ServerlessTrigger`.
-
-## Main Packages & Todo
-
-### apollo-server-midway
-
-- [x] [Feature] Support for plain NodeJS application based on MidwayJS framework(currently only Midway Serverless is supported).
-- [x] [Feature] Support built-in plugins for out-of-box usage.
-- [ ] [Feature] Support Vercel as provider.
-- [x] [Feature] Extension based function debug.
-- [x] [Feature] Apollo-Server / TypeGraphQL config normalization.
-- [ ] [Feature] Custom decorators.
-- [x] [Feature] Schema as response.
-- [x] [Feature] Support Apollo DataSource.
-- [x] [Feature] Support Health-Checks (Also as resolver).
-- [x] [Fix] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
-- [x] [Fix] Request/Response headers adjustments.
-- [ ] [Test] Unit Tests.
-
-### midway-faas-graphql
-
-- [x] [Feature] Configuration.
-- [ ] [Fix] Incorrect config loading behaviour.

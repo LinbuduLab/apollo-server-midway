@@ -10,11 +10,60 @@ export type MidwaySLSReqRes = {
   res: MidwayRes;
 };
 
-export type GraphQLMiddlewareOption = {
-  __tmp__: never;
+export type UsableApolloOption = Pick<
+  ApolloServerConfig,
+  | 'persistedQueries'
+  | 'plugins'
+  | 'context'
+  | 'formatError'
+  | 'formatResponse'
+  | 'rootValue'
+  | 'dataSources'
+  | 'introspection'
+  | 'mocks'
+  | 'mockEntireSchema'
+  | 'schema'
+>;
+
+export type UsableBuildSchemaOption = Pick<
+  BuildSchemaOptions,
+  | 'authChecker'
+  | 'authMode'
+  | 'dateScalarMode'
+  | 'globalMiddlewares'
+  | 'nullableByDefault'
+  | 'skipCheck'
+  | 'resolvers'
+>;
+
+export type BuiltInPluginConfiguration = {
+  resolveTime?: {
+    enable?: boolean;
+  };
+  queryComplexity?: {
+    enable?: boolean;
+    maxComlexity?: number;
+    throwOnMaximum?: boolean;
+  };
+  contextExtension?: {
+    enable?: boolean;
+  };
+  printSchema?: {
+    enable?: boolean;
+    sort?: boolean;
+  };
 };
 
-export type CreateHandlerOption = {
+export type CreateGraphQLMiddlewareOption = {
+  path?: string;
+  prodPlaygound?: boolean;
+  appendApplicationContext?: boolean;
+  builtInPlugins?: BuiltInPluginConfiguration;
+  apollo?: UsableApolloOption;
+  schema?: UsableBuildSchemaOption;
+};
+
+export type CreateApolloHandlerOption = {
   context: Context;
   path?: string;
   app?: IMidwayFaaSApplication;
@@ -23,45 +72,7 @@ export type CreateHandlerOption = {
   disableHealthResolver?: boolean;
   onHealthCheck?: (req: MidwayReq) => Promise<unknown>;
   appendFaaSContext?: boolean;
-  builtInPlugins?: {
-    resolveTime?: {
-      enable?: boolean;
-    };
-    queryComplexity?: {
-      enable?: boolean;
-      maxComlexity?: number;
-      throwOnMaximum?: boolean;
-    };
-    contextExtension?: {
-      enable?: boolean;
-    };
-    printSchema?: {
-      enable?: boolean;
-      sort?: boolean;
-    };
-  };
-  apollo?: Pick<
-    ApolloServerConfig,
-    | 'persistedQueries'
-    | 'plugins'
-    | 'context'
-    | 'formatError'
-    | 'formatResponse'
-    | 'rootValue'
-    | 'dataSources'
-    | 'introspection'
-    | 'mocks'
-    | 'mockEntireSchema'
-    | 'schema'
-  >;
-  schema?: Pick<
-    BuildSchemaOptions,
-    | 'authChecker'
-    | 'authMode'
-    | 'dateScalarMode'
-    | 'globalMiddlewares'
-    | 'nullableByDefault'
-    | 'skipCheck'
-    | 'resolvers'
-  >;
+  builtInPlugins?: BuiltInPluginConfiguration;
+  apollo?: UsableApolloOption;
+  schema?: UsableBuildSchemaOption;
 };

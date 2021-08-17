@@ -9,15 +9,9 @@ import {
 import {
   IWebMiddleware as ExpressMiddleware,
   IMidwayExpressApplication as IMidwayExpressApplication,
-  IMidwayExpressContext as IMidwayExpressContext,
+  IMidwayExpressContext,
 } from '@midwayjs/express';
 import { Request, Response } from 'express';
-
-// import {
-//   MidwayWebMiddleware as EggMiddleware,
-//   Application as IMidwayEggApplication,
-//   Context as IMidwayEggContext,
-// } from '@midwayjs/web';
 
 import {
   ApolloServer as ApolloServerKoa,
@@ -36,8 +30,9 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
-import { playgroundDefaultSettings } from '../shared/constants';
 import { GraphQLSchema } from 'graphql';
+import { playgroundDefaultSettings } from '../shared/constants';
+import {} from '../shared/types';
 
 export const sharedInitGraphQLSchema = (
   app: IMidwayKoaApplication | IMidwayExpressApplication,

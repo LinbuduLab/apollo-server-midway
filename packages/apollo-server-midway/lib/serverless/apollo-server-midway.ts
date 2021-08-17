@@ -5,11 +5,11 @@ import { LandingPage } from 'apollo-server-plugin-base';
 import { createApolloQueryHandler } from './create-apollo-handler';
 import {
   MidwaySLSReqRes,
-  CreateHandlerOption,
   MidwayReq,
   MidwayRes,
+  CreateApolloHandlerOption,
 } from '../shared/types';
-import { handleResponse } from '../shared/utils';
+import { handleResponse, getFallbackResolverPath } from '../shared/utils';
 
 export class ApolloServerMidway extends ApolloServerBase {
   graphqlPath: string;
@@ -26,7 +26,7 @@ export class ApolloServerMidway extends ApolloServerBase {
     context: { request: req, response: res },
     disableHealthCheck,
     onHealthCheck,
-  }: CreateHandlerOption) {
+  }: CreateApolloHandlerOption) {
     this.assertStarted('createHandler');
 
     this.graphqlPath = path || '/graphql';
@@ -75,7 +75,7 @@ export class ApolloServerMidway extends ApolloServerBase {
     disableHealthCheck = false,
     onHealthCheck,
   }: MidwaySLSReqRes &
-    Pick<CreateHandlerOption, 'disableHealthCheck' | 'onHealthCheck'>) {
+    Pick<CreateApolloHandlerOption, 'disableHealthCheck' | 'onHealthCheck'>) {
     let handled = false;
     if (
       // visit /GRAPHQL_PATH?apollo_health_check=true to apply health check

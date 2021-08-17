@@ -4,7 +4,7 @@ import { Framework, Application } from '@midwayjs/serverless-app';
 import { createInitializeContext } from '@midwayjs/serverless-fc-trigger';
 
 import { ApolloServerMidway } from '../../lib/serverless/apollo-server-midway';
-import { getFallbackResolverPath } from '../../lib/serverless/create-handler';
+import { getFallbackResolverPath } from '../../lib/shared/utils';
 import { isFaaSApp } from '../../lib/plugins/container-extension';
 import {
   PLAIN_USAGE_FUNC_PATH,
@@ -313,36 +313,6 @@ describe('Serverless module test suite', () => {
       path.resolve(tmpApp.getBaseDir(), 'resolver/*'),
       path.resolve(tmpApp.getBaseDir(), 'resolvers/*'),
     ]);
-  });
-
-  it('should perform query(built schema)', async () => {
-    const result = await createHttpRequest(app)
-      .post(`${APOLLO_SCHEMA_FUNC_PATH}/`)
-      .send({
-        operationName: null,
-        variables: {},
-        // TODO: use query builder ?
-        query: SAMPLE_FIELD_ONLY_QUERY,
-      });
-
-    expect(result.statusCode).toBe(200);
-    expect(result.headers['content-type']).toBe(
-      'application/json; charset=utf-8'
-    );
-    expect(result.body).toMatchObject({
-      data: {
-        QuerySample: {
-          SampleField: 'SampleField',
-        },
-      },
-    });
-
-    // default enabled built-in plugin
-    expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
-    expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
-
-    expect(result.body.extensions.RESOLVE_TIME).toBeGreaterThan(0);
-    expect(result.body.extensions.CURRENT_COMPLEXITY).toBe(2);
   });
 
   // TODO: extension plugin tests
