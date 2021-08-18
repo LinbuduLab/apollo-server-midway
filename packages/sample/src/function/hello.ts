@@ -74,14 +74,13 @@ export class HelloHTTPService {
   })
   async apolloHandler() {
     return await experimentalCreateHandler({
-      path: '/apollo',
+      path: '/',
       app: this.app,
       context: this.ctx,
       prodPlaygound: true,
       disableHealthResolver: false,
       apollo: {
         introspection: true,
-        schema: externalSchema,
         context: {
           foo: 'bar',
         },
@@ -94,10 +93,9 @@ export class HelloHTTPService {
           enable: true,
         },
       },
-      // schema: {
-      //   // TODO: 测试 this.app 在 faas 下是否正常
-      //   resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
-      // },
+      schema: {
+        resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
+      },
     });
   }
 

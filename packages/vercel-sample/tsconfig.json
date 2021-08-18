@@ -7,7 +7,7 @@
     "lib": ["es2018", "esnext.asynciterable"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "inlineSourceMap": false,
+    "inlineSourceMap": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
     "stripInternal": true,

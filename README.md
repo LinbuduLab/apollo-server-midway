@@ -4,7 +4,7 @@
 
 - [x] Support for plain NodeJS application based on MidwayJS framework(Koa / Express).
 - [x] Support built-in plugins for out-of-box usage.
-- [ ] Support Vercel as provider.
+- [x] Support Vercel as provider.
 - [x] Extension based function debug.
 - [x] Apollo-Server / TypeGraphQL config normalization.
 - [x] Schema as response.
@@ -78,9 +78,10 @@ export class HelloHTTPService {
   })
   async apolloHandler() {
     return await experimentalCreateHandler({
-      path: "/apollo",
+      path: "/",
       app: this.app,
       context: this.ctx,
+      // NOTE: schema is required, either schema.resolvers or apollp.schema should be specified.
       schema: {
         resolvers: [path.resolve(this.app.getBaseDir(), "resolvers/*")],
       },
@@ -91,7 +92,7 @@ export class HelloHTTPService {
 
 See [types.ts](packages/apollo-server-midway/lib/shared/types.ts) and [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) for supported options including **built-in options** & **Apollo Server config** & **TypeGraphQL `buildSchemaSync` options.**
 
-As sample aboce, faas function `apollo` will be deployed with endpoint located at `SLS_DOMAIN/SERVICE/apollo/graphql`.
+As sample aboce, faas function `apollo` will be deployed with endpoint located at `SLS_DOMAIN/SERVICE/apollo/`.
 
 ### Apollo-Server + Midway Node Application(Not Stable!)
 
