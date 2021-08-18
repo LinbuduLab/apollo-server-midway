@@ -1,0 +1,62 @@
+{
+  "name": "vercel-sample",
+  "private": true,
+  "version": "1.1.1",
+  "description": "Midway Serverless for the Serverless environment",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "serverless",
+    "midway"
+  ],
+  "scripts": {
+    "dev": "cross-env NODE_ENV=local midway-bin dev --ts",
+    "prod": "cross-env NODE_ENV=production midway-bin dev --ts --debug",
+    "test": "cross-env midway-bin test --ts",
+    "deploy": "cross-env UDEV_NODE_ENV=production midway-bin deploy --npm=cnpm",
+    "lint": "mwts check",
+    "lint:fix": "mwts fix"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^8.0.3",
+    "@hapi/accept": "^5.0.2",
+    "@midwayjs/core": "^2.12.3",
+    "@midwayjs/decorator": "^2.12.3",
+    "@midwayjs/faas": "^2.12.3",
+    "@types/micro": "^7.3.6",
+    "apollo-datasource-rest": "^3.1.1",
+    "apollo-server-core": "^3.1.2",
+    "apollo-server-express": "^3.1.2",
+    "apollo-server-midway": "^0.5.0",
+    "apollo-server-plugin-base": "^3.1.1",
+    "apollo-server-types": "^3.1.1",
+    "faker": "^5.5.3",
+    "graphql": "^15.5.1",
+    "graphql-playground-html": "^1.6.29",
+    "graphql-query-complexity": "^0.9.0",
+    "graphql-tools": "^8.1.0",
+    "micro": "^9.3.4",
+    "midway-faas-graphql": "^0.3.1",
+    "moment": "^2.29.1",
+    "type-graphql": "^1.1.1",
+    "type-is": "^1.6.18"
+  },
+  "devDependencies": {
+    "@midwayjs/cli": "^1.2.79",
+    "@midwayjs/cli-plugin-faas": "^1.2.79",
+    "@midwayjs/cli-plugin-vercel": "^1.2.80",
+    "@midwayjs/fcli-plugin-fc": "^1.2.79",
+    "@midwayjs/mock": "^2.12.3",
+    "@midwayjs/serverless-app": "^2.12.4",
+    "@midwayjs/serverless-fc-trigger": "^2.12.3",
+    "@midwayjs/serverless-scf-trigger": "^2.12.3",
+    "@types/jest": "^27.0.0",
+    "@types/node": "^16.6.0",
+    "@types/type-is": "^1.6.3",
+    "cross-env": "^7.0.3",
+    "jest": "^27.0.6",
+    "mwts": "^1.2.2",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
+  }
+}

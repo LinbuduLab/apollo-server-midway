@@ -2,7 +2,6 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
-import path from 'path';
 import { buildSchemaSync, NonEmptyArray } from 'type-graphql';
 import ApolloResolveTimePlugin from 'apollo-resolve-time';
 import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
@@ -28,6 +27,7 @@ export async function experimentalCreateHandler(
     path,
     appendFaaSContext,
     prodPlaygound,
+
     builtInPlugins: {
       resolveTime,
       queryComplexity,

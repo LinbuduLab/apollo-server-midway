@@ -9,7 +9,7 @@ import {
   MidwayRes,
   CreateApolloHandlerOption,
 } from '../shared/types';
-import { handleResponse, getFallbackResolverPath } from '../shared/utils';
+import { handleResponse } from '../shared/utils';
 
 export class ApolloServerMidway extends ApolloServerBase {
   graphqlPath: string;
@@ -19,6 +19,10 @@ export class ApolloServerMidway extends ApolloServerBase {
     res: MidwayRes
   ): Promise<GraphQLOptions> {
     return super.graphQLServerOptions({ req, res });
+  }
+
+  protected supportUpload(): boolean {
+    return false;
   }
 
   public async createHandler({
