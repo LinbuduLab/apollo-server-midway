@@ -47,7 +47,7 @@
     "type-graphql": "^1.1.1"
   },
   "devDependencies": {
-    "@midwayjs/cli": "^1.2.77",
+    "@midwayjs/cli": "^1.2.80",
     "@midwayjs/egg-ts-helper": "^1.2.0",
     "@midwayjs/luckyeye": "^1.0.2",
     "@midwayjs/mock": "^2.12.1",

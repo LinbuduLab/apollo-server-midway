@@ -42,7 +42,7 @@
     "type-is": "^1.6.18"
   },
   "devDependencies": {
-    "@midwayjs/cli": "^1.2.79",
+    "@midwayjs/cli": "^1.2.80",
     "@midwayjs/cli-plugin-faas": "^1.2.79",
     "@midwayjs/cli-plugin-vercel": "^1.2.80",
     "@midwayjs/fcli-plugin-fc": "^1.2.79",

@@ -1905,10 +1905,10 @@
     light-generator "^1.6.1"
     light-spinner "^1.0.1"
 
-"@midwayjs/cli-plugin-build@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-build/-/cli-plugin-build-1.2.79.tgz#8907d323264e0f07eb8050603b7f4161415924a8"
-  integrity sha512-WyCAMZUJb/fHLhRf8joqW01cVd+TBGgrURNBxgAxpVQPMkjRncRg4QZkYdUhgPQOzuYVlqHEGkuCHs0hxJNkNg==
+"@midwayjs/cli-plugin-build@^1.2.80":
+  version "1.2.80"
+  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-build/-/cli-plugin-build-1.2.80.tgz#7cc78c05842c0bd7805919e1e95c0e1100b99f9d"
+  integrity sha512-JP/wj9Ef30NgtKv0kYfoXT3ExSVQ8Bz1WdNzpWaURFbFIKHVj+muzJJAqaaLl2Xf47kDsNkdg7F1l9vPgNDs6g==
   dependencies:
     "@midwayjs/command-core" "^1.2.79-beta.4"
     "@midwayjs/faas-code-analysis" "^1.2.79"
@@ -1927,13 +1927,13 @@
     fs-extra "^8.1.0"
     js-yaml "^4.1.0"
 
-"@midwayjs/cli-plugin-clean@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-clean/-/cli-plugin-clean-1.2.79.tgz#9039caf44d931f241e0e53f7456aaba7a525fdb9"
-  integrity sha512-cRg1MdT3ER4KVUF8WnLsh3ceL6CoNh/EJpPkjZIvXeJroyUNQaqy6T135WXKwZKB69z4fRrfzpkVBTGibJ508g==
+"@midwayjs/cli-plugin-clean@^1.2.80":
+  version "1.2.80"
+  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-clean/-/cli-plugin-clean-1.2.80.tgz#086488cfbf7664a72b018bc688526311d9c65917"
+  integrity sha512-lRGx527a+lvUaBn6U9wYvruEnIxsqnbwB9ZHie1YtjdOiSu2wbrH5MWdsfAFws/BHet0KfBWkCZiz6lzopIyTw==
   dependencies:
     "@midwayjs/command-core" "^1.2.79-beta.4"
-    "@midwayjs/serverless-spec-builder" "^1.2.79"
+    "@midwayjs/serverless-spec-builder" "^1.2.80"
     fs-extra "^8.1.0"
 
 "@midwayjs/cli-plugin-dev@^1.2.79":
@@ -1986,15 +1986,15 @@
     globby "^10.0.0"
     vercel "^23.0.1"
 
-"@midwayjs/cli@^1.2.77", "@midwayjs/cli@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/cli/-/cli-1.2.79.tgz#b70c17d88cdf3fdb118adc82400e1bf86bdf40fb"
-  integrity sha512-fyNNGnXPnCZbRQfH/1YArIuWYM0cNk/sckTXu7ngra11sZ02i36kEcwxxsJ8ta0oYeqqxQhHBIQ8h7bqXtLLFg==
+"@midwayjs/cli@^1.2.80":
+  version "1.2.80"
+  resolved "https://registry.yarnpkg.com/@midwayjs/cli/-/cli-1.2.80.tgz#437c2e4fec4d50123d2c91c2b9f05e61ff4fc706"
+  integrity sha512-z6UaF+YF5lUiXMUNhDJ4GaTCRvadtNGwX0+0JcZ0d0Z5FW8LvsW3N4/Rs6iaM5/iUwn9jVoM16hFfUxw5AabWQ==
   dependencies:
     "@midwayjs/cli-plugin-add" "^1.2.79"
-    "@midwayjs/cli-plugin-build" "^1.2.79"
+    "@midwayjs/cli-plugin-build" "^1.2.80"
     "@midwayjs/cli-plugin-check" "^1.2.79"
-    "@midwayjs/cli-plugin-clean" "^1.2.79"
+    "@midwayjs/cli-plugin-clean" "^1.2.80"
     "@midwayjs/cli-plugin-dev" "^1.2.79"
     "@midwayjs/cli-plugin-test" "^1.2.79"
     "@midwayjs/command-core" "^1.2.79-beta.4"
