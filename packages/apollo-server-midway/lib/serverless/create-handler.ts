@@ -28,6 +28,10 @@ export async function experimentalCreateHandler(
     appendFaaSContext,
     prodPlaygound,
 
+    disableHealthCheck,
+    disableHealthResolver,
+    onHealthCheck,
+
     builtInPlugins: {
       resolveTime,
       queryComplexity,
@@ -41,6 +45,8 @@ export async function experimentalCreateHandler(
       mockEntireSchema,
       introspection,
       schema: externalSchemaForApolloServer,
+      plugins,
+      persistedQueries,
     },
     schema: {
       globalMiddlewares,
@@ -50,10 +56,6 @@ export async function experimentalCreateHandler(
       authMode,
       authChecker,
     },
-    disableHealthCheck,
-    disableHealthResolver,
-
-    onHealthCheck,
   } = merge(presetOption, option);
 
   const resolverPath =
@@ -81,11 +83,13 @@ export async function experimentalCreateHandler(
     dataSources,
     mocks,
     mockEntireSchema,
+    persistedQueries,
     introspection,
     context: appendFaaSContext
       ? {
-          ...context,
           ...userGraphQLContext,
+          faasContext: context,
+          container: app.getApplicationContext(),
         }
       : userGraphQLContext,
     plugins: [
@@ -108,6 +112,7 @@ export async function experimentalCreateHandler(
       contextExtension.enable &&
         contextExtensionPlugin(option.context, option.app),
       printSchema.enable && printSchemaExtensionPlugin(schema, printSchema),
+      ...plugins,
     ].filter(Boolean),
   });
 

@@ -1,6 +1,8 @@
 import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
 import { BuildSchemaOptions } from 'type-graphql';
 import { Config as ApolloServerConfig } from 'apollo-server-core';
+import { Options as CORSOptions } from '@koa/cors';
+import { Options as BodyParserOptions } from 'koa-bodyparser';
 
 export type MidwayReq = Context['request'];
 export type MidwayRes = Context['response'];
@@ -61,6 +63,8 @@ export type CreateGraphQLMiddlewareOption = {
   builtInPlugins?: BuiltInPluginConfiguration;
   apollo?: UsableApolloOption;
   schema?: UsableBuildSchemaOption;
+  cors?: CORSOptions | boolean;
+  bodyParserConfig?: BodyParserOptions | boolean;
 };
 
 export type CreateApolloHandlerOption = {
