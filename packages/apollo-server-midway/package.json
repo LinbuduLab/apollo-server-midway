@@ -1,6 +1,6 @@
 {
   "name": "apollo-server-midway",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Apollo Server integration for MidwayJS",
   "keywords": [
     "Apollo-Server",
@@ -40,8 +40,8 @@
     "@midwayjs/koa": "^2.12.3",
     "@midwayjs/web": "^2.12.3",
     "apollo-datasource-rest": "^3.1.1",
-    "apollo-query-complexity": "^0.2.0",
-    "apollo-resolve-time": "^0.2.0",
+    "apollo-query-complexity": "^0.2.1",
+    "apollo-resolve-time": "^0.2.1",
     "apollo-server-core": "^3.1.2",
     "apollo-server-express": "^3.1.2",
     "apollo-server-koa": "^3.1.2",
