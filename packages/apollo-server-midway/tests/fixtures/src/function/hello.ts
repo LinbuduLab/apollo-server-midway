@@ -6,7 +6,7 @@ import {
   App,
 } from '@midwayjs/decorator';
 import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
-import { experimentalCreateHandler } from '../../../../lib';
+import { createApolloServerHandler } from '../../../../lib';
 import { schema as externalSchema } from '../schema';
 import path from 'path';
 
@@ -41,7 +41,7 @@ export class HelloHTTPService {
     method: 'post',
   })
   async PlainUsage() {
-    return await experimentalCreateHandler({
+    return await createApolloServerHandler({
       path: '/',
       context: this.ctx,
       disableHealthCheck: false,
@@ -64,7 +64,7 @@ export class HelloHTTPService {
     method: 'post',
   })
   async PluginUsage() {
-    return await experimentalCreateHandler({
+    return await createApolloServerHandler({
       path: '/',
       context: this.ctx,
       schema: {
@@ -94,7 +94,7 @@ export class HelloHTTPService {
     method: 'post',
   })
   async ApolloSchemaUsage() {
-    return await experimentalCreateHandler({
+    return await createApolloServerHandler({
       path: '/',
       context: this.ctx,
       apollo: {

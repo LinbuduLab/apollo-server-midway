@@ -18,7 +18,7 @@ import { presetOption } from '../shared/preset-option';
 import { playgroundDefaultSettings } from '../shared/constants';
 import { getFallbackResolverPath } from '../shared/utils';
 
-export async function experimentalCreateHandler(
+export async function createApolloServerHandler(
   option: CreateApolloHandlerOption
 ) {
   const {

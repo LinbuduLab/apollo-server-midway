@@ -1,37 +1,27 @@
 # apollo-server-midway
 
-## Towards apollo-server-midway V1.0
+## 🎉 Announcing V 1.0
 
-- [x] Support for plain NodeJS application based on MidwayJS framework(Koa / Express).
-- [x] Support built-in plugins for out-of-box usage.
-- [x] Support Vercel as provider.
-- [x] Extension based function debug.
-- [x] Apollo-Server / TypeGraphQL config normalization.
-- [x] Schema as response.
-- [x] Support Apollo DataSource.
-- [x] Support Health-Checks (Also as resolver).
-- [x] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
-- [x] Request/Response headers adjustments.
-- [x] Unit Tests.
-- [ ] Better options normalization.
-- [x] Better `Debug` support.
-- [x] Function path in custom domain
-- [x] Better node application support.
+现在你可以在 [Midway Serverless](https://www.yuque.com/midwayjs/midway_v2/serverless_introduction) 中使用 [Apollo-Server](https://www.apollographql.com/docs/apollo-server) 和 [TypeGraphQL](https://github.com/MichalLytek/type-graphql) 了：
 
-## Future
+- 支持 `Apollo Server` 与 `TypeGraphQL` 绝大部分在 `Serverless` 场景下的可用配置
+- 支持 `Serverless` 应用（通过 `Apollo-Server` 作为解析器） 与 普通 Node 应用（通过 `Apollo-Server` 作为中间件，目前仅 `Koa` 版本可用，`Express` / `EggJS` 马上就来）
+- 内置开箱即用的插件功能，如 [Query Complexity](packages/apollo-query-complexity)、[Resolve Time](packages/apollo-resolve-time) 等，后续还会有更多插件。
+- 集成 `Midway Container` 的 `Debug` 能力（如在 `GraphQL Response` 中通过 `extensions` 字段返回上下文、`GraphQL Schema` 等信息）
+- 基于 [Apollo Server V3](https://www.apollographql.com/docs/apollo-server/migration/)，默认禁用 `Apollo Sandbox`，使用 `GraphQL Playground`
+- 90+ 单测覆盖率
 
-- [ ] Custom decorators.
-- [ ] Built-in support for TypeORM / Prisma + TypeGraphQL application.
+在开始前，你可以通过 [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) 和 [sample](packages/sample/src/function/hello.ts) 来了解大概的使用方式。
 
-**This project is still under heavy development, the interface exposed may got breaking change at any time.**
-
-**Therefore it's not production-ready yet, if you're searching for usage example of Apollo-Server with Midway Serverless, see repo [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) or package [sample](packages/sample/src/function/hello.ts) for more information.**
+> API 文档加急中
+>
+> 见 [types.ts](packages/apollo-server-midway/lib/shared/types.ts) & [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) 来查看支持的选项（Apollo、TypeGraphQL、Built-In Plugin）。
 
 ## Quick Start
 
 ### Apollo-Server + Midway Serverless
 
-Using [apollo-server-midway](packages/apollo-server-midway/README.md) for Midway Serverless development(Use Apollo-Server as serverless request / response handler).
+在 Serverless 场景中使用 [apollo-server-midway](packages/apollo-server-midway) ：
 
 ```bash
 npm install apollo-server-midway --save
@@ -49,7 +39,7 @@ import {
   App,
 } from "@midwayjs/decorator";
 import { Context, IMidwayFaaSApplication } from "@midwayjs/faas";
-import { experimentalCreateHandler } from "apollo-server-midway";
+import { createApolloServerHandler } from "apollo-server-midway";
 import path from "path";
 
 const apolloHandlerFuncName = "apollo-handler";
@@ -76,11 +66,12 @@ export class HelloHTTPService {
     method: "post",
   })
   async apolloHandler() {
-    return await experimentalCreateHandler({
+    return await createApolloServerHandler({
       path: "/",
       app: this.app,
       context: this.ctx,
-      // NOTE: schema is required, either schema.resolvers or apollp.schema should be specified.
+      // NOTE: schema 是必须的, 使用 schema.resolvers 或者 apollp.schema 来指定
+      // 一旦 apollo.schema 被指定，schema.resolvers 就将被忽略
       schema: {
         resolvers: [path.resolve(this.app.getBaseDir(), "resolvers/*")],
       },
@@ -89,15 +80,13 @@ export class HelloHTTPService {
 }
 ```
 
-See [types.ts](packages/apollo-server-midway/lib/shared/types.ts) and [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) for supported options including **built-in options** & **Apollo Server config** & **TypeGraphQL `buildSchemaSync` options.**
-
-As sample aboce, faas function `apollo` will be deployed with endpoint located at `SLS_DOMAIN/SERVICE/apollo/`.
+在上面的示例中，函数 `apollo-handler` 将被部署在 `SLS_DOMAIN/SERVICE/apollo-handler` 下，你可以通过 `SLS_DOMAIN/SERVICE/apollo-handler/` 访问（注意 `/`）。
 
 ### Apollo-Server + Midway Node Application(Not Stable!)
 
-Using [apollo-server-midway](packages/apollo-server-midway/README.md) for Midway plain node application development(Use Apollo-Server as `Koa`/`Express` middleware).
+在 Node 应用中使用 [apollo-server-midway](packages/apollo-server-midway/lib/app/graphql-middleware.ts)
 
-see [koa-app-sample](packages/koa-app-sample) for more info.
+你可以查看 [koa-app-sample](packages/koa-app-sample) 获得更多信息。
 
 ```typescript
 // config.default.ts
@@ -128,91 +117,3 @@ export class ContainerConfiguration implements ILifeCycle {
   }
 }
 ```
-
-See [types.ts](packages/apollo-server-midway/lib/shared/types.ts) and [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) for supported options including **built-in options** & **Apollo Server config** & **TypeGraphQL `buildSchemaSync` options.**
-
-### Midway-FaaS-GraphQL + Midway Serverless(Not Stable!)
-
-```bash
-npm install midway-faas-graphql --save
-yarn add midway-faas-graphql --save
-pnpm install midway-faas-graphql --save
-```
-
-Using [midway-faas-graphql](packages/apollo-server-midway/README.md) for Midway Serverless development(Use official GraphQL package to handle request / response).
-
-```typescript
-// functions
-import {
-  Provide,
-  Inject,
-  ServerlessTrigger,
-  ServerlessFunction,
-  ServerlessTriggerType,
-  ALL,
-  Query,
-  Config,
-} from "@midwayjs/decorator";
-import { Context } from "@midwayjs/faas";
-import { experimentalCreateHandler } from "apollo-server-midway";
-import {
-  GraphQLService,
-  PluginConfig,
-  RenderPlaygroundQueryOptions,
-} from "midway-faas-graphql";
-
-@Provide()
-export class HelloHTTPService {
-  @Inject()
-  ctx: Context;
-
-  @Inject("graphql:GraphQLService")
-  graphql: GraphQLService;
-
-  @Config()
-  faasGraphQLConfig: PluginConfig;
-
-  @ServerlessFunction({
-    functionName: "graphql",
-  })
-  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
-    path: "/graphql",
-    method: "get",
-  })
-  async graphqlPlaygroundHandler(
-    @Query(ALL) playgroundOptions: RenderPlaygroundQueryOptions
-  ) {
-    return await this.graphql.playground(this.ctx, playgroundOptions);
-  }
-
-  @ServerlessTrigger(ServerlessTriggerType.HTTP, {
-    path: "/graphql",
-    method: "post",
-  })
-  async graphqlHandler() {
-    return this.graphql.handler(this.ctx, this.faasGraphQLConfig);
-  }
-}
-
-// configuration.ts
-import { Configuration } from "@midwayjs/decorator";
-import {
-  ILifeCycle,
-  IMidwayApplication,
-  IMidwayContainer,
-} from "@midwayjs/core";
-import path from "path";
-import * as graphql from "midway-faas-graphql";
-
-@Configuration({
-  imports: [graphql],
-  importConfigs: [path.join(__dirname, "./config")],
-})
-export class ContainerLifeCycle implements ILifeCycle {
-  async onReady(container: IMidwayContainer, app: IMidwayApplication) {}
-}
-```
-
-Function `graphql` will be deployed, endpoint located at `SLS_DOMAIN/SERVICE/graphql/graphql`.
-
-If you prefer index handler, just modify `path` in `@ServerlessTrigger`.

@@ -10,7 +10,7 @@ import {
   App,
 } from '@midwayjs/decorator';
 import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
-import { experimentalCreateHandler } from 'apollo-server-midway';
+import { createApolloServerHandler } from 'apollo-server-midway';
 import {
   GraphQLService,
   PluginConfig,
@@ -73,7 +73,7 @@ export class HelloHTTPService {
     method: 'post',
   })
   async apolloHandler() {
-    return await experimentalCreateHandler({
+    return await createApolloServerHandler({
       path: '/',
       app: this.app,
       context: this.ctx,
@@ -111,7 +111,7 @@ export class HelloHTTPService {
     method: 'post',
   })
   async apolloSchemaHandler() {
-    return await experimentalCreateHandler({
+    return await createApolloServerHandler({
       path: '/',
       app: this.app,
       context: this.ctx,
