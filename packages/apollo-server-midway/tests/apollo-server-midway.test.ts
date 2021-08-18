@@ -3,16 +3,16 @@ import { createFunctionApp, close, createHttpRequest } from '@midwayjs/mock';
 import { Framework, Application } from '@midwayjs/serverless-app';
 import { createInitializeContext } from '@midwayjs/serverless-fc-trigger';
 
-import { ApolloServerMidway } from '../../lib/serverless/apollo-server-midway';
-import { getFallbackResolverPath } from '../../lib/shared/utils';
-import { isFaaSApp } from '../../lib/plugins/container-extension';
+import { ApolloServerMidway } from '../lib/serverless/apollo-server-midway';
+import { getFallbackResolverPath } from '../lib/shared/utils';
+import { isFaaSApp } from '../lib/plugins/container-extension';
 import {
   PLAIN_USAGE_FUNC_PATH,
   PLUGIN_ENABLED_FUNC_PATH,
   USE_APOLLO_SCHEMA_FUNC_PATH,
   FULL_CONFIGURED_FUNC_PATH,
   APOLLO_SCHEMA_FUNC_PATH,
-} from '../fixtures/src/function/hello';
+} from './fixtures/src/function/hello';
 
 import path from 'path';
 import { IMidwayFaaSApplication } from '@midwayjs/faas';
@@ -81,7 +81,7 @@ async function createServer(
   return apolloServer;
 }
 
-const fixturesAppDir = path.join(__dirname, '../fixtures');
+const fixturesAppDir = path.join(__dirname, './fixtures');
 
 describe('Serverless module test suite', () => {
   let app: Application;
@@ -303,8 +303,8 @@ describe('Serverless module test suite', () => {
       getBaseDir: () => 'TMP_DIR',
     };
     expect(getFallbackResolverPath()).toEqual([
-      path.join(__dirname, '../../', 'lib/resolver/*'),
-      path.join(__dirname, '../../', 'lib/resolvers/*'),
+      path.join(__dirname, '../', 'lib/resolver/*'),
+      path.join(__dirname, '../', 'lib/resolvers/*'),
     ]);
 
     expect(
