@@ -13,11 +13,10 @@
 - [x] Apollo v3 introspection compatibility(enable GraphQL Playground in prod).
 - [x] Request/Response headers adjustments.
 - [x] Unit Tests.
-- [ ] f.yml related.
 - [ ] Better options normalization.
-- [ ] Better `Debug` support.
-- [ ] Function path in custom domain
-- [ ] Better node application support.
+- [x] Better `Debug` support.
+- [x] Function path in custom domain
+- [x] Better node application support.
 
 ## Future
 

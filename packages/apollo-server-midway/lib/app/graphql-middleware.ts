@@ -46,6 +46,7 @@ import {
   UsableApolloOption,
   BuiltInPluginConfiguration,
   CreateGraphQLMiddlewareOption,
+  CreateKoaGraphQLMiddlewareOption,
 } from '../shared/types';
 import merge from 'lodash/merge';
 import { getFallbackResolverPath } from '../shared/utils';
@@ -53,10 +54,7 @@ import { getFallbackResolverPath } from '../shared/utils';
 export const sharedInitGraphQLSchema = (
   ctx: IMidwayKoaContext | IMidwayExpressContext,
   app: IMidwayKoaApplication | IMidwayExpressApplication,
-  options?: UsableBuildSchemaOption & {
-    emitSchemaFile?: boolean;
-    useContainer?: boolean;
-  }
+  options: CreateGraphQLMiddlewareOption['schema']
 ) => {
   const {
     resolvers = getFallbackResolverPath(app),
@@ -66,11 +64,9 @@ export const sharedInitGraphQLSchema = (
     nullableByDefault,
     skipCheck,
     globalMiddlewares,
-    emitSchemaFile = 'schema.graphql',
-    useContainer = true,
-  } = merge(presetBuildSchemaOption, options);
-
-  const container = app.getApplicationContext();
+    emitSchemaFile,
+    container,
+  } = options;
 
   const schema = buildSchemaSync({
     resolvers,
@@ -82,7 +78,7 @@ export const sharedInitGraphQLSchema = (
     authChecker,
     emitSchemaFile,
     // TODO: getter
-    container: useContainer ? container : undefined,
+    container: container ? app.getApplicationContext() : undefined,
   });
 
   return schema;
@@ -92,9 +88,9 @@ export function initKoaApolloServer(
   ctx: IMidwayKoaContext,
   app: IMidwayKoaApplication,
   schema: GraphQLSchema,
-  config?: ApolloServerKoaConfig,
-  pluginConfig?: BuiltInPluginConfiguration,
-  extraConfig?: { prodPlaygound?: boolean; appendApplicationContext?: boolean }
+  config: ApolloServerKoaConfig,
+  pluginConfig: BuiltInPluginConfiguration,
+  extraConfig: { prodPlaygound?: boolean; appendApplicationContext?: boolean }
 ): ApolloServerKoa {
   const merged = merge(
     presetApolloOption,
@@ -156,35 +152,10 @@ export function initKoaApolloServer(
   return server;
 }
 
-export function initExpressApolloServer(
-  app: IMidwayExpressApplication,
-  schema: GraphQLSchema,
-  config?: ApolloServerExpressConfig
-): ApolloServerExpress {
-  const container = app.getApplicationContext();
-
-  const server = new ApolloServerExpress({
-    schema,
-    context: {
-      container,
-    },
-    plugins: [
-      ['production'].includes(process.env.NODE_ENV) ||
-      process.env.DISABLE_PLAYGROUND
-        ? ApolloServerPluginLandingPageDisabled()
-        : ApolloServerPluginLandingPageGraphQLPlayground({
-            settings: playgroundDefaultSettings,
-          }),
-    ],
-  });
-
-  return server;
-}
-
 @Provide('GraphQLKoaMiddleware')
 export class GraphQLKoaMiddleware implements KoaMiddleware {
   @Config('graphql')
-  externalconfig: CreateGraphQLMiddlewareOption;
+  externalconfig: CreateKoaGraphQLMiddlewareOption;
 
   @App()
   app: IMidwayKoaApplication;
@@ -194,13 +165,15 @@ export class GraphQLKoaMiddleware implements KoaMiddleware {
       const {
         apollo,
         schema: buildSchemaOptions,
-        path = '/graphql',
-        prodPlaygound = false,
-        appendApplicationContext = true,
+        path,
+        prodPlaygound,
+        appendApplicationContext,
         builtInPlugins,
         cors,
         bodyParserConfig,
-      } = this.externalconfig;
+        disableHealthCheck,
+        onHealthCheck = null,
+      } = merge(presetOption, this.externalconfig);
 
       const schema =
         apollo?.schema ??
@@ -221,30 +194,11 @@ export class GraphQLKoaMiddleware implements KoaMiddleware {
         path,
         cors,
         bodyParserConfig,
+        disableHealthCheck,
+        onHealthCheck,
       });
 
       await next();
-    };
-  }
-}
-
-@Provide('GraphQLExpressMiddleware')
-export class GraphQLExpressMiddleware implements ExpressMiddleware {
-  @Config('graphql')
-  externalconfig: ExpressServerRegistration;
-
-  @App()
-  app: IMidwayExpressApplication;
-
-  resolve() {
-    return async (req: Request, res: Response) => {
-      // const schema = sharedInitGraphQLSchema(ctx, this.app);
-      // const server = initExpressApolloServer(this.app, schema);
-      // server.applyMiddleware({
-      //   app: this.app,
-      //   path: '/graphql',
-      //   ...this.externalconfig,
-      // });
     };
   }
 }

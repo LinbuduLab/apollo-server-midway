@@ -3,7 +3,9 @@ import {
   BuiltInPluginConfiguration,
   UsableApolloOption,
   UsableBuildSchemaOption,
+  CreateGraphQLMiddlewareOption,
 } from '../shared/types';
+import pick from 'lodash/pick';
 
 const DEV_MODE = process.env.NODE_ENV !== 'production';
 
@@ -29,6 +31,7 @@ export const presetApolloOption: UsableApolloOption = {
   plugins: [],
   mocks: false,
   mockEntireSchema: false,
+  schema: undefined,
 };
 
 export const presetBuildSchemaOption: UsableBuildSchemaOption = {
@@ -38,6 +41,25 @@ export const presetBuildSchemaOption: UsableBuildSchemaOption = {
   globalMiddlewares: [],
   authMode: 'error',
   resolvers: ['SKIP_NON_EMPTY_CHECK'],
+};
+
+export const presetCreateMiddlewareOption: CreateGraphQLMiddlewareOption = {
+  path: '/graphql',
+  prodPlaygound: false,
+  appendApplicationContext: false,
+  disableHealthCheck: DEV_MODE,
+  builtInPlugins: pick(presetBuiltInPluginOption, [
+    'resolveTime',
+    'queryComplexity',
+  ]),
+  apollo: presetApolloOption,
+  schema: {
+    ...presetBuildSchemaOption,
+    emitSchemaFile: 'schema.graphql',
+    container: null,
+  },
+  cors: undefined,
+  bodyParserConfig: undefined,
 };
 
 export const presetOption: Omit<CreateApolloHandlerOption, 'context'> = {

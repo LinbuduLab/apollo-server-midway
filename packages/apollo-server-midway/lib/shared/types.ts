@@ -3,6 +3,8 @@ import { BuildSchemaOptions } from 'type-graphql';
 import { Config as ApolloServerConfig } from 'apollo-server-core';
 import { Options as CORSOptions } from '@koa/cors';
 import { Options as BodyParserOptions } from 'koa-bodyparser';
+import { ServerRegistration as KoaServerRegistration } from 'apollo-server-koa';
+import { ServerRegistration as ExpressServerRegistration } from 'apollo-server-express';
 
 export type MidwayReq = Context['request'];
 export type MidwayRes = Context['response'];
@@ -62,21 +64,35 @@ export type CreateGraphQLMiddlewareOption = {
   appendApplicationContext?: boolean;
   builtInPlugins?: BuiltInPluginConfiguration;
   apollo?: UsableApolloOption;
-  schema?: UsableBuildSchemaOption;
+  schema?: UsableBuildSchemaOption &
+    Pick<BuildSchemaOptions, 'emitSchemaFile' | 'container'>;
+  disableHealthCheck?: boolean;
+
   cors?: CORSOptions | boolean;
   bodyParserConfig?: BodyParserOptions | boolean;
 };
+
+export interface CreateKoaGraphQLMiddlewareOption
+  extends CreateGraphQLMiddlewareOption {
+  onHealthCheck?: KoaServerRegistration['onHealthCheck'];
+}
+
+export interface CreateExpressGraphQLMiddlewareOption
+  extends CreateGraphQLMiddlewareOption {
+  onHealthCheck?: ExpressServerRegistration['onHealthCheck'];
+}
 
 export type CreateApolloHandlerOption = {
   context: Context;
   path?: string;
   app?: IMidwayFaaSApplication;
   prodPlaygound?: boolean;
-  disableHealthCheck?: boolean;
-  disableHealthResolver?: boolean;
-  onHealthCheck?: (req: MidwayReq) => Promise<unknown>;
   appendFaaSContext?: boolean;
   builtInPlugins?: BuiltInPluginConfiguration;
   apollo?: UsableApolloOption;
   schema?: UsableBuildSchemaOption;
+
+  disableHealthCheck?: boolean;
+  disableHealthResolver?: boolean;
+  onHealthCheck?: (req: MidwayReq) => Promise<unknown>;
 };
