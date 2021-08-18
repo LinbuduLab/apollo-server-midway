@@ -1,3 +1,0 @@
-# `graphql-util-scalars`
-
-DEVELOPING

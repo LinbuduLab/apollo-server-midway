@@ -26,7 +26,7 @@ const schema = sharedInitGraphQLSchema({
   getBaseDir: () => path.resolve(__dirname, '../fixtures/src'),
 } as IMidwayKoaApplication);
 
-describe('GraphQL Middleare', () => {
+describe.skip('GraphQL Middleare', () => {
   it('should create valid GraphQL Schema', () => {
     expect(validateSchema(schema).length).toBe(0);
   });
