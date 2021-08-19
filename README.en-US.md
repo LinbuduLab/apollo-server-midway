@@ -1,29 +1,29 @@
 # apollo-server-midway
 
-[English](./README.en-US.md) | 简体中文
+English | [简体中文](./README.md)
 
 ## 🎉 Announcing V 1.0
 
-现在你可以在 [Midway Serverless](https://www.yuque.com/midwayjs/midway_v2/serverless_introduction) 中使用 [Apollo-Server](https://www.apollographql.com/docs/apollo-server) 和 [TypeGraphQL](https://github.com/MichalLytek/type-graphql) 了：
+You can now happily integrate [Apollo-Server](https://www.apollographql.com/docs/apollo-server) and [TypeGraphQL](https://github.com/MichalLytek/type-graphql) with [Midway Serverless](https://www.yuque.com/midwayjs/midway_v2/serverless_introduction).
 
-- 支持 `Apollo Server` 与 `TypeGraphQL` 绝大部分在 `Serverless` 场景下的可用配置
-- 支持 `Serverless` 应用（通过 `Apollo-Server` 作为解析器） 与 普通 Node 应用（通过 `Apollo-Server` 作为中间件，目前仅 `Koa` 版本可用，`Express` / `EggJS` 马上就来）
-- 内置开箱即用的插件功能，如 [Query Complexity](packages/apollo-query-complexity)、[Resolve Time](packages/apollo-resolve-time) 等，后续还会有更多插件。
-- 集成 `Midway Container` 的 `Debug` 能力（如在 `GraphQL Response` 中通过 `extensions` 字段返回上下文、`GraphQL Schema` 等信息）
-- 基于 [Apollo Server V3](https://www.apollographql.com/docs/apollo-server/migration/)，默认禁用 `Apollo Sandbox`，使用 `GraphQL Playground`
-- 90+ 单测覆盖率
+- Support most serverless configurations of `Apollo Server` and `TypeGraphQL`.
+- Support `Serverless` application by using `Apollo-Server` as interpreter and traditional Node application in a way of using `Apollo-Server` as middlware, `Koa` solution is available now.
+- Built-in out-of-the-box plugins. e.g. [Query Complexity](packages/apollo-query-complexity), [Resolve Time](packages/apollo-resolve-time), etc.
+- Integrate with debug ability of `Midway Container`.(e.g. retrieving context and `GraphQL Schema` from `GraphQLResponse#extensions`)
+- Based on [Apollo Server V3](https://www.apollographql.com/docs/apollo-server/migration/), `Apollo Sandbox` is disabled by default, try `GraphQL Playground` instead.
+- Unit test coverage more than 90%.
 
-在开始前，你可以通过 [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) 和 [sample](packages/sample/src/function/hello.ts) 来了解大概的使用方式。
+To get started，you could try [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) and [sample](packages/sample/src/function/hello.ts) to get a glance at basic usage.
 
-> API 文档加急中
+> API Documentation is on its way 🐎...
 >
-> 见 [types.ts](packages/apollo-server-midway/lib/shared/types.ts) & [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) 来查看支持的选项（Apollo、TypeGraphQL、Built-In Plugin）。
+> See [types.ts](packages/apollo-server-midway/lib/shared/types.ts) and [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) to check on supported options (Apollo、TypeGraphQL、Built-In Plugin)。
 
 ## Quick Start
 
 ### Apollo-Server + Midway Serverless
 
-在 Serverless 场景中使用 [apollo-server-midway](packages/apollo-server-midway) ：
+Use [apollo-server-midway](packages/apollo-server-midway) in Serverless:
 
 ```bash
 npm install apollo-server-midway --save
@@ -82,13 +82,13 @@ export class HelloHTTPService {
 }
 ```
 
-在上面的示例中，函数 `apollo-handler` 将被部署在 `SLS_DOMAIN/SERVICE/apollo-handler` 下，你可以通过 `SLS_DOMAIN/SERVICE/apollo-handler/` 访问（注意 `/`）。
+In the example above, function `apollo-handler` will be deployed to `SLS_DOMAIN/SERVICE/apollo-handler`. You can invoke it by visiting `SLS_DOMAIN/SERVICE/apollo-handler/`. (Note: the tailing slash `/` is needed).
 
-### Apollo-Server + Midway Node Application(Not Stable!)
+### Apollo-Server + Midway Node Application (Not Stable!)
 
-在 Node 应用中使用 [apollo-server-midway](packages/apollo-server-midway/lib/app/graphql-middleware.ts)
+Use [apollo-server-midway](packages/apollo-server-midway/lib/app/graphql-middleware.ts) in traditional Node app:
 
-你可以查看 [koa-app-sample](packages/koa-app-sample) 获得更多信息。
+Refer to [koa-app-sample](packages/koa-app-sample) for more details.
 
 ```typescript
 // config.default.ts
