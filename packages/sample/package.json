@@ -45,7 +45,7 @@
     "@midwayjs/cli": "^1.2.79",
     "@midwayjs/cli-plugin-faas": "^1.2.79",
     "@midwayjs/fcli-plugin-fc": "^1.2.79",
-    "@midwayjs/mock": "^2.12.3",
+    "@midwayjs/mock": "^2.12.5",
     "@midwayjs/serverless-app": "^2.12.4",
     "@midwayjs/serverless-fc-trigger": "^2.12.3",
     "@midwayjs/serverless-scf-trigger": "^2.12.3",

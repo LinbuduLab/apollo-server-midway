@@ -50,7 +50,7 @@
     "@midwayjs/cli": "^1.2.77",
     "@midwayjs/egg-ts-helper": "^1.2.0",
     "@midwayjs/luckyeye": "^1.0.2",
-    "@midwayjs/mock": "^2.12.1",
+    "@midwayjs/mock": "^2.12.5",
     "@types/cross-spawn": "^6.0.2",
     "@types/jest": "^26.0.24",
     "mwts": "^1.2.2",
