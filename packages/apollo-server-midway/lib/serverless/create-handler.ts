@@ -93,11 +93,7 @@ export async function createApolloServerHandler(
         }
       : userGraphQLContext,
     plugins: [
-      prodPlaygound
-        ? ApolloServerPluginLandingPageGraphQLPlayground({
-            settings: playgroundDefaultSettings,
-          })
-        : process.env.NODE_ENV !== 'production'
+      (prodPlaygound || process.env.NODE_ENV !== 'production')
         ? ApolloServerPluginLandingPageGraphQLPlayground({
             settings: playgroundDefaultSettings,
           })
