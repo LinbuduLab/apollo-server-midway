@@ -20,7 +20,7 @@
   "dependencies": {
     "@graphql-tools/schema": "^8.0.3",
     "@hapi/accept": "^5.0.2",
-    "@midwayjs/core": "^2.12.3",
+    "@midwayjs/core": "^2.12.5",
     "@midwayjs/decorator": "^2.12.3",
     "@midwayjs/faas": "^2.12.3",
     "@types/micro": "^7.3.6",

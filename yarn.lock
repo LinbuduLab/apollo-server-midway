@@ -2013,10 +2013,27 @@
     light-spinner "^1.0.0"
     minimist "^1.2.5"
 
-"@midwayjs/core@^2.11.4", "@midwayjs/core@^2.12.1", "@midwayjs/core@^2.12.3":
+"@midwayjs/core@^2.11.4", "@midwayjs/core@^2.12.3":
   version "2.12.3"
   resolved "https://registry.yarnpkg.com/@midwayjs/core/-/core-2.12.3.tgz#f66304a969474f1414d69d0b15adc646ca5a8dae"
   integrity sha512-DWxhtk8LJIBBFhCGYLHXQgx62nFSUtydmDVyO9QgjzfRlnU5GFNtn1n5v23jmR9V5DqlhXd3N/e7B1YJKdz1ag==
+  dependencies:
+    "@midwayjs/glob" "^1.0.2"
+    "@midwayjs/logger" "^2.11.3"
+    class-transformer "^0.3.1"
+    extend2 "^1.0.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.defaultsdeep "^4.6.0"
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    lodash.template "^4.4.0"
+    picomatch "^2.2.2"
+    reflect-metadata "^0.1.13"
+
+"@midwayjs/core@^2.12.5":
+  version "2.12.5"
+  resolved "https://registry.yarnpkg.com/@midwayjs/core/-/core-2.12.5.tgz#fa2988098165d46559d56dc23f47c0261f10a9ae"
+  integrity sha512-jmcgy7X03grryGksaXAVv5FHRw8n9rI+T0rLl7op+jr02QxmvbrrJqogTCAwUcCBwi0Ese3g8YRnAweke1M1jg==
   dependencies:
     "@midwayjs/glob" "^1.0.2"
     "@midwayjs/logger" "^2.11.3"
