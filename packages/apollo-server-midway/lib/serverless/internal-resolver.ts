@@ -1,4 +1,3 @@
-import { Provide } from '@midwayjs/decorator';
 import {
   ObjectType,
   Field,
@@ -30,7 +29,6 @@ class SuccessStatus {
   experimentalField?: number;
 }
 
-@Provide()
 @ObjectType()
 class FailureStatus {
   @Field()
