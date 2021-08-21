@@ -66,5 +66,15 @@
     "@types/lodash": "^4.14.172",
     "@types/type-is": "^1.6.3"
   },
+  "peerDependencies": {
+    "@midwayjs/core": "^2.12.3",
+    "@midwayjs/decorator": "^2.12.3",
+    "@midwayjs/express": "^2.12.3",
+    "@midwayjs/faas": "^2.12.4",
+    "@midwayjs/koa": "^2.12.3",
+    "@midwayjs/web": "^2.12.3",
+    "graphql": "^15.5.1",
+    "type-graphql": "^1.1.1"
+  },
   "gitHead": "b0fa3e7d2ad3a04442ecdf23e252e3cc1630bce0"
 }

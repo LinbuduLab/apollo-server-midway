@@ -24,10 +24,12 @@
 在 Serverless 场景中使用 [apollo-server-midway](packages/apollo-server-midway) ：
 
 ```bash
-npm install apollo-server-midway --save
-yarn add apollo-server-midway --save
-pnpm install apollo-server-midway --save
+npm install apollo-server-midway graphql type-graphql --save
+yarn add apollo-server-midway graphql type-graphql --save
+pnpm install apollo-server-midway graphql type-graphql --save
 ```
+
+> `type-graphql` 是可选的依赖，如果你已经拥有构建完毕的 GraphQL Schema，可以不使用它。同时，请确保你在 MidwayJS 项目中使用，因为包括 `@midwayjs/core` 以及 `@midwayjs/decorator` 等的一批依赖被标记为 `peerDependencies`。
 
 ```typescript
 import {
@@ -83,6 +85,14 @@ export class HelloHTTPService {
 在上面的示例中，函数 `apollo-handler` 将被部署在 `SLS_DOMAIN/SERVICE/apollo-handler` 下，你可以通过 `SLS_DOMAIN/SERVICE/apollo-handler/` 访问（注意 `/`）。
 
 ### Apollo-Server + Midway Node Application(Not Stable!)
+
+```bash
+npm install apollo-server-midway graphql type-graphql @midwayjs/koa --save
+yarn add apollo-server-midway graphql type-graphql @midwayjs/koa --save
+pnpm install apollo-server-midway graphql type-graphql @midwayjs/koa --save
+```
+
+> 将 `@midwayjs/koa` 替换为你应用对应的框架。
 
 在 Node 应用中使用 [apollo-server-midway](packages/apollo-server-midway/lib/app/graphql-middleware.ts)
 
