@@ -1,11 +1,14 @@
-import { Config, gql } from 'apollo-server-core';
+import { Config } from 'apollo-server-core';
 import { createFunctionApp, close, createHttpRequest } from '@midwayjs/mock';
 import { Framework, Application } from '@midwayjs/serverless-app';
-import { createInitializeContext } from '@midwayjs/serverless-fc-trigger';
+import path from 'path';
+import { IMidwayFaaSApplication } from '@midwayjs/faas';
+import { IMidwayApplication } from '@midwayjs/core';
 
 import { ApolloServerMidway } from '../lib/serverless/apollo-server-midway';
 import { getFallbackResolverPath } from '../lib/shared/utils';
 import { isFaaSApp } from '../lib/plugins/container-extension';
+
 import {
   PLAIN_USAGE_FUNC_PATH,
   PLUGIN_ENABLED_FUNC_PATH,
@@ -13,63 +16,16 @@ import {
   FULL_CONFIGURED_FUNC_PATH,
   APOLLO_SCHEMA_FUNC_PATH,
 } from './fixtures/src/function/hello';
+import {
+  EXPECT_ERROR_QUERY,
+  HEALTH_CHECK_ONLY_QUERY,
+  SAMPLE_FIELD_ONLY_QUERY,
+  typeDefs,
+  resolvers,
+  serverlsssFixturesAppDir,
+} from './shared';
 
-import path from 'path';
-import { IMidwayFaaSApplication } from '@midwayjs/faas';
-import { IMidwayApplication } from '@midwayjs/core';
-
-const SAMPLE_FIELD_ONLY_QUERY = /* GraphQL */ `
-  query {
-    QuerySample {
-      SampleField
-    }
-  }
-`;
-
-const HEALTH_CHECK_ONLY_QUERY = /* GraphQL */ `
-  query {
-    HealthCheck {
-      __typename
-      ... on SuccessStatus {
-        status
-      }
-      ... on FailureStatus {
-        status
-      }
-    }
-  }
-`;
-
-const EXPECT_ERROR_QUERY = /* GraphQL */ `
-  query {
-    HealthCheck(expectError: true) {
-      __typename
-      ... on SuccessStatus {
-        status
-      }
-      ... on FailureStatus {
-        status
-      }
-    }
-  }
-`;
-
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => 'Hello! Linbudu.',
-  },
-};
-
-async function createServer(
-  options: Record<string, unknown> = {},
-  config: Config = {}
-): Promise<ApolloServerMidway> {
+async function createServer(config: Config = {}): Promise<ApolloServerMidway> {
   const apolloServer = new ApolloServerMidway({
     typeDefs,
     resolvers,
@@ -81,15 +37,13 @@ async function createServer(
   return apolloServer;
 }
 
-const fixturesAppDir = path.join(__dirname, './fixtures');
-
-describe('Serverless module test suite', () => {
+describe.skip('Serverless module test suite', () => {
   let app: Application;
 
   beforeAll(async () => {
     try {
-      app = await createFunctionApp<Framework>(fixturesAppDir, {
-        baseDir: fixturesAppDir,
+      app = await createFunctionApp<Framework>(serverlsssFixturesAppDir, {
+        baseDir: serverlsssFixturesAppDir,
         cleanLogsDir: true,
         cleanTempDir: true,
       });
@@ -165,7 +119,6 @@ describe('Serverless module test suite', () => {
       .send({
         operationName: null,
         variables: {},
-        // TODO: use query builder ?
         query: SAMPLE_FIELD_ONLY_QUERY,
       });
 
@@ -211,7 +164,6 @@ describe('Serverless module test suite', () => {
       },
     });
 
-    // // default enabled built-in plugin
     expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
     expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
 
@@ -259,10 +211,6 @@ describe('Serverless module test suite', () => {
     });
   });
 
-  it('should perform health check when no disabled', () => {
-    // 需要 mock 掉 experimentalCreateHandler 的导入
-  });
-
   it('should take plugin extensions', async () => {
     const result = await createHttpRequest(app)
       .post(`${PLUGIN_ENABLED_FUNC_PATH}/`)
@@ -290,7 +238,6 @@ describe('Serverless module test suite', () => {
     expect(result.body.extensions.FAAS_INFO).toBeDefined();
     expect(result.body.extensions.SCHEMA).toBeDefined();
 
-    // // default enabled built-in plugin
     expect(typeof result.body.extensions.RESOLVE_TIME).toBe('number');
     expect(typeof result.body.extensions.CURRENT_COMPLEXITY).toBe('number');
     expect(typeof result.body.extensions.CONTEXT).toBe('object');
@@ -314,13 +261,4 @@ describe('Serverless module test suite', () => {
       path.resolve(tmpApp.getBaseDir(), 'resolvers/*'),
     ]);
   });
-
-  // TODO: extension plugin tests
-  // mock掉 createHandler 还是使用多个不同的函数测试不同选项？
-  // plain
-  // built-in-plugin-enabled
-  // schema
-  // apollo
-  // full
-  // 验证实例化完毕的apollo server内配置部
 });
