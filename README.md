@@ -15,9 +15,7 @@
 
 在开始前，你可以通过 [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) 和 [sample](packages/sample/src/function/hello.ts) 来了解大概的使用方式。
 
-> API 文档加急中
->
-> 见 [types.ts](packages/apollo-server-midway/lib/shared/types.ts) & [preset-options.ts](packages/apollo-server-midway/lib/shared/preset-option.ts) 来查看支持的选项（Apollo、TypeGraphQL、Built-In Plugin）。
+> 详细文档参考：[在 Midway(Serverless) 中使用 GraphQL](https://www.yuque.com/midwayjs/midway_v2/qfdtnx)
 
 ## Quick Start
 
