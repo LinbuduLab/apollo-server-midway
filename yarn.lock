@@ -2279,22 +2279,22 @@
     semver "^7.3.4"
     supports-color "^8.1.0"
 
-"@midwayjs/mock@^2.12.1", "@midwayjs/mock@^2.12.3", "@midwayjs/mock@^2.8.0":
-  version "2.12.3"
-  resolved "https://registry.yarnpkg.com/@midwayjs/mock/-/mock-2.12.3.tgz#8ac55597e8f88ec40879816ef4e9b1bfd7f5c5c7"
-  integrity sha512-KGjKyhBLzLSsuKsGshHOGnhEpy/Ko3pk+3GKsQIrfS6UwMCjTlSQlSkRJ9r44YOYBesAzCdqwutqvB13j2ADxQ==
-  dependencies:
-    "@midwayjs/bootstrap" "^2.12.3"
-    egg-mock "^3.21.0"
-    fs-extra "^8.0.1"
-    supertest "^6.0.0"
-
-"@midwayjs/mock@^2.3.0":
+"@midwayjs/mock@^2.12.7":
   version "2.12.7"
   resolved "https://registry.yarnpkg.com/@midwayjs/mock/-/mock-2.12.7.tgz#eadd1f64a3dfda352b4a04f695bfd38ed88b6269"
   integrity sha512-a8wFFPHE+LFd/RMrQrXd16aCeVswtoGy69uuxwy8QNB7982CeiXfZtEgRZwV9zLNwTmxFNBbgBbS7iFCUfvUZA==
   dependencies:
     "@midwayjs/bootstrap" "^2.12.7"
+    egg-mock "^3.21.0"
+    fs-extra "^8.0.1"
+    supertest "^6.0.0"
+
+"@midwayjs/mock@^2.8.0":
+  version "2.12.3"
+  resolved "https://registry.yarnpkg.com/@midwayjs/mock/-/mock-2.12.3.tgz#8ac55597e8f88ec40879816ef4e9b1bfd7f5c5c7"
+  integrity sha512-KGjKyhBLzLSsuKsGshHOGnhEpy/Ko3pk+3GKsQIrfS6UwMCjTlSQlSkRJ9r44YOYBesAzCdqwutqvB13j2ADxQ==
+  dependencies:
+    "@midwayjs/bootstrap" "^2.12.3"
     egg-mock "^3.21.0"
     fs-extra "^8.0.1"
     supertest "^6.0.0"

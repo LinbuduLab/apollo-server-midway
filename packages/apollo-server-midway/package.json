@@ -61,7 +61,7 @@
     "type-is": "^1.6.18"
   },
   "devDependencies": {
-    "@midwayjs/mock": "^2.12.3",
+    "@midwayjs/mock": "^2.12.7",
     "@midwayjs/serverless-app": "^2.12.4",
     "@midwayjs/serverless-fc-trigger": "^2.12.3",
     "@types/lodash": "^4.14.172",

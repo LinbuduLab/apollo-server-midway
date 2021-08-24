@@ -15,7 +15,7 @@
   "devDependencies": {
     "@midwayjs/cli": "^1.0.0",
     "@midwayjs/luckyeye": "^1.0.0",
-    "@midwayjs/mock": "^2.3.0",
+    "@midwayjs/mock": "^2.12.7",
     "@types/jest": "^26.0.10",
     "@types/node": "14",
     "cross-env": "^6.0.0",
