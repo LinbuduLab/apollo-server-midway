@@ -1,6 +1,6 @@
 {
   "name": "apollo-server-midway",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Apollo Server integration for MidwayJS",
   "keywords": [
     "Apollo-Server",

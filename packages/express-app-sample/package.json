@@ -1,6 +1,6 @@
 {
   "name": "express-app-sample",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "private": true,
   "dependencies": {
@@ -8,7 +8,7 @@
     "@midwayjs/core": "^2.3.0",
     "@midwayjs/decorator": "^2.3.0",
     "@midwayjs/express": "^2.3.0",
-    "apollo-server-midway": "^1.3.0",
+    "apollo-server-midway": "^1.4.0",
     "graphql": "^15.5.1",
     "type-graphql": "^1.1.1"
   },
