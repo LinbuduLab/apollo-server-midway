@@ -1,7 +1,7 @@
 {
   "name": "vercel-sample",
   "private": true,
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Midway Serverless for the Serverless environment",
   "main": "index.js",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "apollo-datasource-rest": "^3.1.1",
     "apollo-server-core": "^3.1.2",
     "apollo-server-express": "^3.1.2",
-    "apollo-server-midway": "^1.4.0",
+    "apollo-server-midway": "^1.4.1",
     "apollo-server-plugin-base": "^3.1.1",
     "apollo-server-types": "^3.1.1",
     "faker": "^5.5.3",
