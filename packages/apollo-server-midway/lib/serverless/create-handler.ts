@@ -82,7 +82,7 @@ export async function createApolloServerHandler(
       globalMiddlewares,
       authMode,
       authChecker,
-      container: app.getApplicationContext(),
+      container: context.requestContext,
     });
 
   const server = new ApolloServerMidway({
