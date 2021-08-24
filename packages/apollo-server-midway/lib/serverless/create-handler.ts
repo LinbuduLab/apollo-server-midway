@@ -2,9 +2,10 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
-import { buildSchemaSync, NonEmptyArray } from 'type-graphql';
+import { buildSchemaSync, NonEmptyArray, ResolverData } from 'type-graphql';
 import ApolloResolveTimePlugin from 'apollo-resolve-time';
 import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
+import { Context } from '@midwayjs/faas';
 import merge from 'lodash/merge';
 
 import { ApolloServerMidway } from './apollo-server-midway';
@@ -21,6 +22,8 @@ import { getFallbackResolverPath } from '../shared/utils';
 export async function createApolloServerHandler(
   option: CreateApolloHandlerOption
 ) {
+  // console.log('Using linked ApolloServerMidway');
+
   const {
     context,
     app,
@@ -61,6 +64,11 @@ export async function createApolloServerHandler(
   const resolverPath =
     option?.schema?.resolvers ?? getFallbackResolverPath(app);
 
+  // 这里也能拿到带有注入完毕的
+  // console.log('linked===');
+  // console.log(await app.getApplicationContext().getAsync('SummaryResolver'));
+  // console.log('linked===');
+
   const schema =
     externalSchemaForApolloServer ??
     buildSchemaSync({
@@ -74,8 +82,7 @@ export async function createApolloServerHandler(
       globalMiddlewares,
       authMode,
       authChecker,
-      // not supported! will cause unexpected error.
-      // container: app?.getApplicationContext() ?? undefined,
+      container: app.getApplicationContext(),
     });
 
   const server = new ApolloServerMidway({
@@ -93,7 +100,7 @@ export async function createApolloServerHandler(
         }
       : userGraphQLContext,
     plugins: [
-      (prodPlaygound || process.env.NODE_ENV !== 'production')
+      prodPlaygound || process.env.NODE_ENV !== 'production'
         ? ApolloServerPluginLandingPageGraphQLPlayground({
             settings: playgroundDefaultSettings,
           })
