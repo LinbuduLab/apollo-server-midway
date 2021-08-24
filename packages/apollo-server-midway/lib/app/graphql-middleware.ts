@@ -49,7 +49,6 @@ import { getFallbackResolverPath } from '../shared/utils';
 import { NextFunction } from 'express';
 
 export const sharedInitGraphQLSchema = (
-  // ctx: IMidwayKoaContext | IMidwayExpressContext,
   app: IMidwayKoaApplication | IMidwayExpressApplication,
   options: CreateGraphQLMiddlewareOption['schema']
 ) => {
@@ -62,7 +61,6 @@ export const sharedInitGraphQLSchema = (
     skipCheck,
     globalMiddlewares,
     emitSchemaFile,
-    container,
   } = options;
 
   const schema = buildSchemaSync({
@@ -74,8 +72,7 @@ export const sharedInitGraphQLSchema = (
     authMode,
     authChecker,
     emitSchemaFile,
-    // TODO: Node App Container support
-    container,
+    container: app.getApplicationContext(),
   });
 
   return schema;

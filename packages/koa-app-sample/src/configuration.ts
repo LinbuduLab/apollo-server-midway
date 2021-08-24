@@ -1,5 +1,5 @@
 import { Configuration, App } from '@midwayjs/decorator';
-import { ILifeCycle } from '@midwayjs/core';
+import { ILifeCycle, IMidwayContainer } from '@midwayjs/core';
 import { IMidwayKoaApplication } from '@midwayjs/koa';
 import * as GraphQL from 'apollo-server-midway';
 
@@ -11,7 +11,8 @@ export class ContainerConfiguration implements ILifeCycle {
   @App()
   app: IMidwayKoaApplication;
 
-  async onReady(): Promise<void> {
+  async onReady(container: IMidwayContainer): Promise<void> {
+    container.registerObject('foo', 'bar');
     this.app.use(
       await this.app.generateMiddleware('graphql:GraphQLKoaMiddleware')
     );
