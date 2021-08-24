@@ -16,9 +16,11 @@ import {
   PluginConfig,
   RenderPlaygroundQueryOptions,
 } from 'midway-faas-graphql';
-import path from 'path';
 import { DogsAPISource } from '../extra/data-source';
 import { schema as externalSchema } from '../schema';
+
+import { SampleResolver } from '../resolvers/sample.resolver';
+import { DogResolver } from '../resolvers/dog.resolver';
 
 const apolloHandlerFuncName = 'apollo-handler';
 const graphqlHandlerFuncName = 'graphql-handler';
@@ -94,7 +96,7 @@ export class HelloHTTPService {
         },
       },
       schema: {
-        resolvers: [path.resolve(this.app.getBaseDir(), 'resolvers/*')],
+        resolvers: [SampleResolver, DogResolver],
       },
     });
   }

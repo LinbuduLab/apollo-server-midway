@@ -8,26 +8,24 @@ import {
 } from '@midwayjs/koa';
 import {
   IWebMiddleware as ExpressMiddleware,
-  IMidwayExpressApplication as IMidwayExpressApplication,
+  IMidwayExpressApplication,
   IMidwayExpressContext,
 } from '@midwayjs/express';
 import { Request, Response } from 'express';
 
 import {
   ApolloServer as ApolloServerKoa,
-  ServerRegistration as KoaServerRegistration,
   Config as ApolloServerKoaConfig,
 } from 'apollo-server-koa';
 import {
   ApolloServer as ApolloServerExpress,
-  ServerRegistration as ExpressServerRegistration,
   Config as ApolloServerExpressConfig,
 } from 'apollo-server-express';
 
 import ApolloResolveTimePlugin from 'apollo-resolve-time';
 import ApolloQueryComplexityPlugin from 'apollo-query-complexity';
 
-import { buildSchemaSync, BuildSchemaOptions } from 'type-graphql';
+import { buildSchemaSync } from 'type-graphql';
 
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
@@ -37,22 +35,21 @@ import { GraphQLSchema } from 'graphql';
 import { playgroundDefaultSettings } from '../shared/constants';
 import {
   presetApolloOption,
-  presetBuildSchemaOption,
   presetBuiltInPluginOption,
   presetOption,
 } from '../shared/preset-option';
 import {
-  UsableBuildSchemaOption,
-  UsableApolloOption,
   BuiltInPluginConfiguration,
   CreateGraphQLMiddlewareOption,
   CreateKoaGraphQLMiddlewareOption,
+  CreateExpressGraphQLMiddlewareOption,
 } from '../shared/types';
 import merge from 'lodash/merge';
 import { getFallbackResolverPath } from '../shared/utils';
+import { NextFunction } from 'express';
 
 export const sharedInitGraphQLSchema = (
-  ctx: IMidwayKoaContext | IMidwayExpressContext,
+  // ctx: IMidwayKoaContext | IMidwayExpressContext,
   app: IMidwayKoaApplication | IMidwayExpressApplication,
   options: CreateGraphQLMiddlewareOption['schema']
 ) => {
@@ -77,12 +74,87 @@ export const sharedInitGraphQLSchema = (
     authMode,
     authChecker,
     emitSchemaFile,
-    // TODO: getter
-    container: container ? app.getApplicationContext() : undefined,
+    // TODO: Node App Container support
+    container,
   });
 
   return schema;
 };
+
+const getPresetPluginList = (
+  { resolveTime, queryComplexity }: BuiltInPluginConfiguration,
+  prodPlaygound: boolean,
+  schema: GraphQLSchema
+) => {
+  const plugins = [
+    prodPlaygound || process.env.NODE_ENV !== 'production'
+      ? ApolloServerPluginLandingPageGraphQLPlayground({
+          settings: playgroundDefaultSettings,
+        })
+      : ApolloServerPluginLandingPageDisabled(),
+    resolveTime.enable && ApolloResolveTimePlugin(),
+    queryComplexity.enable &&
+      ApolloQueryComplexityPlugin(
+        schema,
+        queryComplexity.maxComlexity,
+        queryComplexity.throwOnMaximum
+      ),
+  ].filter(Boolean);
+
+  return plugins;
+};
+
+// TODO: extract shared
+export function initExpressApolloServer(
+  app: IMidwayExpressApplication,
+  schema: GraphQLSchema,
+  config: ApolloServerExpressConfig,
+  pluginConfig: BuiltInPluginConfiguration,
+  extraConfig: { prodPlaygound?: boolean; appendApplicationContext?: boolean }
+): ApolloServerExpress {
+  const merged = merge(
+    presetApolloOption,
+    config,
+    {
+      builtInPlugins: merge(presetBuiltInPluginOption, pluginConfig),
+    },
+    extraConfig
+  );
+
+  const {
+    context: userGraphQLContext,
+    dataSources,
+    mocks,
+    mockEntireSchema,
+    introspection,
+    persistedQueries,
+    plugins,
+    builtInPlugins,
+    prodPlaygound,
+    appendApplicationContext,
+  } = merged;
+
+  const server = new ApolloServerExpress({
+    schema,
+    persistedQueries,
+    context: appendApplicationContext
+      ? {
+          ...userGraphQLContext,
+          container: app.getApplicationContext(),
+        }
+      : userGraphQLContext,
+    plugins: [
+      ...getPresetPluginList(builtInPlugins, prodPlaygound, schema),
+      ...plugins,
+    ],
+    dataSources,
+    mocks,
+    mockEntireSchema,
+    introspection,
+  });
+
+  return server;
+}
 
 export function initKoaApolloServer(
   ctx: IMidwayKoaContext,
@@ -109,7 +181,7 @@ export function initKoaApolloServer(
     introspection,
     persistedQueries,
     plugins,
-    builtInPlugins: { resolveTime, queryComplexity },
+    builtInPlugins,
     prodPlaygound,
     appendApplicationContext,
   } = merged;
@@ -125,24 +197,9 @@ export function initKoaApolloServer(
         }
       : userGraphQLContext,
     plugins: [
-      prodPlaygound
-        ? ApolloServerPluginLandingPageGraphQLPlayground({
-            settings: playgroundDefaultSettings,
-          })
-        : process.env.NODE_ENV !== 'production'
-        ? ApolloServerPluginLandingPageGraphQLPlayground({
-            settings: playgroundDefaultSettings,
-          })
-        : ApolloServerPluginLandingPageDisabled(),
-      resolveTime.enable && ApolloResolveTimePlugin(),
-      queryComplexity.enable &&
-        ApolloQueryComplexityPlugin(
-          schema,
-          queryComplexity.maxComlexity,
-          queryComplexity.throwOnMaximum
-        ),
+      ...getPresetPluginList(builtInPlugins, prodPlaygound, schema),
       ...plugins,
-    ].filter(Boolean),
+    ],
     dataSources,
     mocks,
     mockEntireSchema,
@@ -176,8 +233,7 @@ export class GraphQLKoaMiddleware implements KoaMiddleware {
       } = merge(presetOption, this.externalconfig);
 
       const schema =
-        apollo?.schema ??
-        sharedInitGraphQLSchema(ctx, this.app, buildSchemaOptions);
+        apollo?.schema ?? sharedInitGraphQLSchema(this.app, buildSchemaOptions);
 
       const server = initKoaApolloServer(
         ctx,
@@ -199,6 +255,55 @@ export class GraphQLKoaMiddleware implements KoaMiddleware {
       });
 
       await next();
+    };
+  }
+}
+
+@Provide('GraphQLExpressMiddleware')
+export class GraphQLExpressMiddleware implements ExpressMiddleware {
+  @Config('graphql')
+  externalconfig: CreateExpressGraphQLMiddlewareOption;
+
+  @App()
+  app: IMidwayExpressApplication;
+
+  resolve() {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      const {
+        apollo,
+        schema: buildSchemaOptions,
+        path,
+        prodPlaygound,
+        appendApplicationContext,
+        builtInPlugins,
+        cors,
+        bodyParserConfig,
+        disableHealthCheck,
+        onHealthCheck = null,
+      } = merge(presetOption, this.externalconfig);
+
+      const schema =
+        apollo?.schema ?? sharedInitGraphQLSchema(this.app, buildSchemaOptions);
+
+      const server = initExpressApolloServer(
+        this.app,
+        schema,
+        apollo,
+        builtInPlugins,
+        { prodPlaygound, appendApplicationContext }
+      );
+
+      await server.start();
+
+      server.applyMiddleware({
+        app: this.app,
+        path,
+        bodyParserConfig,
+        disableHealthCheck,
+        onHealthCheck,
+      });
+
+      next();
     };
   }
 }

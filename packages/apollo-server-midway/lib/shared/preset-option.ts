@@ -58,7 +58,6 @@ export const presetCreateMiddlewareOption: CreateGraphQLMiddlewareOption = {
     emitSchemaFile: 'schema.graphql',
     container: null,
   },
-  cors: undefined,
   bodyParserConfig: undefined,
 };
 

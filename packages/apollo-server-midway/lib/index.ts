@@ -12,4 +12,7 @@ export * from './shared/constants';
 export * from './shared/preset-option';
 
 export { GraphQLConfiguration as Configuration } from './app/configuration';
-export { GraphQLKoaMiddleware } from './app/graphql-middleware';
+export {
+  GraphQLKoaMiddleware,
+  GraphQLExpressMiddleware,
+} from './app/graphql-middleware';

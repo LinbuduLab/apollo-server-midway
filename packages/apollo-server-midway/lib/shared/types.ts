@@ -2,6 +2,7 @@ import { Context, IMidwayFaaSApplication } from '@midwayjs/faas';
 import { BuildSchemaOptions } from 'type-graphql';
 import { Config as ApolloServerConfig } from 'apollo-server-core';
 import { Options as CORSOptions } from '@koa/cors';
+import corsMiddleware from 'cors';
 import { Options as BodyParserOptions } from 'koa-bodyparser';
 import { ServerRegistration as KoaServerRegistration } from 'apollo-server-koa';
 import { ServerRegistration as ExpressServerRegistration } from 'apollo-server-express';
@@ -104,10 +105,6 @@ export type CreateGraphQLMiddlewareOption = {
   disableHealthCheck?: boolean;
 
   /**
-   * CORS options, equal to @koa/cors options.
-   */
-  cors?: CORSOptions | boolean;
-  /**
    * BodyParser options, equal to koa-bodyparser options.
    */
   bodyParserConfig?: BodyParserOptions | boolean;
@@ -116,6 +113,10 @@ export type CreateGraphQLMiddlewareOption = {
 export interface CreateKoaGraphQLMiddlewareOption
   extends CreateGraphQLMiddlewareOption {
   /**
+   * CORS options, equal to @koa/cors options.
+   */
+  cors?: CORSOptions | boolean;
+  /**
    * Customize health check handler.
    */
   onHealthCheck?: KoaServerRegistration['onHealthCheck'];
@@ -123,6 +124,16 @@ export interface CreateKoaGraphQLMiddlewareOption
 
 export interface CreateExpressGraphQLMiddlewareOption
   extends CreateGraphQLMiddlewareOption {
+  /**
+   * CORS options, equal to cors options.
+   */
+  cors?:
+    | corsMiddleware.CorsOptions
+    | corsMiddleware.CorsOptionsDelegate
+    | boolean;
+  /**
+   * Customize health check handler.
+   */
   onHealthCheck?: ExpressServerRegistration['onHealthCheck'];
 }
 

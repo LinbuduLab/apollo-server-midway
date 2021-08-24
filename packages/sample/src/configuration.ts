@@ -12,5 +12,7 @@ import * as graphql from 'midway-faas-graphql';
   importConfigs: [path.join(__dirname, './config')],
 })
 export class ContainerLifeCycle implements ILifeCycle {
-  async onReady(container: IMidwayContainer, app: IMidwayApplication) {}
+  async onReady(container: IMidwayContainer, app: IMidwayApplication) {
+    container.registerObject('foo', 'bar');
+  }
 }
