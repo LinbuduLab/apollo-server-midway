@@ -1892,7 +1892,12 @@
   resolved "https://registry.yarnpkg.com/@midwayjs/bootstrap/-/bootstrap-2.12.3.tgz#3956a4e5879dc5347b5bcc960e0ec969c7af2de9"
   integrity sha512-dTarHZT5CZQ+GB5zk9v+mKbCJsfbD35DMPWG6T5kVnB28YSdCcEyU4VQiqbAo+5K20WfBYTdGgluwfCgWUyByA==
 
-"@midwayjs/bootstrap@^2.12.7", "@midwayjs/bootstrap@^2.3.0":
+"@midwayjs/bootstrap@^2.12.9":
+  version "2.12.9"
+  resolved "https://registry.yarnpkg.com/@midwayjs/bootstrap/-/bootstrap-2.12.9.tgz#9651c39ca943c1593a8640f8191e1eeef32fd3fd"
+  integrity sha512-wSUGRw28XfbUI+VE+kPRSkxvH6Gq4FQbPRd9YS6FzgqMdi/mh+5RCgFgJv9uAsxUig1cyJ4nICqV90pV4gfcDg==
+
+"@midwayjs/bootstrap@^2.3.0":
   version "2.12.7"
   resolved "https://registry.yarnpkg.com/@midwayjs/bootstrap/-/bootstrap-2.12.7.tgz#0f4671bd2893ccdfa9f48d097eea46ef6568bcb8"
   integrity sha512-ghcuCrz2iNGQtpBZqEfYSA/JARGz8cxCZMaPP8uWwnggIwxyKR/EymGUTF4hz04PndgTwfRi9CSSugRJHh6G0w==
@@ -2279,22 +2284,22 @@
     semver "^7.3.4"
     supports-color "^8.1.0"
 
-"@midwayjs/mock@^2.12.1", "@midwayjs/mock@^2.12.3", "@midwayjs/mock@^2.8.0":
+"@midwayjs/mock@^2.12.9":
+  version "2.12.9"
+  resolved "https://registry.yarnpkg.com/@midwayjs/mock/-/mock-2.12.9.tgz#e2d1a8fbc1638fa7668a08d503859dc5918f4b53"
+  integrity sha512-zbEYu0eIHbEFtMe/pEH6fp1GWU4t1I7vmAhVqcalHkl6XPo+1mZyhNywZm/gU1OQ0JVt8cZ1YI8vbxfscfJ2Bw==
+  dependencies:
+    "@midwayjs/bootstrap" "^2.12.9"
+    egg-mock "^3.21.0"
+    fs-extra "^8.0.1"
+    supertest "^6.0.0"
+
+"@midwayjs/mock@^2.8.0":
   version "2.12.3"
   resolved "https://registry.yarnpkg.com/@midwayjs/mock/-/mock-2.12.3.tgz#8ac55597e8f88ec40879816ef4e9b1bfd7f5c5c7"
   integrity sha512-KGjKyhBLzLSsuKsGshHOGnhEpy/Ko3pk+3GKsQIrfS6UwMCjTlSQlSkRJ9r44YOYBesAzCdqwutqvB13j2ADxQ==
   dependencies:
     "@midwayjs/bootstrap" "^2.12.3"
-    egg-mock "^3.21.0"
-    fs-extra "^8.0.1"
-    supertest "^6.0.0"
-
-"@midwayjs/mock@^2.3.0":
-  version "2.12.7"
-  resolved "https://registry.yarnpkg.com/@midwayjs/mock/-/mock-2.12.7.tgz#eadd1f64a3dfda352b4a04f695bfd38ed88b6269"
-  integrity sha512-a8wFFPHE+LFd/RMrQrXd16aCeVswtoGy69uuxwy8QNB7982CeiXfZtEgRZwV9zLNwTmxFNBbgBbS7iFCUfvUZA==
-  dependencies:
-    "@midwayjs/bootstrap" "^2.12.7"
     egg-mock "^3.21.0"
     fs-extra "^8.0.1"
     supertest "^6.0.0"
