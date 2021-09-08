@@ -2057,7 +2057,7 @@
     light-spinner "^1.0.0"
     minimist "^1.2.5"
 
-"@midwayjs/core@^2.11.4", "@midwayjs/core@^2.12.1", "@midwayjs/core@^2.12.3":
+"@midwayjs/core@^2.11.4", "@midwayjs/core@^2.12.3":
   version "2.12.3"
   resolved "https://registry.yarnpkg.com/@midwayjs/core/-/core-2.12.3.tgz#f66304a969474f1414d69d0b15adc646ca5a8dae"
   integrity sha512-DWxhtk8LJIBBFhCGYLHXQgx62nFSUtydmDVyO9QgjzfRlnU5GFNtn1n5v23jmR9V5DqlhXd3N/e7B1YJKdz1ag==
@@ -2074,13 +2074,30 @@
     picomatch "^2.2.2"
     reflect-metadata "^0.1.13"
 
-"@midwayjs/core@^2.12.7", "@midwayjs/core@^2.3.0":
+"@midwayjs/core@^2.12.7":
   version "2.12.7"
   resolved "https://registry.yarnpkg.com/@midwayjs/core/-/core-2.12.7.tgz#357eafd46c32e8ea26386adab61fd8474a2c0882"
   integrity sha512-WZW4QmGMTGGX2r6prkeBGZsJ43B/EZMayPFMDTHXQNS2EdO0zbJ+r7Nh/zemRXcUo/MzTy0ZcfBMhvtoZgKjfQ==
   dependencies:
     "@midwayjs/glob" "^1.0.2"
     "@midwayjs/logger" "^2.11.3"
+    class-transformer "^0.3.1"
+    extend2 "^1.0.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.defaultsdeep "^4.6.0"
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    lodash.template "^4.4.0"
+    picomatch "^2.2.2"
+    reflect-metadata "^0.1.13"
+
+"@midwayjs/core@^2.13.0":
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@midwayjs/core/-/core-2.13.0.tgz#c856337a59ac9b20491243a144707ee72288977a"
+  integrity sha512-foAK/wuSwss5Ru/fmYBbvDYQTK6PdX4CyCXBmWDEkQTfDQWi/oDDRhxDGsjKtu1kkroIA57GUOUiauKofKgueQ==
+  dependencies:
+    "@midwayjs/glob" "^1.0.2"
+    "@midwayjs/logger" "^2.13.0"
     class-transformer "^0.3.1"
     extend2 "^1.0.0"
     lodash.clonedeep "^4.5.0"
@@ -2263,6 +2280,17 @@
   integrity sha512-rzCTg84YxKOymVIzd3zaS9sYFt0dJaBAGOvM/DKUthEcfLJB0MMvGCcBSiyhCc1lOcMZPgIhzPBjnlNAGX5bAA==
   dependencies:
     file-stream-rotator "^0.5.7"
+    object-hash "^2.0.1"
+    triple-beam "^1.3.0"
+    winston "^3.3.3"
+    winston-transport "^4.4.0"
+
+"@midwayjs/logger@^2.13.0":
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@midwayjs/logger/-/logger-2.13.0.tgz#1bdf9cdd8f5591e34af5b1dfe5c8b4d8cf5cc392"
+  integrity sha512-M6ik/d2mD2NJacpgKqJtpvAFXQj3PuSwigFk7db3UUMhmpbo5lSY7xkTplvbS4APKdUpyDq8awDZN4Us5mTtKA==
+  dependencies:
+    moment "^2.11.2"
     object-hash "^2.0.1"
     triple-beam "^1.3.0"
     winston "^3.3.3"

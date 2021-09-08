@@ -34,7 +34,7 @@
     "@graphql-tools/schema": "^8.1.0",
     "@hapi/accept": "^5.0.2",
     "@koa/cors": "^3.1.0",
-    "@midwayjs/core": "^2.12.3",
+    "@midwayjs/core": "^2.13.0",
     "@midwayjs/decorator": "^2.12.3",
     "@midwayjs/express": "^2.12.3",
     "@midwayjs/faas": "^2.12.4",
