@@ -7,7 +7,7 @@
 现在你可以在 [Midway Serverless](https://www.yuque.com/midwayjs/midway_v2/serverless_introduction) 中使用 [Apollo-Server](https://www.apollographql.com/docs/apollo-server) 和 [TypeGraphQL](https://github.com/MichalLytek/type-graphql) 了：
 
 - 支持 `Apollo Server` 与 `TypeGraphQL` 绝大部分在 `Serverless` 场景下的可用配置
-- 支持 `Serverless` 应用（通过 `Apollo-Server` 作为解析器） 与 普通 Node 应用（通过 `Apollo-Server` 作为中间件，目前仅 `Koa` 版本可用，`Express` / `EggJS` 马上就来）
+- 支持 `Serverless` 应用（通过 `Apollo-Server` 作为解析器） 与 普通 Node 应用（通过 `Apollo-Server` 作为中间件，已支持 `koa`/ `Express` 版本）
 - 内置开箱即用的插件功能，如 [Query Complexity](packages/apollo-query-complexity)、[Resolve Time](packages/apollo-resolve-time) 等，后续还会有更多插件。
 - 集成 `Midway Container` 的 `Debug` 能力（如在 `GraphQL Response` 中通过 `extensions` 字段返回上下文、`GraphQL Schema` 等信息）
 - 基于 [Apollo Server V3](https://www.apollographql.com/docs/apollo-server/migration/)，默认禁用 `Apollo Sandbox`，使用 `GraphQL Playground`
@@ -42,6 +42,8 @@ import {
 } from "@midwayjs/decorator";
 import { Context, IMidwayFaaSApplication } from "@midwayjs/faas";
 import { createApolloServerHandler } from "apollo-server-midway";
+import { SampleResolver } from '../resolvers/sample.resolver';
+import { DogResolver } from '../resolvers/dog.resolver';
 import path from "path";
 
 const apolloHandlerFuncName = "apollo-handler";
@@ -72,10 +74,8 @@ export class HelloHTTPService {
       path: "/",
       app: this.app,
       context: this.ctx,
-      // NOTE: schema 是必须的, 使用 schema.resolvers 或者 apollp.schema 来指定
-      // 一旦 apollo.schema 被指定，schema.resolvers 就将被忽略
       schema: {
-        resolvers: [path.resolve(this.app.getBaseDir(), "resolvers/*")],
+        resolvers: [SampleResolver, DogResolver],
       },
     });
   }
@@ -92,17 +92,22 @@ yarn add apollo-server-midway graphql type-graphql @midwayjs/koa --save
 pnpm install apollo-server-midway graphql type-graphql @midwayjs/koa --save
 ```
 
-> 将 `@midwayjs/koa` 替换为你应用对应的框架。
+> 将 `@midwayjs/koa` 替换为你应用对应的框架。目前仅有 Koa / Express 支持。
 
 在 Node 应用中使用 [apollo-server-midway](packages/apollo-server-midway/lib/app/graphql-middleware.ts)
 
-你可以查看 [koa-app-sample](packages/koa-app-sample) 获得更多信息。
+你可以查看 [koa-app-sample](packages/koa-app-sample) / [express-app-sample](packages/express-app-sample) 获得更多信息。
 
 ```typescript
 // config.default.ts
+import { SampleResolver } from "../resolvers/sample.resolver";
 import { CreateGraphQLMiddlewareOption } from "apollo-server-midway";
 
-export const graphql: CreateGraphQLMiddlewareOption = {};
+export const graphql: CreateGraphQLMiddlewareOption = {
+	schema: {
+  	resolvers: [SampleResolver]
+  }
+};
 
 // configuration.ts
 import { Configuration, App } from "@midwayjs/decorator";
@@ -119,9 +124,8 @@ export class ContainerConfiguration implements ILifeCycle {
   app: IMidwayKoaApplication;
 
   async onReady(): Promise<void> {
-    // Component Namespace:Framework-Specified Middleware Identifier
-    // graphql:GraphQLExpressMiddleware
     this.app.use(
+      // Express 下的命名空间：graphql:GraphQLExpressMiddleware
       await this.app.generateMiddleware("graphql:GraphQLKoaMiddleware")
     );
   }
