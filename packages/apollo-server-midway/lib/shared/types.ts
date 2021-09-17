@@ -4,6 +4,8 @@ import { Config as ApolloServerConfig } from 'apollo-server-core';
 import { Options as CORSOptions } from '@koa/cors';
 import corsMiddleware from 'cors';
 import { Options as BodyParserOptions } from 'koa-bodyparser';
+import { json, OptionsJson } from 'body-parser';
+
 import { ServerRegistration as KoaServerRegistration } from 'apollo-server-koa';
 import { ServerRegistration as ExpressServerRegistration } from 'apollo-server-express';
 
@@ -103,11 +105,6 @@ export type CreateGraphQLMiddlewareOption = {
    * Disable Apollo-Server health check.
    */
   disableHealthCheck?: boolean;
-
-  /**
-   * BodyParser options, equal to koa-bodyparser options.
-   */
-  bodyParserConfig?: BodyParserOptions | boolean;
 };
 
 export interface CreateKoaGraphQLMiddlewareOption
@@ -116,6 +113,10 @@ export interface CreateKoaGraphQLMiddlewareOption
    * CORS options, equal to @koa/cors options.
    */
   cors?: CORSOptions | boolean;
+  /**
+   * BodyParser options, equal to koa-bodyparser options.
+   */
+  bodyParserConfig?: BodyParserOptions | boolean;
   /**
    * Customize health check handler.
    */
@@ -131,6 +132,10 @@ export interface CreateExpressGraphQLMiddlewareOption
     | corsMiddleware.CorsOptions
     | corsMiddleware.CorsOptionsDelegate
     | boolean;
+  /**
+   * BodyParser options, equal to bodyparser options.
+   */
+  bodyParserConfig?: OptionsJson | boolean;
   /**
    * Customize health check handler.
    */

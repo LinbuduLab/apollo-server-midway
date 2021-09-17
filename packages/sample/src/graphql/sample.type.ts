@@ -8,4 +8,7 @@ export class SampleType {
 
   @Field(type => ChildType)
   Child?: ChildType;
+
+  @Field()
+  Test: string[];
 }
