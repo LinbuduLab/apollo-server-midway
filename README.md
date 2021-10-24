@@ -42,8 +42,8 @@ import {
 } from "@midwayjs/decorator";
 import { Context, IMidwayFaaSApplication } from "@midwayjs/faas";
 import { createApolloServerHandler } from "apollo-server-midway";
-import { SampleResolver } from '../resolvers/sample.resolver';
-import { DogResolver } from '../resolvers/dog.resolver';
+import { SampleResolver } from "../resolvers/sample.resolver";
+import { DogResolver } from "../resolvers/dog.resolver";
 import path from "path";
 
 const apolloHandlerFuncName = "apollo-handler";
@@ -84,7 +84,7 @@ export class HelloHTTPService {
 
 在上面的示例中，函数 `apollo-handler` 将被部署在 `SLS_DOMAIN/SERVICE/apollo-handler` 下，你可以通过 `SLS_DOMAIN/SERVICE/apollo-handler/` 访问（注意 `/`）。
 
-### Apollo-Server + Midway Node Application(Not Stable!)
+### Apollo-Server + Midway Node Application
 
 ```bash
 npm install apollo-server-midway graphql type-graphql @midwayjs/koa --save
@@ -98,15 +98,17 @@ pnpm install apollo-server-midway graphql type-graphql @midwayjs/koa --save
 
 你可以查看 [koa-app-sample](packages/koa-app-sample) / [express-app-sample](packages/express-app-sample) 获得更多信息。
 
+**在普通 Node 应用中，更推荐通过自己定义 `GraphQL` 中间件的方式来接入 GraphQL Server，因为其成本是非常低的，同时相比框架的黑盒，你可以更容易的做定制。`Apollo-Server-Midway`同样会更侧重 Serverless 能力相关，因为对于花样百出的 Node 应用定制需求，我们无法做到满足每一个使用者。关于如何定制，请参考 [文档-定制 GraphQL 中间件]。**
+
 ```typescript
 // config.default.ts
 import { SampleResolver } from "../resolvers/sample.resolver";
 import { CreateGraphQLMiddlewareOption } from "apollo-server-midway";
 
 export const graphql: CreateGraphQLMiddlewareOption = {
-	schema: {
-  	resolvers: [SampleResolver]
-  }
+  schema: {
+    resolvers: [SampleResolver],
+  },
 };
 
 // configuration.ts

@@ -7,13 +7,8 @@ type ChildType {
   ChildField: String!
 }
 
-type FailureStatus {
-  error: String
-  status: String!
-}
-
 type Query {
-  HealthCheck(expectError: Boolean): StatusCheckUnion!
+  QueryApplicationContext: SampleType!
   QuerySample: SampleType!
 }
 
@@ -21,11 +16,4 @@ type SampleType {
   Child: ChildType!
   FieldQuerySample: String!
   SampleField: String!
-}
-
-union StatusCheckUnion = FailureStatus | SuccessStatus
-
-type SuccessStatus {
-  experimentalField: Int!
-  status: String!
 }
