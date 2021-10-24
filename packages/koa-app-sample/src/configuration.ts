@@ -14,7 +14,9 @@ export class ContainerConfiguration implements ILifeCycle {
   async onReady(container: IMidwayContainer): Promise<void> {
     container.registerObject('foo', 'bar');
     this.app.use(
+      // Use built-in middleware component
       // await this.app.generateMiddleware('graphql:GraphQLKoaMiddleware')
+      // Use extend middleware
       await this.app.generateMiddleware('extend:GraphQLKoaMiddleware')
     );
   }
