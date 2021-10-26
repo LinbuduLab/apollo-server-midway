@@ -32,7 +32,7 @@ export class SampleResolver {
 
   @Query(type => SampleType)
   QueryApplicationContext(@Ctx() ctx: IContext): SampleType {
-    console.log(ctx.reqCtx.header['authorization']);
+    console.log('header', ctx.reqCtx.header['authorization']);
     return {
       SampleField: 'SampleField',
       Child: {

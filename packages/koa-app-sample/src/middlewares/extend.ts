@@ -36,9 +36,11 @@ export class GraphQLMiddleware implements IWebMiddleware {
 
       const server = new ApolloServer({
         schema,
-        context: {
-          container,
-          reqCtx: _ctx,
+        // 这里的 ctx 来自于 Apollo-Server-Koa 的解析，但会与 Koa 保持一致
+        context: ({ ctx }) => {
+          return {
+            reqCtx: ctx,
+          };
         },
         plugins: [
           ['production'].includes(process.env.NODE_ENV) ||
