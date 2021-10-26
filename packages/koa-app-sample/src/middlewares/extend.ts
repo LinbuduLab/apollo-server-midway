@@ -7,13 +7,14 @@ import {
 } from '@midwayjs/koa';
 
 import { ApolloServer, ServerRegistration } from 'apollo-server-koa';
-import { buildSchemaSync } from 'type-graphql';
+import { buildSchemaSync, ResolverData } from 'type-graphql';
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
 
 import { SampleResolver } from '../resolvers/sample.resolver';
+import { IMidwayContainer } from '@midwayjs/core';
 
 @Provide('extend:GraphQLKoaMiddleware')
 export class GraphQLMiddleware implements IWebMiddleware {
@@ -29,16 +30,22 @@ export class GraphQLMiddleware implements IWebMiddleware {
 
       const schema = buildSchemaSync({
         resolvers: [SampleResolver],
-        container,
+        // 使用应用上下文作为容器
+        // container,
+        // 使用请求上下文作为容器
+        container: ({
+          context,
+        }: ResolverData<{ container: IMidwayContainer }>) => context.container,
         authMode: 'error',
         emitSchemaFile: 'schema.graphql',
       });
 
       const server = new ApolloServer({
         schema,
-        // 这里的 ctx 来自于 Apollo-Server-Koa 的解析，但会与 Koa 保持一致
-        context: ({ ctx }) => {
+        // 这里的 ctx 实际上是被 Midway 处理过的，所以你可以拿到 requestContext
+        context: ({ ctx }: { ctx: IMidwayKoaContext }) => {
           return {
+            container: ctx.requestContext,
             reqCtx: ctx,
           };
         },
