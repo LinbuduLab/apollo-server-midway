@@ -187,10 +187,12 @@ export function initKoaApolloServer(
     schema,
     persistedQueries,
     context: appendApplicationContext
-      ? {
-          ...userGraphQLContext,
-          appContext: ctx,
-          container: app.getApplicationContext(),
+      ? ({ ctx }: { ctx: IMidwayKoaContext }) => {
+          return {
+            ...userGraphQLContext,
+            appContext: ctx,
+            container: app.getApplicationContext(),
+          };
         }
       : userGraphQLContext,
     plugins: [
