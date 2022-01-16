@@ -2,9 +2,11 @@
 
 [English](./README.en-US.md) | 简体中文
 
+> 推荐直接阅读 Midway 官方文档部分：[GraphQL | Midway](https://midwayjs.org/docs/extensions/graphql)
+
 ## 🎉 Announcing V 1.0
 
-现在你可以在 [Midway Serverless](https://www.yuque.com/midwayjs/midway_v2/serverless_introduction) 中使用 [Apollo-Server](https://www.apollographql.com/docs/apollo-server) 和 [TypeGraphQL](https://github.com/MichalLytek/type-graphql) 了：
+现在你可以在 [Midway Serverless](https://midwayjs.org/docs/serverless/serverless_intro) 中使用 [Apollo-Server(V3)](https://www.apollographql.com/docs/apollo-server) 和 [TypeGraphQL](https://github.com/MichalLytek/type-graphql) 了：
 
 - 支持 `Apollo Server` 与 `TypeGraphQL` 绝大部分在 `Serverless` 场景下的可用配置
 - 支持 `Serverless` 应用（通过 `Apollo-Server` 作为解析器） 与 普通 Node 应用（通过 `Apollo-Server` 作为中间件，已支持 `koa`/ `Express` 版本）
@@ -15,7 +17,7 @@
 
 在开始前，你可以通过 [experimental-midway-sls-graphql](https://github.com/linbudu599/experimental-midway-sls-graphql) 和 [sample](packages/sample/src/function/hello.ts) 来了解大概的使用方式。
 
-> 详细文档参考：[在 Midway(Serverless) 中使用 GraphQL](https://www.yuque.com/midwayjs/midway_v2/qfdtnx)
+> 详细文档参考：[在 Midway(Serverless) 中使用 GraphQL](https://midwayjs.org/docs/extensions/graphql)
 
 ## Quick Start
 
@@ -96,7 +98,7 @@ pnpm install apollo-server-midway graphql type-graphql @midwayjs/koa --save
 
 你可以查看 [koa-app-sample](packages/koa-app-sample) / [express-app-sample](packages/express-app-sample) 获得更多信息。
 
-**在普通 Node 应用中，更推荐通过自己定义 `GraphQL` 中间件的方式来接入 GraphQL Server，因为其成本是非常低的，同时相比框架的黑盒，你可以更容易的做定制。`Apollo-Server-Midway`同样会更侧重 Serverless 能力相关，因为对于花样百出的 Node 应用定制需求，我们无法做到满足每一个使用者。关于如何定制，请参考 [文档-定制 GraphQL 中间件](https://www.yuque.com/midwayjs/midway_v2/graphql#a8iyy)。**
+**在普通 Node 应用中，更推荐通过自己定义 `GraphQL` 中间件的方式来接入 GraphQL Server，因为其成本是非常低的，同时相比框架的黑盒，你可以更容易的做定制。`Apollo-Server-Midway`同样会更侧重 Serverless 能力相关，因为对于花样百出的 Node 应用定制需求，我们无法做到满足每一个使用者。关于如何定制，请参考 [文档-定制 GraphQL 中间件](https://midwayjs.org/docs/extensions/graphql#%E5%AE%9A%E5%88%B6-graphql-%E4%B8%AD%E9%97%B4%E4%BB%B6)。**
 
 ```typescript
 // config.default.ts
@@ -131,3 +133,7 @@ export class ContainerConfiguration implements ILifeCycle {
   }
 }
 ```
+
+## License
+
+MIT
