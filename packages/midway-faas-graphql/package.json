@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^8.1.0",
-    "@midwayjs/core": "^2.12.3",
+    "@midwayjs/core": "^2.13.2",
     "@midwayjs/decorator": "^2.12.3",
     "@midwayjs/faas": "^2.12.4",
     "apollo-server-core": "^3.1.2",
