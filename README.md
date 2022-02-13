@@ -2,7 +2,7 @@
 
 [English](./README.en-US.md) | 简体中文
 
-> 推荐直接阅读 Midway 官方文档部分：[GraphQL | Midway](https://midwayjs.org/docs/extensions/graphql)
+> 推荐直接阅读 Midway 官方文档部分：[GraphQL | Midway](https://midwayjs.org/docs/2.0.0/extensions/graphql)
 
 ## 🎉 Announcing V 1.0
 
