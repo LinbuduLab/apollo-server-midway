@@ -1978,16 +1978,16 @@
     light-spinner "^1.0.1"
     tsconfig-paths "^3.9.0"
 
-"@midwayjs/cli-plugin-faas@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-faas/-/cli-plugin-faas-1.2.79.tgz#fae776a3a64a2e9f95cc424f18f0eb1fdb2fc0d9"
-  integrity sha512-o+3J00EHZqq/iYb6jOKAbkd9yBWjDhPbnPKxJIzcrj8EZAvig2KGM6q/hSx0z9akqG+1V4d43QKnD263IevKzw==
+"@midwayjs/cli-plugin-faas@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/cli-plugin-faas/-/cli-plugin-faas-1.2.82.tgz#e5646a7b3a378fc2b0520097d00794f75fdb4802"
+  integrity sha512-VLahcBV+oE8bRUwTYO2swzEdEt7ZKh2/qLAe9rQweEJZ/MG1NlSiuC268VgHNe1gIMLp088ALpoeSHgA5vbc9Q==
   dependencies:
-    "@midwayjs/command-core" "^1.2.79-beta.4"
-    "@midwayjs/fcli-plugin-deploy" "^1.2.79"
-    "@midwayjs/fcli-plugin-package" "^1.2.79"
+    "@midwayjs/command-core" "^1.2.82"
+    "@midwayjs/fcli-plugin-deploy" "^1.2.82"
+    "@midwayjs/fcli-plugin-package" "^1.2.82"
     "@midwayjs/serverless-app" "^2.8.9"
-    "@midwayjs/serverless-spec-builder" "^1.2.79"
+    "@midwayjs/serverless-spec-builder" "^1.2.82"
 
 "@midwayjs/cli-plugin-test@^1.2.79":
   version "1.2.79"
@@ -2053,6 +2053,14 @@
   version "1.2.79"
   resolved "https://registry.yarnpkg.com/@midwayjs/command-core/-/command-core-1.2.79.tgz#da0d23838dce24b4466a6d11a7af93b5b07b99cd"
   integrity sha512-DsAatrtsx+OeFPN2s1uAUX+Zt1xMj72eqJ7ykZyzrY7uAiA2fm5qg4KZvM/G3V/IZAyR16GHYBm4Ywqq6Z7Uhw==
+  dependencies:
+    light-spinner "^1.0.0"
+    minimist "^1.2.5"
+
+"@midwayjs/command-core@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/command-core/-/command-core-1.2.82.tgz#7dae509e653c8b515324266e6e260c81d0fe1c7e"
+  integrity sha512-+EE+i1/eYqvjcjH0d0YHjO4Chr6QCchIGpdeNK+7cwlS+GzgRzA/Dymfz+o9d6cG6VE/GjOSXJiOsCar2VGOLQ==
   dependencies:
     light-spinner "^1.0.0"
     minimist "^1.2.5"
@@ -2148,6 +2156,16 @@
     globby "^10.0.1"
     p-limit "^3.1.0"
 
+"@midwayjs/faas-code-analysis@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/faas-code-analysis/-/faas-code-analysis-1.2.82.tgz#f900ee269030334f62c580a94efbc5d18ca29e39"
+  integrity sha512-Xm8AZiHqXs4cigsvNFiz/FQUKfh9U5nxQvTGl7a0wqFQT7Wx5kLwI9CQOgXB+VHeexZjjl43Dag/Ld8Uul91fw==
+  dependencies:
+    "@midwayjs/mwcc" "^0.7.x"
+    fs-extra "^8.1.0"
+    globby "^10.0.1"
+    p-limit "^3.1.0"
+
 "@midwayjs/faas-typings@^2.11.1":
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/@midwayjs/faas-typings/-/faas-typings-2.11.1.tgz#d2c06d55958b395bb08b517ce7ecfbe65d77f176"
@@ -2165,12 +2183,12 @@
     "@midwayjs/simple-lock" "^1.1.4"
     koa-compose "^4.1.0"
 
-"@midwayjs/fcli-plugin-deploy@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-deploy/-/fcli-plugin-deploy-1.2.79.tgz#161be47633a2fa040881ea0cbd215f2fec382245"
-  integrity sha512-sX7fFnfwhjySfJSmS4gyDgzoQ0A0odorYHpgurwW9atawwTbENX+17wKH5JE1zZwv7AatDNpvDdyOXhu67gw5A==
+"@midwayjs/fcli-plugin-deploy@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-deploy/-/fcli-plugin-deploy-1.2.82.tgz#27bac3be85b0452c2fa510405d585d2ea7123e2b"
+  integrity sha512-WCompG4GbR7mx8gw1NjXlz07P3R46vl60AVEW3KgWJhDjVIENU6BOgqWidM0l6ZDTG6BWI0WYAdIXX3Pp93xFw==
   dependencies:
-    "@midwayjs/command-core" "^1.2.79-beta.4"
+    "@midwayjs/command-core" "^1.2.82"
 
 "@midwayjs/fcli-plugin-fc@^1.2.79":
   version "1.2.79"
@@ -2185,17 +2203,18 @@
     "@serverless-devs/core" "*"
     request "^2.88.2"
 
-"@midwayjs/fcli-plugin-package@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-package/-/fcli-plugin-package-1.2.79.tgz#9b73187875d29825d1439a84341af8cdffd85c54"
-  integrity sha512-JNu8LgHWI5K00KjmFm7hrWlVs8thyJKITIkI6TQW5Tbk8B9jkTdUgyowP8Vpkz2pKQjXYWSanrfwbKwgE+srCQ==
+"@midwayjs/fcli-plugin-package@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-package/-/fcli-plugin-package-1.2.82.tgz#4ff89047612942b51f9fd7bf8e0f4896b1e54dcf"
+  integrity sha512-AxgI545VjkDnuHFE91LEWY4hwbsicwlCJeKWSdlt8kWZUPC897v2aZT6YzkIG+XZBITF48FFaNcIITpeCxxdGw==
   dependencies:
-    "@midwayjs/command-core" "^1.2.79-beta.4"
-    "@midwayjs/faas-code-analysis" "^1.2.79"
+    "@midwayjs/command-core" "^1.2.82"
+    "@midwayjs/faas-code-analysis" "^1.2.82"
     "@midwayjs/hooks-core" "^2.2.4"
     "@midwayjs/locate" "^1.0.3"
     "@midwayjs/mwcc" "^0.7.x"
-    "@midwayjs/serverless-spec-builder" "^1.2.79"
+    "@midwayjs/serverless-spec-builder" "^1.2.82"
+    "@vercel/ncc" "^0.30.0"
     fs-extra "^8.1.0"
     globby "^10.0.1"
     jszip "^3.2.2"
@@ -2409,6 +2428,16 @@
   version "1.2.80"
   resolved "https://registry.yarnpkg.com/@midwayjs/serverless-spec-builder/-/serverless-spec-builder-1.2.80.tgz#9ab982d2e1cc6d00bdefa98fb6c69cf87ec9f723"
   integrity sha512-GGIAfjeTJ1L9uZyuCYB5QbagtG+R0ces/Qgmd6AoW9YaPXvxfXHMA5cXZDacnVx2LV9r4Loq9ekxhnbXGkHYDw==
+  dependencies:
+    ejs "^3.1.3"
+    js-yaml "^4.1.0"
+    json-cycle "^1.3.0"
+    mkdirp "^0.5.1"
+
+"@midwayjs/serverless-spec-builder@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/serverless-spec-builder/-/serverless-spec-builder-1.2.82.tgz#456ecb27a4fd9dc66484e3eac5fcf89a9e182e7a"
+  integrity sha512-x15qG0yjtRTns3C5te4yUSUE5Bgb/UTe3z+3AI8Hap3DM//vv0gldXohMW7Cu4/xarfoDMGnLDUGu7d6/O6PZg==
   dependencies:
     ejs "^3.1.3"
     js-yaml "^4.1.0"
@@ -3399,6 +3428,11 @@
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@vercel/go/-/go-1.2.3.tgz#6f2bdba5681f9d64ee17060c5d63589e2d45e2d8"
   integrity sha512-BZCHRz43Qfr0DwZlZQCcofR+3cr+H+HK72/ZPkZy1Uq0NYjJMlmZ3ahuMgvJxT9lfC1RA6eOEUlUsZ+gqKcMCg==
+
+"@vercel/ncc@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.30.0.tgz#e940f5cfe30dfd0b7b30c4d7f9f6f00fcf754577"
+  integrity sha512-16ePj2GkwjomvE0HLL5ny+d+sudOwvZNYW8vjpMh3cyWdFxoMI8KSQiolVxeHBULbU1C5mVxLK5nL9NtnnpIew==
 
 "@vercel/node@1.12.1":
   version "1.12.1"
