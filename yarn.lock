@@ -2057,6 +2057,14 @@
     light-spinner "^1.0.0"
     minimist "^1.2.5"
 
+"@midwayjs/command-core@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/command-core/-/command-core-1.2.82.tgz#7dae509e653c8b515324266e6e260c81d0fe1c7e"
+  integrity sha512-+EE+i1/eYqvjcjH0d0YHjO4Chr6QCchIGpdeNK+7cwlS+GzgRzA/Dymfz+o9d6cG6VE/GjOSXJiOsCar2VGOLQ==
+  dependencies:
+    light-spinner "^1.0.0"
+    minimist "^1.2.5"
+
 "@midwayjs/core@^2.11.4", "@midwayjs/core@^2.12.1", "@midwayjs/core@^2.12.3":
   version "2.12.3"
   resolved "https://registry.yarnpkg.com/@midwayjs/core/-/core-2.12.3.tgz#f66304a969474f1414d69d0b15adc646ca5a8dae"
@@ -2172,17 +2180,18 @@
   dependencies:
     "@midwayjs/command-core" "^1.2.79-beta.4"
 
-"@midwayjs/fcli-plugin-fc@^1.2.79":
-  version "1.2.79"
-  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-fc/-/fcli-plugin-fc-1.2.79.tgz#16d21bb0a3b4ab335eb9587287aec623bbe0c6ab"
-  integrity sha512-XurjWimvn871ywdfLuzInG0IA7htHfQ1jFpfJPwJRs9J+YE9PBIW2fUnAMg43FpMZ/Tajx7xb1n0DtcgShXypg==
+"@midwayjs/fcli-plugin-fc@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/fcli-plugin-fc/-/fcli-plugin-fc-1.2.82.tgz#f3222795a947026760bc5ce78cafb03e5d6b289e"
+  integrity sha512-CBaG+rJzyHGsc/o6QPpxaYLvbdS4U8ZSWm1seGSki2ZvRrESHWqzyAYwWO9cT/1ZP9P2MZsNW9l/XEKVCDzJbQ==
   dependencies:
     "@alicloud/fun" "^3.1.3"
-    "@midwayjs/command-core" "^1.2.79-beta.4"
+    "@midwayjs/command-core" "^1.2.82"
     "@midwayjs/serverless-fc-starter" "^2.8.7"
     "@midwayjs/serverless-fc-trigger" "^2.8.7"
-    "@midwayjs/serverless-spec-builder" "^1.2.79"
+    "@midwayjs/serverless-spec-builder" "^1.2.82"
     "@serverless-devs/core" "*"
+    globby "^10.0.2"
     request "^2.88.2"
 
 "@midwayjs/fcli-plugin-package@^1.2.79":
@@ -2409,6 +2418,16 @@
   version "1.2.80"
   resolved "https://registry.yarnpkg.com/@midwayjs/serverless-spec-builder/-/serverless-spec-builder-1.2.80.tgz#9ab982d2e1cc6d00bdefa98fb6c69cf87ec9f723"
   integrity sha512-GGIAfjeTJ1L9uZyuCYB5QbagtG+R0ces/Qgmd6AoW9YaPXvxfXHMA5cXZDacnVx2LV9r4Loq9ekxhnbXGkHYDw==
+  dependencies:
+    ejs "^3.1.3"
+    js-yaml "^4.1.0"
+    json-cycle "^1.3.0"
+    mkdirp "^0.5.1"
+
+"@midwayjs/serverless-spec-builder@^1.2.82":
+  version "1.2.82"
+  resolved "https://registry.yarnpkg.com/@midwayjs/serverless-spec-builder/-/serverless-spec-builder-1.2.82.tgz#456ecb27a4fd9dc66484e3eac5fcf89a9e182e7a"
+  integrity sha512-x15qG0yjtRTns3C5te4yUSUE5Bgb/UTe3z+3AI8Hap3DM//vv0gldXohMW7Cu4/xarfoDMGnLDUGu7d6/O6PZg==
   dependencies:
     ejs "^3.1.3"
     js-yaml "^4.1.0"
@@ -8307,7 +8326,7 @@ globby@6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-globby@^10.0.0, globby@^10.0.1:
+globby@^10.0.0, globby@^10.0.1, globby@^10.0.2:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/globby/-/globby-10.0.2.tgz#277593e745acaa4646c3ab411289ec47a0392543"
   integrity sha512-7dUi7RvCoT/xast/o/dLN53oqND4yk0nsHkhRgn9w65C4PofCLOoJ39iSOg+qVDdWQPIEj+eszMHQ+aLVwwQSg==
