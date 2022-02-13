@@ -3,6 +3,8 @@
 [English](./README.en-US.md) | 简体中文
 
 > 推荐直接阅读 Midway 官方文档部分：[GraphQL | Midway](https://midwayjs.org/docs/2.0.0/extensions/graphql)
+> 
+> **V3 版本见 [apollo-server-midway-v3](https://github.com/LinbuduLab/apollo-server-midway-v3)（开发中）**
 
 ## 🎉 Announcing V 1.0
 
